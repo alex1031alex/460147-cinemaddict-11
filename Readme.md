@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Александров](https://up.htmlacademy.ru/ecmascript/11/user/460147).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Лизурчик](https://htmlacademy.ru/profile/id1431185).
 
 ---
 
