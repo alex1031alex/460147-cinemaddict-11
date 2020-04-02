@@ -326,8 +326,7 @@ render(HeaderElement, createUserProfileTemplate());
 render(MainElement, createSiteMenuTemplate());
 render(MainElement, createMovieBoardTemplate());
 
-const mainMovieListElement = MainElement
-  .querySelector(`.films-list .films-list__container`);
+const mainMovieListElement = MainElement.querySelector(`.films-list .films-list__container`);
 
 renderList(mainMovieListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
