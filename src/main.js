@@ -61,7 +61,7 @@ const createMovieBoardTemplate = () => (
    </section>`
 );
 
-const createMoovieCardTemplate = () => (
+const createMovieCardTemplate = () => (
   `<article class="film-card">
      <h3 class="film-card__title">The Dance of Life</h3>
      <p class="film-card__rating">8.3</p>
@@ -324,7 +324,7 @@ const movieMainListElement = siteMainElement
   .querySelector(`.films-list .films-list__container`);
 
 for (let i = 0; i < MAIN_MOVIE_COUNT; i++) {
-  render(movieMainListElement, createMoovieCardTemplate());
+  render(movieMainListElement, createMovieCardTemplate());
 }
 
 render(movieMainListElement, createShowMoreButtonTemplate(), `afterend`);
@@ -334,7 +334,7 @@ const movieExtraListElements = siteMainElement
 
 for (let element of movieExtraListElements) {
   for (let i = 0; i < EXTRA_MOVIE_COUNT; i++) {
-    render(element, createMoovieCardTemplate());
+    render(element, createMovieCardTemplate());
   }
 }
 
