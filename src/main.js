@@ -2,8 +2,8 @@
 
 const MAIN_MOVIE_COUNT = 5;
 const EXTRA_MOVIE_COUNT = 2;
-const HeaderElement = document.querySelector(`.header`);
-const MainElement = document.querySelector(`.main`);
+const headerElement = document.querySelector(`.header`);
+const mainElement = document.querySelector(`.main`);
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -322,19 +322,19 @@ const createMovieDetailsTemplate = () => (
    </section>`
 );
 
-render(HeaderElement, createUserProfileTemplate());
-render(MainElement, createSiteMenuTemplate());
-render(MainElement, createMovieBoardTemplate());
+render(headerElement, createUserProfileTemplate());
+render(mainElement, createSiteMenuTemplate());
+render(mainElement, createMovieBoardTemplate());
 
-const mainMovieListElement = MainElement.querySelector(`.films-list .films-list__container`);
+const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
 
 renderList(mainMovieListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
 
-const extraMovieListElements = MainElement.querySelectorAll(`.films-list--extra .films-list__container`);
+const extraMovieListElements = mainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
 for (let element of extraMovieListElements) {
   renderList(element, createMovieCardTemplate(), EXTRA_MOVIE_COUNT);
 }
 
-render(MainElement, createMovieDetailsTemplate());
+render(mainElement, createMovieDetailsTemplate());
