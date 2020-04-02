@@ -330,11 +330,9 @@ const mainMovieListElement = MainElement
   .querySelector(`.films-list .films-list__container`);
 
 renderList(mainMovieListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
-
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
 
-const extraMovieListElements = MainElement
-  .querySelectorAll(`.films-list--extra .films-list__container`);
+const extraMovieListElements = MainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
 for (let element of extraMovieListElements) {
   renderList(element, createMovieCardTemplate(), EXTRA_MOVIE_COUNT);
