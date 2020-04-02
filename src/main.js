@@ -9,6 +9,12 @@ const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
+const renderList = (container, template, count) => {
+  for (let i = 0; i < count; i++) {
+    render(container, template);
+  }
+};
+
 const createUserProfileTemplate = () => (
   `<section class="header__profile profile">
      <p class="profile__rating">Movie Buff</p>
@@ -323,9 +329,7 @@ render(siteMainElement, createMovieBoardTemplate());
 const movieMainListElement = siteMainElement
   .querySelector(`.films-list .films-list__container`);
 
-for (let i = 0; i < MAIN_MOVIE_COUNT; i++) {
-  render(movieMainListElement, createMovieCardTemplate());
-}
+renderList(movieMainListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
 
 render(movieMainListElement, createShowMoreButtonTemplate(), `afterend`);
 
@@ -333,9 +337,7 @@ const movieExtraListElements = siteMainElement
   .querySelectorAll(`.films-list--extra .films-list__container`);
 
 for (let element of movieExtraListElements) {
-  for (let i = 0; i < EXTRA_MOVIE_COUNT; i++) {
-    render(element, createMovieCardTemplate());
-  }
+  renderList(element, createMovieCardTemplate(), EXTRA_MOVIE_COUNT);
 }
 
 render(siteMainElement, createMovieDetailsTemplate());
