@@ -94,7 +94,7 @@ const createShowMoreButtonTemplate = () => (
   `<button class="films-list__show-more">Show more</button>`
 );
 
-const createMovieDetailsElement = () => (
+const createMovieDetailsTemplate = () => (
   `<section class="film-details">
      <form class="film-details__inner" action="" method="get">
        <div class="form-details__top-container">
@@ -338,4 +338,4 @@ for (let element of movieExtraListElements) {
   }
 }
 
-render(siteMainElement, createMovieDetailsElement());
+render(siteMainElement, createMovieDetailsTemplate());
