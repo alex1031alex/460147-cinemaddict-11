@@ -6,7 +6,7 @@ const getRandomArrayItem = (array) => {
   return array[getRandomNumber(0, array.length - 1)];
 };
 
-const FILM_NAMES = [
+const filmNames = [
   `Made for Each Other`,
   `Popeye the Sailor meets Sinbad the Sailor`,
   `Sagebrush Trail`,
@@ -14,9 +14,14 @@ const FILM_NAMES = [
   `The Dance of Life`,
   `The Great Flamarion`,
   `The Man with the Golden Arm`,
+  `Dream Warriors`,
+  `Jessabelle`,
+  `Stay Alive`,
+  `Black Hawk Down`,
+  `Sahara`,
 ];
 
-const POSTERS = [
+const posters = [
   `made-of-each-other.png`,
   `popeye-meets-sinbad.png`,
   `sagebrush-trail.jpg`,
@@ -29,6 +34,17 @@ const POSTERS = [
 const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
 const SENTENCE_LIMIT = 5;
 
+const genres = [
+  `musical`,
+  `western`,
+  `drama`,
+  `comedy`,
+  `cartoon`,
+  `mystery`,
+  `horror`,
+  `adventure`,
+];
+
 const generateRandomDesc = (text, limit) => {
   const descriptionItems = text.split(`.`);
   const count = getRandomNumber(1, limit);
@@ -38,17 +54,32 @@ const generateRandomDesc = (text, limit) => {
       .push(`${descriptionItems[getRandomNumber(0, descriptionItems.length)]}.`);
   }
   return randomDescItems.join(` `);
-}; 
+};
+
+const generateFilmDurationData = () => {
+  const hours = getRandomNumber(1, 2);
+  const minutes = hours < 2 ? getRandomNumber(30, 60) : getRandomNumber(0, 30);
+  if (minutes < 10) {
+    return `${hours}h 0${minutes}m`;
+  }
+  return `${hours}h ${minutes}m`;
+};
 
 const generateFilm = () => {
-  const name = getRandomArrayItem(FILM_NAMES);
-  const poster = getRandomArrayItem(POSTERS);
+  const name = getRandomArrayItem(filmNames);
+  const poster = getRandomArrayItem(posters);
   const description = generateRandomDesc(DESCRIPTION_TEXT, SENTENCE_LIMIT);
+  const year = getRandomNumber(1930, 2014);
+  const duration = generateFilmDurationData();
+  const genre = getRandomArrayItem(genres);
   return {
     name,
     poster,
     description,
     comment: {},
+    year,
+    duration,
+    genre,
   }
 };
 
