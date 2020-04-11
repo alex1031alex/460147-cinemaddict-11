@@ -1,6 +1,6 @@
 const createMovieCardTemplate = (film) => {
   const {name, poster, description, comment, year, duration, genre} = film;
-  const genre = genre.replace(/^\w/, genre[0].toUpperCase());
+  const formattedGenre = genre.replace(/^\w/, genre[0].toUpperCase());
 
   return `<article class="film-card">
             <h3 class="film-card__title">${name}</h3>
@@ -8,7 +8,7 @@ const createMovieCardTemplate = (film) => {
             <p class="film-card__info">
               <span class="film-card__year">${year}</span>
               <span class="film-card__duration">${duration}</span>
-              <span class="film-card__genre">${genre}</span>
+              <span class="film-card__genre">${formattedGenre}</span>
             </p>
             <img src="./images/posters/${poster}" alt="" class="film-card__poster">
             <p class="film-card__description">

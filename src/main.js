@@ -5,20 +5,19 @@ import {createMovieBoardTemplate} from './components/board.js';
 import {createMovieCardTemplate} from './components/card.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createMovieDetailsTemplate} from './components/details.js';
+import {generateFilm, generateFilms} from './mock/film.js';
 
+const TOTAL_MOVIE_COUNT = 20;
 const MAIN_MOVIE_COUNT = 5;
 const EXTRA_MOVIE_COUNT = 2;
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
+const films = generateFilms(TOTAL_MOVIE_COUNT);
+console.log(films);
+
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
-};
-
-const renderList = (container, template, count) => {
-  for (let i = 0; i < count; i++) {
-    render(container, template);
-  }
 };
 
 render(headerElement, createUserProfileTemplate());
@@ -28,13 +27,14 @@ render(mainElement, createMovieBoardTemplate());
 
 const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
 
-renderList(mainMovieListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
+// renderList(mainMovieListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
+films
+  .slice(0, MAIN_MOVIE_COUNT)
+  .forEach((film) => {
+    render(mainMovieListElement, createMovieCardTemplate(film))
+  });
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
 
 const extraMovieListElements = mainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
-for (let element of extraMovieListElements) {
-  renderList(element, createMovieCardTemplate(), EXTRA_MOVIE_COUNT);
-}
-
-render(mainElement, createMovieDetailsTemplate());
+// render(mainElement, createMovieDetailsTemplate());

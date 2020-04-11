@@ -22,7 +22,7 @@ const filmNames = [
 ];
 
 const posters = [
-  `made-of-each-other.png`,
+  `made-for-each-other.png`,
   `popeye-meets-sinbad.png`,
   `sagebrush-trail.jpg`,
   `santa-claus-conquers-the-martians.jpg`,
@@ -47,6 +47,8 @@ const genres = [
 
 const generateRandomDesc = (text, limit) => {
   const descriptionItems = text.split(`.`);
+  descriptionItems.pop();
+  console.log(descriptionItems);
   const count = getRandomNumber(1, limit);
   const randomDescItems = [];
   for (let i = 0; i < count; i++) {
