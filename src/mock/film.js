@@ -82,6 +82,9 @@ const generateFilm = () => {
     year,
     duration,
     genre,
+    isAtWatchlist: false,
+    isWatched: false,
+    isFavorites: false,
   }
 };
 

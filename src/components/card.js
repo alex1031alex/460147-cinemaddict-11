@@ -1,5 +1,6 @@
 const createMovieCardTemplate = (film) => {
-  const {name, poster, description, comment, year, duration, genre} = film;
+  const {name, poster, description, comment, year, duration, genre, 
+    isAtWhatchlist, isWatched, isFavorites } = film;
   const formattedGenre = genre.replace(/^\w/, genre[0].toUpperCase());
 
   return `<article class="film-card">
@@ -19,21 +20,24 @@ const createMovieCardTemplate = (film) => {
               <button
                 class="film-card__controls-item
                 button
-                film-card__controls-item--add-to-watchlist"
+                film-card__controls-item--add-to-watchlist
+                ${isAtWhatchlist ? `film-card__controls-item--active` : ``}"
               >
                 Add to watchlist
               </button>
               <button
                 class="film-card__controls-item
                 button
-                film-card__controls-item--mark-as-watched"
+                film-card__controls-item--mark-as-watched
+                ${isWatched ? `film-card__controls-item--active` : ``}"
               >
                 Mark as watched
               </button>
               <button
                 class="film-card__controls-item
                 button
-                film-card__controls-item--favorite"
+                film-card__controls-item--favorite
+                ${isFavorites ? `film-card__controls-item--active` : ``}"
               >
                 Mark as favorite
               </button>
