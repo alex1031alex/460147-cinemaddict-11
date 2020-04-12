@@ -6,6 +6,8 @@ import {createMovieCardTemplate} from './components/card.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createMovieDetailsTemplate} from './components/details.js';
 import {generateFilm, generateFilms} from './mock/film.js';
+import {generateFilters} from './mock/filter.js';
+import {getUserTitle} from './mock/profile.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const MAIN_MOVIE_COUNT = 5;
@@ -13,15 +15,15 @@ const EXTRA_MOVIE_COUNT = 2;
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 const films = generateFilms(TOTAL_MOVIE_COUNT);
-console.log(films);
-
+const filters = generateFilters(films);
+const watchedFilms = filters.find((it) => {return it.name === `watchlist`}).count;
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-render(headerElement, createUserProfileTemplate());
-render(mainElement, createMenuTemplate());
+render(headerElement, createUserProfileTemplate(getUserTitle(watchedFilms)));
+render(mainElement, createMenuTemplate(filters));
 render(mainElement, createSortingTemplate());
 render(mainElement, createMovieBoardTemplate());
 
