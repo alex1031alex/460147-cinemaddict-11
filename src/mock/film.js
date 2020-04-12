@@ -84,9 +84,9 @@ const generateFilm = () => {
     duration,
     genre,
     rating,
-    isAtWatchlist: false,
-    isWatched: false,
-    isFavorites: false,
+    isAtWatchlist: getRandomNumber(0, 3) < 1,
+    isWatched: getRandomNumber(0, 3) < 1,
+    isFavorites: getRandomNumber(0, 3) < 1,
   }
 };
 
