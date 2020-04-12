@@ -1,6 +1,6 @@
-const createUserProfileTemplate = () => (
+const createUserProfileTemplate = (userTitle) => (
   `<section class="header__profile profile">
-     <p class="profile__rating">Movie Buff</p>
+     <p class="profile__rating">${userTitle}</p>
      <img
        class="profile__avatar"
        src="images/bitmap@2x.png"
