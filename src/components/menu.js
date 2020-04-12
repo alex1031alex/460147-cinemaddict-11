@@ -1,14 +1,13 @@
 const createFilterMarkup = (filter, isActive) => {
   const {name, count} = filter;
-  return `<a href="#watchlist" 
+  const formattedName = name.replace(/^\w/, name[0].toUpperCase());
+  return  `<a href="#watchlist" 
             class="main-navigation__item
             ${isActive ? `main-navigation__item--active` : ``}"
           >
-            ${name}
-            <span class="main-navigation__item-count">
-              ${(/all movies/i.test(name) || count > 5) ? `` : count }
-            </span>
-          </a>`
+            ${formattedName}${/all movies/i.test(formattedName) || count > 5 ? 
+              `` : `<span class="main-navigation__item-count">${count}</span>`}           
+          </a>`;
 };
 
 const createMenuTemplate = (filters) => {
