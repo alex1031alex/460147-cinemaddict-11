@@ -1,8 +1,10 @@
 const createMovieCardTemplate = (film) => {
   const {name, poster, description, comment, year, duration, genre, rating,
     isAtWhatchlist, isWatched, isFavorites } = film;
-  const formattedGenre = genre.replace(/^\w/, genre[0].toUpperCase());
 
+  const formattedGenre = genre.replace(/^\w/, genre[0].toUpperCase());
+  const brief = description.length > 140 ? `${description.substring(0, 141)}...` : description;
+    
   return `<article class="film-card">
             <h3 class="film-card__title">${name}</h3>
             <p class="film-card__rating">${rating % 1 === 0 ? `${rating}.0` : rating}</p>
@@ -13,7 +15,7 @@ const createMovieCardTemplate = (film) => {
             </p>
             <img src="./images/posters/${poster}" alt="" class="film-card__poster">
             <p class="film-card__description">
-              ${description}
+              ${brief}
             </p>
             <a class="film-card__comments">5 comments</a>
             <form class="film-card__controls">
