@@ -74,6 +74,7 @@ const generateFilm = () => {
   const year = getRandomNumber(1930, 2014);
   const duration = generateFilmDurationData();
   const genre = getRandomArrayItem(genres);
+  const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
   return {
     name,
     poster,
@@ -82,6 +83,7 @@ const generateFilm = () => {
     year,
     duration,
     genre,
+    rating,
     isAtWatchlist: false,
     isWatched: false,
     isFavorites: false,
