@@ -48,12 +48,12 @@ const genres = [
 const generateRandomDesc = (text, limit) => {
   const descriptionItems = text.split(`.`);
   descriptionItems.pop();
-  console.log(descriptionItems);
+  // console.log(descriptionItems);
   const count = getRandomNumber(1, limit);
   const randomDescItems = [];
   for (let i = 0; i < count; i++) {
     randomDescItems
-      .push(`${descriptionItems[getRandomNumber(0, descriptionItems.length)]}.`);
+      .push(`${descriptionItems[getRandomNumber(0, descriptionItems.length - 1)]}.`);
   }
   return randomDescItems.join(` `);
 };
