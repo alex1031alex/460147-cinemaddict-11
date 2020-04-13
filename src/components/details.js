@@ -1,12 +1,11 @@
 import {capitalizeWords, formatDate} from './utils.js';
 const createMovieDetailsTemplate = (film) => {
-  const {name, poster, description, comments, duration, genres, rating,
+  const {name, poster, description, duration, genres, rating,
     isAtWhatchlist, isWatched, isFavorites} = film;
 
   const formattedGenres = capitalizeWords(genres)
-    .map((it) => {return `<span class="film-details__genre">${it}</span>`;})
+    .map((it) => `<span class="film-details__genre">${it}</span>`)
     .join(`\n`);
-  
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   return `<section class="film-details">
             <form class="film-details__inner" action="" method="get">
@@ -231,7 +230,7 @@ const createMovieDetailsTemplate = (film) => {
                 </section>
               </div>
             </form>
-          </section>`
+          </section>`;
 };
 
 export {createMovieDetailsTemplate};

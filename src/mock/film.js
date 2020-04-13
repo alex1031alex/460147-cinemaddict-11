@@ -92,7 +92,6 @@ const generateFilm = () => {
   const year = getRandomNumber(1930, 2014);
   const duration = generateFilmDurationData();
   const genres = generateGenres();
-  
   const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
   return {
     name,
@@ -115,7 +114,7 @@ const generateFilm = () => {
       writers: [`Anne Wigton`, `Heinz Herald`, `Richard Weil`],
       actors: [`Erich von Stroheim`, `Mary Beth`, `Hughes`, `Dan Dureya`],
     },
-  }
+  };
 };
 
 const generateFilms = (count) => {

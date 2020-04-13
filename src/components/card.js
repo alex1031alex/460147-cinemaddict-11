@@ -2,12 +2,11 @@ import {capitalizeWords} from './utils.js';
 
 const createMovieCardTemplate = (film) => {
   const {name, poster, description, comments, year, duration, genres, rating,
-    isAtWhatchlist, isWatched, isFavorites } = film;
-  
+    isAtWhatchlist, isWatched, isFavorites} = film;
+
   const formattedGenres = capitalizeWords(genres).join(`, `);
-  console.log(formattedGenres);
   const brief = description.length > 140 ? `${description.substring(0, 141)}...` : description;
-    
+
   return `<article class="film-card">
             <h3 class="film-card__title">${name}</h3>
             <p class="film-card__rating">${rating % 1 === 0 ? `${rating}.0` : rating}</p>
@@ -47,7 +46,7 @@ const createMovieCardTemplate = (film) => {
                 Mark as favorite
               </button>
             </form>
-          </article>`
+          </article>`;
 };
 
 export {createMovieCardTemplate};
