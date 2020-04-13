@@ -1,8 +1,11 @@
-const createMovieCardTemplate = (film) => {
-  const {name, poster, description, comment, year, duration, genre, rating,
-    isAtWhatchlist, isWatched, isFavorites } = film;
+import {capitalizeWords} from './utils.js';
 
-  const formattedGenre = genre.replace(/^\w/, genre[0].toUpperCase());
+const createMovieCardTemplate = (film) => {
+  const {name, poster, description, comments, year, duration, genres, rating,
+    isAtWhatchlist, isWatched, isFavorites } = film;
+  
+  const formattedGenres = capitalizeWords(genres).join(`, `);
+  console.log(formattedGenres);
   const brief = description.length > 140 ? `${description.substring(0, 141)}...` : description;
     
   return `<article class="film-card">
@@ -11,13 +14,13 @@ const createMovieCardTemplate = (film) => {
             <p class="film-card__info">
               <span class="film-card__year">${year}</span>
               <span class="film-card__duration">${duration}</span>
-              <span class="film-card__genre">${formattedGenre}</span>
+              <span class="film-card__genre">${formattedGenres}</span>
             </p>
             <img src="./images/posters/${poster}" alt="" class="film-card__poster">
             <p class="film-card__description">
               ${brief}
             </p>
-            <a class="film-card__comments">5 comments</a>
+            <a class="film-card__comments">${comments.length} comments</a>
             <form class="film-card__controls">
               <button
                 class="film-card__controls-item
