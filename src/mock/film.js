@@ -21,6 +21,14 @@ const filmNames = [
   `Sahara`,
 ];
 
+const countries = [
+  `USA`,
+  `Great Britain`,
+  `Germany`,
+  `France`,
+  `Italy`,
+];
+
 const posters = [
   `made-for-each-other.png`,
   `popeye-meets-sinbad.png`,
@@ -33,8 +41,9 @@ const posters = [
 
 const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
 const SENTENCE_LIMIT = 5;
+const AGE_RAITINGS = [0, 6, 12, 16, 18];
 
-const genres = [
+const genresNames = [
   `musical`,
   `western`,
   `drama`,
@@ -48,12 +57,11 @@ const genres = [
 const generateRandomDesc = (text, limit) => {
   const descriptionItems = text.split(`.`);
   descriptionItems.pop();
-  // console.log(descriptionItems);
   const count = getRandomNumber(1, limit);
   const randomDescItems = [];
   for (let i = 0; i < count; i++) {
     randomDescItems
-      .push(`${descriptionItems[getRandomNumber(0, descriptionItems.length - 1)]}.`);
+      .push(`${getRandomArrayItem(descriptionItems)}.`);
   }
   return randomDescItems.join(` `);
 };
@@ -67,26 +75,46 @@ const generateFilmDurationData = () => {
   return `${hours}h ${minutes}m`;
 };
 
+const generateGenres = () => {
+  const genresCount = getRandomNumber(1, 3);
+  const genresArray = [];
+  for (let i = 0; i < genresCount; i++) {
+    genresArray.push(getRandomArrayItem(genresNames));
+  }
+  const genres = Array.from(new Set(genresArray));
+  return genres;
+};
+
 const generateFilm = () => {
   const name = getRandomArrayItem(filmNames);
   const poster = getRandomArrayItem(posters);
   const description = generateRandomDesc(DESCRIPTION_TEXT, SENTENCE_LIMIT);
   const year = getRandomNumber(1930, 2014);
   const duration = generateFilmDurationData();
-  const genre = getRandomArrayItem(genres);
+  const genres = generateGenres();
+  
   const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
   return {
     name,
     poster,
     description,
-    comment: {},
+    comments: [],
     year,
     duration,
-    genre,
+    genres,
     rating,
     isAtWatchlist: getRandomNumber(0, 3) < 1,
     isWatched: getRandomNumber(0, 3) < 1,
     isFavorites: getRandomNumber(0, 3) < 1,
+    details: {
+      ageRating: getRandomArrayItem(AGE_RAITINGS),
+      originTitle: name,
+      releaseDate: new Date(year, getRandomNumber(0, 17), getRandomNumber(0, 30)),
+      country: getRandomArrayItem(countries),
+      director: `Anthony Mann`,
+      writers: [`Anne Wigton`, `Heinz Herald`, `Richard Weil`],
+      actors: [`Erich von Stroheim`, `Mary Beth`, `Hughes`, `Dan Dureya`],
+    },
   }
 };
 
