@@ -29,7 +29,6 @@ render(mainElement, createMovieBoardTemplate());
 
 const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
 
-// renderList(mainMovieListElement, createMovieCardTemplate(), MAIN_MOVIE_COUNT);
 films
   .slice(0, MAIN_MOVIE_COUNT)
   .forEach((film) => {
@@ -39,4 +38,4 @@ render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
 
 const extraMovieListElements = mainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
-// render(mainElement, createMovieDetailsTemplate());
+// render(mainElement, createMovieDetailsTemplate(films[0]));
