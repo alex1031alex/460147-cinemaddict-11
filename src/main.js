@@ -8,6 +8,7 @@ import {createMovieDetailsTemplate} from './components/details.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
+import {createStatCounterTemplate} from './components/stat-counter.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
@@ -17,6 +18,7 @@ let movieShowing = INITIAL_MOVIE_COUNT;
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
+const footer = document.querySelector(`.footer__statistics`);
 
 const films = generateFilms(TOTAL_MOVIE_COUNT);
 const filmsByInitialOrder = films.slice();
@@ -95,5 +97,7 @@ const filmsByRating = films.slice().sort((a, b) => b.rating - a.rating);
 const filmsByComment = films.slice().sort((a, b) => b.comments.length - a.comments.length);
 renderList(ratedMovieContainer, filmsByRating, 0, EXTRA_MOVIE_COUNT);
 renderList(commentMovieContainer, filmsByComment, 0, EXTRA_MOVIE_COUNT);
+
+render(footer, createStatCounterTemplate());
 
 // render(main, createMovieDetailsTemplate(films[0]));
