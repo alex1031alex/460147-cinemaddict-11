@@ -32,11 +32,14 @@ render(mainElement, createMovieBoardTemplate());
 
 const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
 
-const renderList = (container, filmList, from = 0, till = INITIAL_MOVIE_COUNT) => {
-  filmList
+const renderList = (container, films, from = 0, till = INITIAL_MOVIE_COUNT, isClean = false) => {
+  if (isClean) {
+    container.innerHTML = ``;
+  }
+  films
     .slice(from, till)
-    .forEach((filmListItem) => {
-      render(container, createMovieCardTemplate(filmListItem));
+    .forEach((film) => {
+      render(container, createMovieCardTemplate(film));
     });
 };
 
@@ -58,19 +61,16 @@ for (let button of sortButtons) {
 
 sortByDateButton.addEventListener(`click`, () => {
   films.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
-  mainMovieListElement.innerHTML = ``;
-  renderList(mainMovieListElement, films, 0, movieShowing);
+  renderList(mainMovieListElement, films, 0, movieShowing, true);
 });
 
 sortByRatingButton.addEventListener(`click`, () => {
   films.sort((a, b) => b.rating - a.rating);
-  mainMovieListElement.innerHTML = ``;
-  renderList(mainMovieListElement, films, 0, movieShowing);
+  renderList(mainMovieListElement, films, 0, movieShowing, true);
 });
 
 sortByDefaultButton.addEventListener(`click`, () => {
-  mainMovieListElement.innerHTML = ``;
-  renderList(mainMovieListElement, filmsInitialList, 0, movieShowing);
+  renderList(mainMovieListElement, filmsInitialList, 0, movieShowing, true);
 });
 
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
@@ -81,6 +81,7 @@ showMoreButton.addEventListener(`click`, () => {
   movieShowing += MOVIE_COUNT_BY_BUTTON;
   renderList(mainMovieListElement, films, prevMovieCount, movieShowing);
   
+
   if (movieShowing >= films.length) {
     showMoreButton.remove();
   }
