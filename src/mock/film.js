@@ -1,4 +1,4 @@
-import {getRandomNumber, getRandomArrayItem} from './utils.js';
+import {getRandomNumber, getRandomArrayItem} from './../components/utils.js';
 
 const filmNames = [
   `Made for Each Other`,
