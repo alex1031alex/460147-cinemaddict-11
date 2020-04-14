@@ -1,7 +1,7 @@
 import {capitalizeWords} from './utils.js';
 
 const createMovieCardTemplate = (film) => {
-  const {name, poster, description, comments, year, duration, genres, rating,
+  const {name, poster, description, year, duration, genres, rating,
     isAtWhatchlist, isWatched, isFavorites} = film;
 
   const formattedGenres = capitalizeWords(genres).join(`, `);
@@ -19,7 +19,7 @@ const createMovieCardTemplate = (film) => {
             <p class="film-card__description">
               ${brief}
             </p>
-            <a class="film-card__comments">${comments.length} comments</a>
+            <a class="film-card__comments">5 comments</a>
             <form class="film-card__controls">
               <button
                 class="film-card__controls-item

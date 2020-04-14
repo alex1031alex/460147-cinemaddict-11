@@ -91,7 +91,6 @@ const generateFilm = () => {
     name,
     poster,
     description,
-    comments: [],
     year,
     duration,
     genres,
