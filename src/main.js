@@ -12,10 +12,12 @@ import {getUserTitle} from './mock/profile.js';
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
 const MOVIE_COUNT_BY_BUTTON = 5;
+const EXTRA_MOVIE_COUNT = 2;
 let movieShowing = INITIAL_MOVIE_COUNT;
-// const EXTRA_MOVIE_COUNT = 2; not ready yet
+
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
+
 const films = generateFilms(TOTAL_MOVIE_COUNT);
 const filmsInitialList = films.slice();
 const filters = generateFilters(films);
@@ -86,6 +88,12 @@ showMoreButton.addEventListener(`click`, () => {
     showMoreButton.remove();
   }
 });
-// const extraMovieListElements = mainElement.querySelectorAll(`.films-list--extra .films-list__container`);
+
+const topRatedMovieListElement = document.querySelector(`.films-list__container--rate`);
+const mostCommentedMovieListElement = document.querySelector(`.films-list__container--comment`);
+const filmsByRating = films.slice().sort((a, b) => b.rating - a.rating);
+const filmsByComment = films.slice().sort((a, b) => b.comments.length - a.comments.length);
+renderList(topRatedMovieListElement, filmsByRating, 0, EXTRA_MOVIE_COUNT);
+renderList(mostCommentedMovieListElement, filmsByComment, 0, EXTRA_MOVIE_COUNT);
 
 // render(mainElement, createMovieDetailsTemplate(films[0]));
