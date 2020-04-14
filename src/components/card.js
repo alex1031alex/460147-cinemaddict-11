@@ -1,7 +1,7 @@
 import {capitalizeWords} from './utils.js';
 
-const createMovieCardTemplate = (film, comments) => {
-  const {name, poster, description, year, duration, genres, rating,
+const createMovieCardTemplate = (film) => {
+  const {name, poster, description, year, duration, genres, rating, comments,
     isAtWhatchlist, isWatched, isFavorites} = film;
   const formattedGenres = capitalizeWords(genres).join(`, `);
   const brief = description.length > 140 ? `${description.substring(0, 141)}...` : description;

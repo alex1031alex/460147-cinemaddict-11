@@ -8,7 +8,6 @@ import {createMovieDetailsTemplate} from './components/details.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
-import {generateComments} from './mock/comment.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const MAIN_MOVIE_COUNT = 5;
@@ -33,10 +32,10 @@ const mainMovieListElement = mainElement.querySelector(`.films-list .films-list_
 films
   .slice(0, MAIN_MOVIE_COUNT)
   .forEach((film) => {
-    render(mainMovieListElement, createMovieCardTemplate(film, generateComments()));
+    render(mainMovieListElement, createMovieCardTemplate(film));
   });
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
 
 // const extraMovieListElements = mainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
-// render(mainElement, createMovieDetailsTemplate(films[0]));
+render(mainElement, createMovieDetailsTemplate(films[0]));
