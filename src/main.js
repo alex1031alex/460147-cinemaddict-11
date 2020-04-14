@@ -32,11 +32,15 @@ render(mainElement, createMovieBoardTemplate());
 
 const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
 
-films
-  .slice(0, INITIAL_MOVIE_COUNT)
-  .forEach((film) => {
-    render(mainMovieListElement, createMovieCardTemplate(film));
-  });
+const renderList = (container, filmList, from = 0, till = INITIAL_MOVIE_COUNT) => {
+  filmList
+    .slice(from, till)
+    .forEach((filmListItem) => {
+      render(container, createMovieCardTemplate(filmListItem));
+    });
+};
+
+renderList(mainMovieListElement, films);
 
 const sortButtons = document.querySelectorAll(`.sort__button`);
 const sortByDateButton = document.querySelector(`.sort__button--date`);
@@ -55,30 +59,18 @@ for (let button of sortButtons) {
 sortByDateButton.addEventListener(`click`, () => {
   films.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
   mainMovieListElement.innerHTML = ``;
-  films
-  .slice(0, movieShowing)
-  .forEach((film) => {
-    render(mainMovieListElement, createMovieCardTemplate(film));
-  });
+  renderList(mainMovieListElement, films, 0, movieShowing);
 });
 
 sortByRatingButton.addEventListener(`click`, () => {
   films.sort((a, b) => b.rating - a.rating);
   mainMovieListElement.innerHTML = ``;
-  films
-  .slice(0, movieShowing)
-  .forEach((film) => {
-    render(mainMovieListElement, createMovieCardTemplate(film));
-  });
+  renderList(mainMovieListElement, films, 0, movieShowing);
 });
 
 sortByDefaultButton.addEventListener(`click`, () => {
   mainMovieListElement.innerHTML = ``;
-  filmsInitialList
-  .slice(0, movieShowing)
-  .forEach((film) => {
-    render(mainMovieListElement, createMovieCardTemplate(film));
-  });
+  renderList(mainMovieListElement, filmsInitialList, 0, movieShowing);
 });
 
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
@@ -87,12 +79,7 @@ const showMoreButton = mainElement.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, () => {
   const prevMovieCount = movieShowing;
   movieShowing += MOVIE_COUNT_BY_BUTTON;
-
-  films
-    .slice(prevMovieCount, movieShowing)
-    .forEach((film) => {
-      render(mainMovieListElement, createMovieCardTemplate(film))
-    });
+  renderList(mainMovieListElement, films, prevMovieCount, movieShowing);
   
   if (movieShowing >= films.length) {
     showMoreButton.remove();
