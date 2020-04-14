@@ -17,6 +17,7 @@ let movieShowing = INITIAL_MOVIE_COUNT;
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 const films = generateFilms(TOTAL_MOVIE_COUNT);
+const filmsInitialList = films.slice();
 const filters = generateFilters(films);
 const watchedFilms = filters.find((it) => it.name === `watchlist`).count;
 
@@ -36,6 +37,50 @@ films
   .forEach((film) => {
     render(mainMovieListElement, createMovieCardTemplate(film));
   });
+
+const sortButtons = document.querySelectorAll(`.sort__button`);
+const sortByDateButton = document.querySelector(`.sort__button--date`);
+const sortByRatingButton = document.querySelector(`.sort__button--rating`);
+const sortByDefaultButton = document.querySelector(`.sort__button--default`);
+
+for (let button of sortButtons) {
+  button.addEventListener(`click`, function () {
+    const activeClass = `sort__button--active`;
+    const activeButton = document.querySelector(`.${activeClass}`);
+    activeButton.classList.remove(activeClass);
+    this.classList.add(activeClass);
+  });
+}
+
+sortByDateButton.addEventListener(`click`, () => {
+  films.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
+  mainMovieListElement.innerHTML = ``;
+  films
+  .slice(0, movieShowing)
+  .forEach((film) => {
+    render(mainMovieListElement, createMovieCardTemplate(film));
+  });
+});
+
+sortByRatingButton.addEventListener(`click`, () => {
+  films.sort((a, b) => b.rating - a.rating);
+  mainMovieListElement.innerHTML = ``;
+  films
+  .slice(0, movieShowing)
+  .forEach((film) => {
+    render(mainMovieListElement, createMovieCardTemplate(film));
+  });
+});
+
+sortByDefaultButton.addEventListener(`click`, () => {
+  mainMovieListElement.innerHTML = ``;
+  filmsInitialList
+  .slice(0, movieShowing)
+  .forEach((film) => {
+    render(mainMovieListElement, createMovieCardTemplate(film));
+  });
+});
+
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
 const showMoreButton = mainElement.querySelector(`.films-list__show-more`);
 
