@@ -10,7 +10,9 @@ import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
 
 const TOTAL_MOVIE_COUNT = 20;
-const MAIN_MOVIE_COUNT = 5;
+const INITIAL_MOVIE_COUNT = 5;
+const MOVIE_COUNT_BY_BUTTON = 5;
+let movieShowing = INITIAL_MOVIE_COUNT;
 // const EXTRA_MOVIE_COUNT = 2; not ready yet
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
@@ -30,12 +32,27 @@ render(mainElement, createMovieBoardTemplate());
 const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
 
 films
-  .slice(0, MAIN_MOVIE_COUNT)
+  .slice(0, INITIAL_MOVIE_COUNT)
   .forEach((film) => {
     render(mainMovieListElement, createMovieCardTemplate(film));
   });
 render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
+const showMoreButton = mainElement.querySelector(`.films-list__show-more`);
 
+showMoreButton.addEventListener(`click`, () => {
+  const prevMovieCount = movieShowing;
+  movieShowing += MOVIE_COUNT_BY_BUTTON;
+
+  films
+    .slice(prevMovieCount, movieShowing)
+    .forEach((film) => {
+      render(mainMovieListElement, createMovieCardTemplate(film))
+    });
+  
+  if (movieShowing >= films.length) {
+    showMoreButton.remove();
+  }
+});
 // const extraMovieListElements = mainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
-render(mainElement, createMovieDetailsTemplate(films[0]));
+// render(mainElement, createMovieDetailsTemplate(films[0]));
