@@ -15,11 +15,11 @@ const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
 let movieShowing = INITIAL_MOVIE_COUNT;
 
-const headerElement = document.querySelector(`.header`);
-const mainElement = document.querySelector(`.main`);
+const header = document.querySelector(`.header`);
+const main = document.querySelector(`.main`);
 
 const films = generateFilms(TOTAL_MOVIE_COUNT);
-const filmsInitialList = films.slice();
+const filmsByInitialOrder = films.slice();
 const filters = generateFilters(films);
 const watchedFilms = filters.find((it) => it.name === `watchlist`).count;
 
@@ -27,12 +27,12 @@ const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-render(headerElement, createUserProfileTemplate(getUserTitle(watchedFilms)));
-render(mainElement, createMenuTemplate(filters));
-render(mainElement, createSortingTemplate());
-render(mainElement, createMovieBoardTemplate());
+render(header, createUserProfileTemplate(getUserTitle(watchedFilms)));
+render(main, createMenuTemplate(filters));
+render(main, createSortingTemplate());
+render(main, createMovieBoardTemplate());
 
-const mainMovieListElement = mainElement.querySelector(`.films-list .films-list__container`);
+const mainMovieContainer = main.querySelector(`.films-list .films-list__container`);
 
 const renderList = (container, films, from = 0, till = INITIAL_MOVIE_COUNT, isClean = false) => {
   if (isClean) {
@@ -45,7 +45,7 @@ const renderList = (container, films, from = 0, till = INITIAL_MOVIE_COUNT, isCl
     });
 };
 
-renderList(mainMovieListElement, films);
+renderList(mainMovieContainer, films);
 
 const sortButtons = document.querySelectorAll(`.sort__button`);
 const sortByDateButton = document.querySelector(`.sort__button--date`);
@@ -63,25 +63,25 @@ for (let button of sortButtons) {
 
 sortByDateButton.addEventListener(`click`, () => {
   films.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
-  renderList(mainMovieListElement, films, 0, movieShowing, true);
+  renderList(mainMovieContainer, films, 0, movieShowing, true);
 });
 
 sortByRatingButton.addEventListener(`click`, () => {
   films.sort((a, b) => b.rating - a.rating);
-  renderList(mainMovieListElement, films, 0, movieShowing, true);
+  renderList(mainMovieContainer, films, 0, movieShowing, true);
 });
 
 sortByDefaultButton.addEventListener(`click`, () => {
-  renderList(mainMovieListElement, filmsInitialList, 0, movieShowing, true);
+  renderList(mainMovieContainer, filmsByInitialOrder, 0, movieShowing, true);
 });
 
-render(mainMovieListElement, createShowMoreButtonTemplate(), `afterend`);
-const showMoreButton = mainElement.querySelector(`.films-list__show-more`);
+render(mainMovieContainer, createShowMoreButtonTemplate(), `afterend`);
+const showMoreButton = main.querySelector(`.films-list__show-more`);
 
 showMoreButton.addEventListener(`click`, () => {
   const prevMovieCount = movieShowing;
   movieShowing += MOVIE_COUNT_BY_BUTTON;
-  renderList(mainMovieListElement, films, prevMovieCount, movieShowing);
+  renderList(mainMovieContainer, films, prevMovieCount, movieShowing);
   
 
   if (movieShowing >= films.length) {
@@ -89,11 +89,11 @@ showMoreButton.addEventListener(`click`, () => {
   }
 });
 
-const topRatedMovieListElement = document.querySelector(`.films-list__container--rate`);
-const mostCommentedMovieListElement = document.querySelector(`.films-list__container--comment`);
+const ratedMovieContainer = document.querySelector(`.films-list__container--rate`);
+const commentMovieContainer = document.querySelector(`.films-list__container--comment`);
 const filmsByRating = films.slice().sort((a, b) => b.rating - a.rating);
 const filmsByComment = films.slice().sort((a, b) => b.comments.length - a.comments.length);
-renderList(topRatedMovieListElement, filmsByRating, 0, EXTRA_MOVIE_COUNT);
-renderList(mostCommentedMovieListElement, filmsByComment, 0, EXTRA_MOVIE_COUNT);
+renderList(ratedMovieContainer, filmsByRating, 0, EXTRA_MOVIE_COUNT);
+renderList(commentMovieContainer, filmsByComment, 0, EXTRA_MOVIE_COUNT);
 
-// render(mainElement, createMovieDetailsTemplate(films[0]));
+// render(main, createMovieDetailsTemplate(films[0]));
