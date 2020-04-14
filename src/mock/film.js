@@ -1,10 +1,4 @@
-const getRandomNumber = (min, max) => {
-  return Math.floor(min + Math.random() * (max - min + 1));
-};
-
-const getRandomArrayItem = (array) => {
-  return array[getRandomNumber(0, array.length - 1)];
-};
+import {getRandomNumber, getRandomArrayItem} from './utils.js';
 
 const filmNames = [
   `Made for Each Other`,
