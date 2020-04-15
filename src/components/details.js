@@ -3,7 +3,7 @@ import {createCommentTemplate} from './comment.js';
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
-    isAtWhatchlist, isWatched, isFavorites} = film;
+    isAtWhatchlist, isWatched, isFavorite} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const formattedGenres = capitalizeWords(genres)
   .map((it) => `<span class="film-details__genre">${it}</span>`)
@@ -108,7 +108,7 @@ const createMovieDetailsTemplate = (film) => {
                     class="film-details__control-input visually-hidden"
                     id="favorite"
                     name="favorite"
-                    ${isFavorites ? `checked` : ``}
+                    ${isFavorite ? `checked` : ``}
                   >
                   <label
                     for="favorite"

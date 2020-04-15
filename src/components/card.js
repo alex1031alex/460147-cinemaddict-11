@@ -12,7 +12,7 @@ const createMovieCardTemplate = (film) => {
     comments,
     isAtWhatchlist,
     isWatched,
-    isFavorites,
+    isFavorite,
   } = film;
 
   const formattedGenres = capitalizeWords(genres).join(`, `);
@@ -52,7 +52,7 @@ const createMovieCardTemplate = (film) => {
                 class="film-card__controls-item
                 button
                 film-card__controls-item--favorite
-                ${isFavorites ? `film-card__controls-item--active` : ``}"
+                ${isFavorite ? `film-card__controls-item--active` : ``}"
               >
                 Mark as favorite
               </button>

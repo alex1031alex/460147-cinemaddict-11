@@ -100,7 +100,7 @@ const generateFilm = () => {
     comments,
     isAtWatchlist: getRandomNumber(0, 3) < 1,
     isWatched: getRandomNumber(0, 3) < 1,
-    isFavorites: getRandomNumber(0, 3) < 1,
+    isFavorite: getRandomNumber(0, 3) < 1,
     details: {
       ageRating: getRandomArrayItem(AGE_RAITINGS),
       originTitle: name,
