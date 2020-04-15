@@ -25,4 +25,6 @@ const capitalizeWords = (words) => words.map((it) => it.replace(/^\w/, it[0].toU
 
 const formatDate = (date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 
-export {capitalizeWords, formatDate, getRandomNumber, getRandomArrayItem};
+const cutText = (text, length) => text.length > length ? `${text.substring(0, length)}...` : text; 
+
+export {capitalizeWords, formatDate, getRandomNumber, getRandomArrayItem, cutText};

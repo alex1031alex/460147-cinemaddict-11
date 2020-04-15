@@ -1,4 +1,4 @@
-import {capitalizeWords} from './utils.js';
+import {capitalizeWords, cutText} from './utils.js';
 
 const createMovieCardTemplate = (film) => {
   const {
@@ -16,7 +16,7 @@ const createMovieCardTemplate = (film) => {
   } = film;
 
   const formattedGenres = capitalizeWords(genres).join(`, `);
-  const brief = description.length > 140 ? `${description.substring(0, 141)}...` : description;
+  const brief = cutText(description, 140);
 
   return `<article class="film-card">
             <h3 class="film-card__title">${name}</h3>
