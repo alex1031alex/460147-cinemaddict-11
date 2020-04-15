@@ -1,19 +1,19 @@
 const generateFilters = (films) => {
   const filters = [
     {
-      name: `all movies`,
+      name: `All movies`,
       count: films.length,
     },
     {
-      name: `watchlist`,
+      name: `Watchlist`,
       count: films.filter((it) => it.isAtWatchlist).length,
     },
     {
-      name: `history`,
+      name: `History`,
       count: films.filter((it) => it.isWatched).length,
     },
     {
-      name: `favorites`,
+      name: `Favorites`,
       count: films.filter((it) => it.isFavorites).length,
     }
   ];
