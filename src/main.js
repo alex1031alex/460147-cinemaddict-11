@@ -100,7 +100,7 @@ renderList(commentMovieContainer, filmsByComment, 0, EXTRA_MOVIE_COUNT);
 
 render(footer, createStatCounterTemplate());
 
-render(main, createMovieDetailsTemplate(films[0]));
+// render(main, createMovieDetailsTemplate(films[0]));
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
 statsButton.addEventListener(`click`, () => {

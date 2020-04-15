@@ -1,12 +1,17 @@
 const getUserTitle = (watchedFilms) => {
-  if (watchedFilms >= 1 && watchedFilms <= 10) {
+  if (watchedFilms === 0) {
+    return ``;
+  } 
+  
+  if (watchedFilms < 11) {
     return `novice`;
-  } else if (watchedFilms >= 11 && watchedFilms <= 20) {
+  } 
+  
+  if (watchedFilms < 21) {
     return `fan`;
-  } else if (watchedFilms >= 21) {
-    return `movie buff`;
   }
-  return ``;
+  
+  return `movie buff`;
 };
 
 export {getUserTitle};
