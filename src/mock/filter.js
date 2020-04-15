@@ -2,7 +2,7 @@ const generateFilters = (films) => {
   const filters = [
     {
       name: `All movies`,
-      count: films.length,
+      count: 0,
     },
     {
       name: `Watchlist`,
