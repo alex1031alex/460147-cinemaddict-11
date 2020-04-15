@@ -24,7 +24,7 @@ const footer = document.querySelector(`.footer__statistics`);
 const films = generateFilms(TOTAL_MOVIE_COUNT);
 const filmsByInitialOrder = films.slice();
 const filters = generateFilters(films);
-const watchedFilms = filters.find((it) => it.name === `watchlist`).count;
+const watchedFilms = filters.find((it) => it.name === `Watchlist`).count;
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
