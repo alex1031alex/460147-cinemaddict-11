@@ -21,11 +21,7 @@ const getRandomArrayItem = (array) => {
   return array[getRandomNumber(0, array.length - 1)];
 };
 
-const capitalizeWords = (words) => {
-  return words.map((it) => {
-    return it.replace(/^\w/, it[0].toUpperCase());
-  });
-};
+const capitalizeWords = (words) => words.map((it) => it.replace(/^\w/, it[0].toUpperCase()));
 
 const formatDate = (date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 
