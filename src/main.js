@@ -9,7 +9,7 @@ import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
 import {createStatCounterTemplate} from './components/stat-counter.js';
-import {createStatTemplate, creatStatTemplate} from './components/stat.js';
+import {creatStatTemplate} from './components/stat.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
@@ -37,14 +37,14 @@ render(main, createMovieBoardTemplate());
 
 const mainMovieContainer = main.querySelector(`.films-list .films-list__container`);
 
-const renderList = (container, films, from = 0, till = INITIAL_MOVIE_COUNT, isClean = false) => {
+const renderList = (container, movieList, from = 0, till = INITIAL_MOVIE_COUNT, isClean = false) => {
   if (isClean) {
     container.innerHTML = ``;
   }
-  films
+  movieList
     .slice(from, till)
-    .forEach((film) => {
-      render(container, createMovieCardTemplate(film));
+    .forEach((movie) => {
+      render(container, createMovieCardTemplate(movie));
     });
 };
 
@@ -56,11 +56,11 @@ const sortByRatingButton = document.querySelector(`.sort__button--rating`);
 const sortByDefaultButton = document.querySelector(`.sort__button--default`);
 
 for (let button of sortButtons) {
-  button.addEventListener(`click`, function () {
+  button.addEventListener(`click`, () => {
     const activeClass = `sort__button--active`;
     const activeButton = document.querySelector(`.${activeClass}`);
     activeButton.classList.remove(activeClass);
-    this.classList.add(activeClass);
+    button.classList.add(activeClass);
   });
 }
 
@@ -85,7 +85,6 @@ showMoreButton.addEventListener(`click`, () => {
   const prevMovieCount = movieShowing;
   movieShowing += MOVIE_COUNT_BY_BUTTON;
   renderList(mainMovieContainer, films, prevMovieCount, movieShowing);
-  
 
   if (movieShowing >= films.length) {
     showMoreButton.remove();
@@ -104,7 +103,7 @@ render(footer, createStatCounterTemplate());
 render(main, createMovieDetailsTemplate(films[0]));
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
-statsButton.addEventListener('click', () => {
+statsButton.addEventListener(`click`, () => {
   const sortingList = document.querySelector(`.sort`);
   const filmsList = document.querySelector(`.films`);
   sortingList.remove();

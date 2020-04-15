@@ -29,7 +29,7 @@ const generateCommentDate = () => {
   const diffValue = getRandomNumber(5, 360);
   targetDate.setDate(targetDate.getDate() - diffValue);
   return targetDate;
-}
+};
 
 const generateComment = () => {
   return {

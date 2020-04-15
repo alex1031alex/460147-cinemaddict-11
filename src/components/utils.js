@@ -27,7 +27,6 @@ const capitalizeWords = (words) => {
   });
 };
 
-const formatDate = (date) => 
-  `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+const formatDate = (date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 
 export {capitalizeWords, formatDate, getRandomNumber, getRandomArrayItem};

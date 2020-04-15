@@ -82,4 +82,4 @@ const creatStatTemplate = () => {
           </section>`;
 };
 
-export { creatStatTemplate };
+export {creatStatTemplate};
