@@ -25,6 +25,16 @@ const capitalizeWords = (words) => words.map((it) => it.replace(/^\w/, it[0].toU
 
 const formatDate = (date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 
+const formatDateTime = (date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const formattedDate = date.getDate() + 1;
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const fullCommentDate = `${year}/${month}/${formattedDate} ${hours}:${minutes}`;
+  return fullCommentDate;
+};
+
 const cutText = (text, length) => text.length > length ? `${text.substring(0, length)}...` : text;
 
-export {capitalizeWords, formatDate, getRandomNumber, getRandomArrayItem, cutText};
+export {capitalizeWords, formatDate, formatDateTime, getRandomNumber, getRandomArrayItem, cutText};

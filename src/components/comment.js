@@ -1,12 +1,8 @@
+import {formatDateTime} from './utils.js';
+
 const createCommentMarkup = (comment) => {
   const {emoji, date, author, message} = comment;
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const formattedDate = date.getDate() + 1;
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-
-  const fullCommentDate = `${year}/${month}/${formattedDate} ${hours}:${minutes}`;
+  const fullCommentDate = formatDateTime(date);
 
   return (
     `<li class="film-details__comment">
