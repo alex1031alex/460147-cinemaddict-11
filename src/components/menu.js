@@ -10,9 +10,9 @@ const createFilterMarkup = (filter, isActive) => {
 };
 
 const createMenuTemplate = (filters) => {
-  const filtersMarkup = filters.map((elem, index) => {
-    return createFilterMarkup(elem, index === 0);
-  }).join(`\n`);
+  const filtersMarkup = filters
+    .map((elem, index) => createFilterMarkup(elem, index === 0))
+    .join(`\n`);
   return (
     `<nav class="main-navigation">
       <div class="main-navigation__items">
