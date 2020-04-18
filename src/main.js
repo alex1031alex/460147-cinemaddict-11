@@ -24,7 +24,7 @@ const footer = document.querySelector(`.footer__statistics`);
 const films = generateFilms(TOTAL_MOVIE_COUNT);
 const filmsByInitialOrder = films.slice();
 const filters = generateFilters(films);
-const watchedFilms = filters.find((it) => it.name === `Watchlist`).count;
+const watchedFilms = films.filter((film) => film.isWatched).length;
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -59,7 +59,7 @@ for (let button of sortButtons) {
   button.addEventListener(`click`, () => {
     const activeClass = `sort__button--active`;
     const activeButton = document.querySelector(`.${activeClass}`);
-    
+
     activeButton.classList.remove(activeClass);
     button.classList.add(activeClass);
   });
