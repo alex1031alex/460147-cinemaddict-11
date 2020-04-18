@@ -35,6 +35,8 @@ const formatDateTime = (date) => {
   return fullCommentDate;
 };
 
+const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
+
 const cutText = (text, length) => text.length > length ? `${text.substring(0, length)}...` : text;
 
-export {capitalizeWords, formatDate, formatDateTime, getRandomNumber, getRandomArrayItem, cutText};
+export {capitalizeWords, formatDate, formatDateTime, formatRating, getRandomNumber, getRandomArrayItem, cutText};

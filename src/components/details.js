@@ -1,4 +1,4 @@
-import {capitalizeWords, formatDate} from './utils.js';
+import {capitalizeWords, formatDate, formatRating} from './utils.js';
 import {createCommentTemplate} from './comment.js';
 
 const createMovieDetailsTemplate = (film) => {
@@ -8,7 +8,7 @@ const createMovieDetailsTemplate = (film) => {
   const formattedGenres = capitalizeWords(genres)
   .map((it) => `<span class="film-details__genre">${it}</span>`)
   .join(`\n`);
-  const formattedRating = rating % 1 === 0 ? `${rating}.0` : rating;
+  const formattedRating = formatRating(rating);
   const writersList = writers.join(`, `);
   const actorsList = actors.join(`, `);
   const formattedReleaseDate = formatDate(releaseDate);
