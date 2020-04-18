@@ -15,7 +15,7 @@ const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
 const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
-let movieShowing = INITIAL_MOVIE_COUNT;
+let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
@@ -30,25 +30,21 @@ const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
+const renderCards = (container, movies) => {
+  movies
+    .forEach((movie) => {
+      render(container, createMovieCardTemplate(movie));
+    });
+};
+
 render(header, createUserProfileTemplate(getUserTitle(watchedFilms)));
 render(main, createMenuTemplate(filters));
 render(main, createSortingTemplate());
 render(main, createMovieBoardTemplate());
 
 const mainMovieContainer = main.querySelector(`.films-list .films-list__container`);
-
-const renderList = (container, movieList, from = 0, till = INITIAL_MOVIE_COUNT, isClean = false) => {
-  if (isClean) {
-    container.innerHTML = ``;
-  }
-  movieList
-    .slice(from, till)
-    .forEach((movie) => {
-      render(container, createMovieCardTemplate(movie));
-    });
-};
-
-renderList(mainMovieContainer, films);
+const mainShowingFilms = films.slice(0, INITIAL_MOVIE_COUNT);
+renderCards(mainMovieContainer, mainShowingFilms);
 
 const sortButtons = document.querySelectorAll(`.sort__button`);
 const sortByDateButton = document.querySelector(`.sort__button--date`);
@@ -66,17 +62,21 @@ for (let button of sortButtons) {
 }
 
 sortByDateButton.addEventListener(`click`, () => {
-  films.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
-  renderList(mainMovieContainer, films, 0, movieShowing, true);
+  const sortedFilms = films.sort((a, b) => b.details.releaseDate - a.details.releaseDate).slice(0, movieShowingCount);
+  mainMovieContainer.innerHTML = ``;
+  renderCards(mainMovieContainer, sortedFilms);
 });
 
 sortByRatingButton.addEventListener(`click`, () => {
-  films.sort((a, b) => b.rating - a.rating);
-  renderList(mainMovieContainer, films, 0, movieShowing, true);
+  const sortedFilms = films.sort((a, b) => b.rating - a.rating).slice(0, movieShowingCount);
+  mainMovieContainer.innerHTML = ``;
+  renderCards(mainMovieContainer, sortedFilms);
 });
 
 sortByDefaultButton.addEventListener(`click`, () => {
-  renderList(mainMovieContainer, filmsByInitialOrder, 0, movieShowing, true);
+  const sortedFilms = filmsByInitialOrder.slice(0, movieShowingCount);
+  mainMovieContainer.innerHTML = ``;
+  renderCards(mainMovieContainer, sortedFilms);
 });
 
 render(mainMovieContainer, createShowMoreButtonTemplate(), `afterend`);
@@ -84,22 +84,27 @@ render(mainMovieContainer, createShowMoreButtonTemplate(), `afterend`);
 const showMoreButton = main.querySelector(`.films-list__show-more`);
 
 showMoreButton.addEventListener(`click`, () => {
-  const prevMovieCount = movieShowing;
-  movieShowing += MOVIE_COUNT_BY_BUTTON;
-  renderList(mainMovieContainer, films, prevMovieCount, movieShowing);
+  const prevMovieCount = movieShowingCount;
+  movieShowingCount += MOVIE_COUNT_BY_BUTTON;
+  const showingFilms = films.slice(prevMovieCount, movieShowingCount);
+  renderCards(mainMovieContainer, showingFilms);
 
-  if (movieShowing >= films.length) {
+  if (movieShowingCount >= films.length) {
     showMoreButton.remove();
   }
 });
 
 const ratedMovieContainer = document.querySelector(`.films-list__container--rate`);
 const commentMovieContainer = document.querySelector(`.films-list__container--comment`);
-const filmsByRating = films.slice().sort((a, b) => b.rating - a.rating);
-const filmsByComment = films.slice().sort((a, b) => b.comments.length - a.comments.length);
+const topRatedShowingFilms = films
+  .sort((a, b) => b.rating - a.rating)
+  .slice(0, EXTRA_MOVIE_COUNT);
+const mostCommentedShowingFilms = films
+  .sort((a, b) => b.comments.length - a.comments.length)
+  .slice(0, EXTRA_MOVIE_COUNT);
 
-renderList(ratedMovieContainer, filmsByRating, 0, EXTRA_MOVIE_COUNT);
-renderList(commentMovieContainer, filmsByComment, 0, EXTRA_MOVIE_COUNT);
+renderCards(ratedMovieContainer, topRatedShowingFilms);
+renderCards(commentMovieContainer, mostCommentedShowingFilms);
 
 render(footer, createStatCounterTemplate(films));
 
