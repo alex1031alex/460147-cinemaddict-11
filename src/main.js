@@ -62,13 +62,17 @@ for (let button of sortButtons) {
 }
 
 sortByDateButton.addEventListener(`click`, () => {
-  const sortedFilms = films.sort((a, b) => b.details.releaseDate - a.details.releaseDate).slice(0, movieShowingCount);
+  const sortedFilms = films
+    .sort((a, b) => b.details.releaseDate - a.details.releaseDate)
+    .slice(0, movieShowingCount);
   mainMovieContainer.innerHTML = ``;
   renderCards(mainMovieContainer, sortedFilms);
 });
 
 sortByRatingButton.addEventListener(`click`, () => {
-  const sortedFilms = films.sort((a, b) => b.rating - a.rating).slice(0, movieShowingCount);
+  const sortedFilms = films
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, movieShowingCount);
   mainMovieContainer.innerHTML = ``;
   renderCards(mainMovieContainer, sortedFilms);
 });
@@ -108,7 +112,7 @@ renderCards(commentMovieContainer, mostCommentedShowingFilms);
 
 render(footer, createStatCounterTemplate(films));
 
-// render(main, createMovieDetailsTemplate(films[0]));
+render(main, createMovieDetailsTemplate(films[0]));
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
 
