@@ -59,6 +59,7 @@ for (let button of sortButtons) {
   button.addEventListener(`click`, () => {
     const activeClass = `sort__button--active`;
     const activeButton = document.querySelector(`.${activeClass}`);
+    
     activeButton.classList.remove(activeClass);
     button.classList.add(activeClass);
   });
@@ -79,6 +80,7 @@ sortByDefaultButton.addEventListener(`click`, () => {
 });
 
 render(mainMovieContainer, createShowMoreButtonTemplate(), `afterend`);
+
 const showMoreButton = main.querySelector(`.films-list__show-more`);
 
 showMoreButton.addEventListener(`click`, () => {
@@ -95,6 +97,7 @@ const ratedMovieContainer = document.querySelector(`.films-list__container--rate
 const commentMovieContainer = document.querySelector(`.films-list__container--comment`);
 const filmsByRating = films.slice().sort((a, b) => b.rating - a.rating);
 const filmsByComment = films.slice().sort((a, b) => b.comments.length - a.comments.length);
+
 renderList(ratedMovieContainer, filmsByRating, 0, EXTRA_MOVIE_COUNT);
 renderList(commentMovieContainer, filmsByComment, 0, EXTRA_MOVIE_COUNT);
 
@@ -103,10 +106,13 @@ render(footer, createStatCounterTemplate());
 // render(main, createMovieDetailsTemplate(films[0]));
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
+
 statsButton.addEventListener(`click`, () => {
   const sortingList = document.querySelector(`.sort`);
   const filmsList = document.querySelector(`.films`);
+
   sortingList.remove();
   filmsList.remove();
+
   render(main, creatStatTemplate());
 });
