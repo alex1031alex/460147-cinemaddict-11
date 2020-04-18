@@ -23,7 +23,7 @@ const createCommentMarkup = (comment) => {
 
 const createCommentTemplate = (comments) => {
   return comments
-    .map((comment) => createCommentMarkup(comment))
+    .map(createCommentMarkup)
     .join(`\n`);
 };
 
