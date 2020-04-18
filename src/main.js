@@ -101,7 +101,7 @@ const filmsByComment = films.slice().sort((a, b) => b.comments.length - a.commen
 renderList(ratedMovieContainer, filmsByRating, 0, EXTRA_MOVIE_COUNT);
 renderList(commentMovieContainer, filmsByComment, 0, EXTRA_MOVIE_COUNT);
 
-render(footer, createStatCounterTemplate());
+render(footer, createStatCounterTemplate(films));
 
 // render(main, createMovieDetailsTemplate(films[0]));
 
