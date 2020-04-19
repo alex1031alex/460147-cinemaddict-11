@@ -36,4 +36,20 @@ const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
 
 const cutText = (text, length) => text.length > length ? `${text.substring(0, length)}...` : text;
 
-export {getRandomNumber, getRandomArrayItem, capitalizeWords, formatDate, formatDateTime, formatRating, cutText};
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export {
+  getRandomNumber,
+  getRandomArrayItem,
+  capitalizeWords,
+  formatDate,
+  formatDateTime,
+  formatRating,
+  cutText,
+  createElement
+};
