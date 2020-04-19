@@ -1,3 +1,5 @@
+import { createElement } from "./utils";
+
 const createMovieBoardTemplate = () => (
   `<section class="films">
     <section class="films-list">
@@ -17,4 +19,25 @@ const createMovieBoardTemplate = () => (
   </section>`
 );
 
-export {createMovieBoardTemplate};
+export default class Board {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMovieBoardTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+} 
+
