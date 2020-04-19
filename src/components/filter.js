@@ -1,3 +1,5 @@
+import {createElement} from './utils.js';
+
 const createFilterTemplate = (filter, isActive) => {
   const {name, count} = filter;
   const activeClass = isActive ? `main-navigation__item--active` : ``;
