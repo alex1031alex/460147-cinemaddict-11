@@ -2,7 +2,7 @@ import {createUserProfileTemplate} from './components/profile.js';
 import {createMenuTemplate} from './components/menu.js';
 import {createSortingTemplate} from './components/sorting.js';
 import {createMovieBoardTemplate} from './components/board.js';
-import {createMovieCardTemplate} from './components/card.js';
+import {createMovieCardTemplate} from './components/film.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createMovieDetailsTemplate} from './components/details.js';
 import {generateFilms} from './mock/film.js';
