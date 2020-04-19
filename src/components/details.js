@@ -17,7 +17,6 @@ const createMovieDetailsTemplate = (film) => {
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
-
   const commentTemplate = createCommentTemplate(comments);
 
   return (

@@ -17,6 +17,7 @@ const generateFilters = (films) => {
       count: films.filter((it) => it.isFavorites).length,
     }
   ];
+
   return filters;
 };
 
