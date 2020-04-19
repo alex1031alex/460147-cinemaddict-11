@@ -4,7 +4,7 @@ import {createSortingTemplate} from './components/sorting.js';
 import {createMovieBoardTemplate} from './components/board.js';
 import {createMovieCardTemplate} from './components/film.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
-import {createMovieDetailsTemplate} from './components/details.js';
+import {createMovieDetailsTemplate} from './components/filmDescription.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';

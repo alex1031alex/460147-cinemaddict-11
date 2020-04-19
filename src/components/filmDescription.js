@@ -1,4 +1,4 @@
-import {capitalizeWords, formatDate, formatRating} from './utils.js';
+import {capitalizeWords, formatDate, formatRating, createElement} from './utils.js';
 import {createCommentTemplate} from './comment.js';
 
 const createMovieDetailsTemplate = (film) => {
@@ -196,4 +196,25 @@ const createMovieDetailsTemplate = (film) => {
   );
 };
 
-export {createMovieDetailsTemplate};
+export default class FilmDescription {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMovieDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = this.getTemplate();
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
