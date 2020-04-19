@@ -1,13 +1,30 @@
-const createMenuTemplate = (filters) => {
+import {createElement} from '/utils.js';
 
-  return (
-    `<nav class="main-navigation">
-      <div class="main-navigation__items">
-        ${filtersMarkup}
-      </div>
-      <a href="#stats" class="main-navigation__additional">Stats</a>
-    </nav>`
-  );
-};
+const createMenuTemplate = () => (
+  `<nav class="main-navigation">
+    <div class="main-navigation__items"></div>
+    <a href="#stats" class="main-navigation__additional">Stats</a>
+  </nav>`
+);
 
-export {createMenuTemplate};
+export default class Menu {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenuTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = this.getTemplate();
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
