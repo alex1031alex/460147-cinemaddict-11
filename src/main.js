@@ -10,6 +10,7 @@ import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
 import {createStatCounterTemplate} from './components/stat-counter.js';
 import {creatStatTemplate} from './components/stat.js';
+import {render} from './components/utils.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
@@ -25,10 +26,6 @@ const films = generateFilms(TOTAL_MOVIE_COUNT);
 const filmsByInitialOrder = films.slice();
 const filters = generateFilters(films);
 const watchedFilms = films.filter((film) => film.isWatched).length;
-
-const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
 
 const renderCards = (container, movies) => {
   movies

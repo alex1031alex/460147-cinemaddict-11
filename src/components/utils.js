@@ -13,6 +13,11 @@ const MONTHS = [
   `Dec`,
 ];
 
+const placeForRender = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`,
+};
+
 const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
 
 const getRandomArrayItem = (array) => array[getRandomNumber(0, array.length - 1)];
@@ -27,8 +32,8 @@ const formatDateTime = (date) => {
   const formattedDate = date.getDate() + 1;
   const hours = date.getHours();
   const minutes = date.getMinutes();
-
   const fullCommentDate = `${year}/${month}/${formattedDate} ${hours}:${minutes}`;
+
   return fullCommentDate;
 };
 
@@ -43,6 +48,17 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
+const render = (container, element, place = `beforeend`) => {
+  switch (place) {
+    case placeForRender.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case placeForRender.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
 export {
   getRandomNumber,
   getRandomArrayItem,
@@ -51,5 +67,6 @@ export {
   formatDateTime,
   formatRating,
   cutText,
-  createElement
+  createElement,
+  render
 };
