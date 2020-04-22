@@ -17,7 +17,7 @@ const createMovieDetailsTemplate = (film) => {
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
-  const commentTemplate = createCommentTemplate(comments);
+  // const commentTemplate = createCommentTemplate(comments);
 
   return (
     `<section class="film-details">
@@ -134,7 +134,7 @@ const createMovieDetailsTemplate = (film) => {
               Comments <span class="film-details__comments-count">${commentsQuantity}</span>
             </h3>
             <ul class="film-details__comments-list">
-              ${commentTemplate}
+
             </ul>
             <div class="film-details__new-comment">
               <div for="add-emoji" class="film-details__add-emoji-label"></div>
