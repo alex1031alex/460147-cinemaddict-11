@@ -21,11 +21,11 @@ const createCommentMarkup = (comment) => {
   );
 };
 
-const createCommentTemplate = (comments) => {
-  return comments
-    .map(createCommentMarkup)
-    .join(`\n`);
-};
+// const createCommentTemplate = (comments) => {
+//   return comments
+//     .map(createCommentMarkup)
+//     .join(`\n`);
+// };
 
 export default class Comment {
   constructor(comment) {
@@ -48,4 +48,4 @@ export default class Comment {
   removeElement() {
     this._element = null;
   }
-};
+}

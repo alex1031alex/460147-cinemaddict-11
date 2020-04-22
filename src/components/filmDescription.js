@@ -1,5 +1,5 @@
 import {capitalizeWords, formatDate, formatRating, createElement} from './utils.js';
-import {createCommentTemplate} from './comment.js';
+// import {createCommentTemplate} from './comment.js';
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,

@@ -1,4 +1,4 @@
-import { createElement } from "./utils";
+import {createElement} from "./utils";
 
 const createMovieBoardTemplate = () => (
   `<section class="films">
@@ -39,5 +39,4 @@ export default class Board {
   removeElement() {
     this._element = null;
   }
-} 
-
+}

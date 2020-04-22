@@ -67,8 +67,8 @@ render(main, new MenuComponent().getElement());
 const filterListElement = document.querySelector(`.main-navigation__items`);
 
 filters.forEach((filter, index) => {
-    render(filterListElement, new FilterComponent(filter, index === 0).getElement());
-  });
+  render(filterListElement, new FilterComponent(filter, index === 0).getElement());
+});
 
 render(main, new SortingComponent().getElement());
 render(main, new BoardComponent().getElement());
@@ -153,5 +153,5 @@ statsButton.addEventListener(`click`, () => {
   sortingList.remove();
   filmsList.remove();
 
-  render(main, creatStatTemplate());
+  render(main, new StatComponent().getElement());
 });
