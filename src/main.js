@@ -28,12 +28,13 @@ const filmsByInitialOrder = films.slice();
 const filters = generateFilters(films);
 const watchedFilms = films.filter((film) => film.isWatched).length;
 
-const renderCard = (movieContainer, movie) => {
+const renderFilmCard = (movieContainer, movie) => {
   const showPopup = () => {};
   const closePopup = () => {};
+
 };
 
-const renderCards = (container, movies) => {
+const renderFilmCards = (container, movies) => {
   movies
     .forEach((movie) => {
       render(container, new FilmComponent(movie).getElement());
@@ -55,7 +56,7 @@ render(main, new BoardComponent().getElement());
 const mainMovieContainer = main.querySelector(`.films-list__container--main`);
 const mainShowingFilms = films.slice(0, INITIAL_MOVIE_COUNT);
 
-renderCards(mainMovieContainer, mainShowingFilms);
+renderFilmCards(mainMovieContainer, mainShowingFilms);
 
 const sortButtons = document.querySelectorAll(`.sort__button`);
 const sortByDateButton = document.querySelector(`.sort__button--date`);
@@ -77,7 +78,7 @@ sortByDateButton.addEventListener(`click`, () => {
     .sort((a, b) => b.details.releaseDate - a.details.releaseDate)
     .slice(0, movieShowingCount);
   mainMovieContainer.innerHTML = ``;
-  renderCards(mainMovieContainer, sortedFilms);
+  renderFilmCards(mainMovieContainer, sortedFilms);
 });
 
 sortByRatingButton.addEventListener(`click`, () => {
@@ -85,13 +86,13 @@ sortByRatingButton.addEventListener(`click`, () => {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, movieShowingCount);
   mainMovieContainer.innerHTML = ``;
-  renderCards(mainMovieContainer, sortedFilms);
+  renderFilmCards(mainMovieContainer, sortedFilms);
 });
 
 sortByDefaultButton.addEventListener(`click`, () => {
   const sortedFilms = filmsByInitialOrder.slice(0, movieShowingCount);
   mainMovieContainer.innerHTML = ``;
-  renderCards(mainMovieContainer, sortedFilms);
+  renderFilmCards(mainMovieContainer, sortedFilms);
 });
 
 render(mainMovieContainer, new ShowMoreButtonComponent().getElement(), `afterend`);
@@ -102,7 +103,7 @@ showMoreButton.addEventListener(`click`, () => {
   const prevMovieCount = movieShowingCount;
   movieShowingCount += MOVIE_COUNT_BY_BUTTON;
   const showingFilms = films.slice(prevMovieCount, movieShowingCount);
-  renderCards(mainMovieContainer, showingFilms);
+  renderFilmCards(mainMovieContainer, showingFilms);
 
   if (movieShowingCount >= films.length) {
     showMoreButton.remove();
@@ -118,8 +119,8 @@ const mostCommentedShowingFilms = films
   .sort((a, b) => b.comments.length - a.comments.length)
   .slice(0, EXTRA_MOVIE_COUNT);
 
-renderCards(ratedMovieContainer, topRatedShowingFilms);
-renderCards(commentMovieContainer, mostCommentedShowingFilms);
+renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
+renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
 
 render(footer, new StatCounterComponent(films).getElement());
 
