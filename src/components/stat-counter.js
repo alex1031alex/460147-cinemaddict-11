@@ -3,7 +3,7 @@ import {createElement} from './utils.js';
 const createStatCounterTemplate = (films) => `<p>${films.length} movies inside</p>`;
 
 export default class StatCounter {
-  constructor() {
+  constructor(films) {
     this._films = films;
     this._element = null;
   }
@@ -13,7 +13,11 @@ export default class StatCounter {
   }
 
   getElement() {
-    createElement(this.getTemplate());
+    if(!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+ 
+    return this._element;
   }
 
   removeElement() {
