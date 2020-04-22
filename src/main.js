@@ -1,5 +1,6 @@
 import ProfileComponent from './components/profile.js';
 import MenuComponent from './components/menu.js';
+import FilterComponent from './components/filter.js';
 import SortingComponent from './components/sorting.js';
 import BoardComponent from './components/board.js';
 import FilmComponent from './components/film.js';
@@ -30,17 +31,25 @@ const watchedFilms = films.filter((film) => film.isWatched).length;
 const renderCards = (container, movies) => {
   movies
     .forEach((movie) => {
-      render(container, createMovieCardTemplate(movie));
+      render(container, new FilmComponent(movie).getElement());
     });
 };
 
-render(header, createUserProfileTemplate(getUserTitle(watchedFilms)));
-render(main, createMenuTemplate(filters));
-render(main, createSortingTemplate());
-render(main, createMovieBoardTemplate());
+render(header, new ProfileComponent(getUserTitle(watchedFilms)).getElement());
+render(main, new MenuComponent().getElement());
 
-const mainMovieContainer = main.querySelector(`.films-list .films-list__container`);
+const filterListElement = document.querySelector(`.main-navigation__items`);
+
+filters.forEach((filter, index) => {
+    render(filterListElement, new FilterComponent(filter, index === 0).getElement());
+  });
+
+render(main, new SortingComponent().getElement());
+render(main, new BoardComponent().getElement());
+
+const mainMovieContainer = main.querySelector(`.films-list__container--main`);
 const mainShowingFilms = films.slice(0, INITIAL_MOVIE_COUNT);
+
 renderCards(mainMovieContainer, mainShowingFilms);
 
 const sortButtons = document.querySelectorAll(`.sort__button`);
@@ -80,7 +89,7 @@ sortByDefaultButton.addEventListener(`click`, () => {
   renderCards(mainMovieContainer, sortedFilms);
 });
 
-render(mainMovieContainer, createShowMoreButtonTemplate(), `afterend`);
+render(mainMovieContainer, new ShowMoreButtonComponent().getElement(), `afterend`);
 
 const showMoreButton = main.querySelector(`.films-list__show-more`);
 
@@ -107,9 +116,7 @@ const mostCommentedShowingFilms = films
 renderCards(ratedMovieContainer, topRatedShowingFilms);
 renderCards(commentMovieContainer, mostCommentedShowingFilms);
 
-render(footer, createStatCounterTemplate(films));
-
-render(main, createMovieDetailsTemplate(films[0]));
+render(footer, new StatCounterComponent(films).getElement());
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
 

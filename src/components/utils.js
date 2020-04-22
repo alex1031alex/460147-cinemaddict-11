@@ -16,6 +16,7 @@ const MONTHS = [
 const placeForRender = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`,
+  AFTEREND: `afterend`,
 };
 
 const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
@@ -56,6 +57,8 @@ const render = (container, element, place = `beforeend`) => {
     case placeForRender.BEFOREEND:
       container.append(element);
       break;
+    case placeForRender.AFTEREND:
+      container.parentElement.append(element);
   }
 };
 
