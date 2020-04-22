@@ -28,7 +28,11 @@ const filmsByInitialOrder = films.slice();
 const filters = generateFilters(films);
 const watchedFilms = films.filter((film) => film.isWatched).length;
 
-const renderCard = () => {};
+const renderCard = (movieContainer, movie) => {
+  const showPopup = () => {};
+  const closePopup = () => {};
+};
+
 const renderCards = (container, movies) => {
   movies
     .forEach((movie) => {
