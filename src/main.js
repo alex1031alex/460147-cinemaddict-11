@@ -29,15 +29,35 @@ const filters = generateFilters(films);
 const watchedFilms = films.filter((film) => film.isWatched).length;
 
 const renderFilmCard = (movieContainer, movie) => {
-  const showPopup = () => {};
-  const closePopup = () => {};
+  const showPopup = () => {
+    movieContainer.appendChild(popupComponent.getElement());
+  };
 
+  const closePopup = () => {
+    movieContainer.removeChild(popupComponent.getElement());
+  };
+
+  const filmCardComponent = new FilmComponent(movie);
+  const flimCardTitle = filmCardComponent.getElement().querySelector(`.film-card__title`);
+  const filmCardPoster = filmCardComponent.getElement().querySelector(`.film-card__poster`);
+  const filmCardComments = filmCardComponent.getElement().querySelector(`.film-card__comments`);
+
+  flimCardTitle.addEventListener(`click`, showPopup);
+  filmCardPoster.addEventListener(`click`, showPopup);
+  filmCardComments.addEventListener(`click`, showPopup);
+
+  const popupComponent = new FilmDescriptionComponent(movie);
+  const popupCloseButton = popupComponent.getElement().querySelector(`.film-details__close-btn`);
+
+  popupCloseButton.addEventListener(`click`, closePopup);
+
+  render(movieContainer, filmCardComponent.getElement());
 };
 
 const renderFilmCards = (container, movies) => {
   movies
     .forEach((movie) => {
-      render(container, new FilmComponent(movie).getElement());
+      renderFilmCard(container, movie);
     });
 };
 
