@@ -13,7 +13,7 @@ const MONTHS = [
   `Dec`,
 ];
 
-const placeForRender = {
+const PlaceForRender = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`,
   AFTEREND: `afterend`,
@@ -51,13 +51,13 @@ const createElement = (template) => {
 
 const render = (container, element, place = `beforeend`) => {
   switch (place) {
-    case placeForRender.AFTERBEGIN:
+    case PlaceForRender.AFTERBEGIN:
       container.prepend(element);
       break;
-    case placeForRender.BEFOREEND:
+    case PlaceForRender.BEFOREEND:
       container.append(element);
       break;
-    case placeForRender.AFTEREND:
+    case PlaceForRender.AFTEREND:
       container.parentElement.append(element);
   }
 };
