@@ -31,6 +31,22 @@ export default class Sorting {
     return this._element;
   }
 
+  getSortButtons() {
+    return this.getElement().querySelectorAll(`.sort__button`);
+  }
+
+  getSortByDateButton() {
+    return this.getElement().querySelector(`.sort__button--date`);
+  }
+
+  getSortByRatingButton() {
+    return this.getElement().querySelector(`.sort__button--rating`);
+  }
+
+  getSortByDefaultButton() {
+    return this.getElement().querySelector(`.sort__button--default`);
+  }
+
   removeElement() {
     this._element = null;
   }

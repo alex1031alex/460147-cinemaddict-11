@@ -70,18 +70,11 @@ filters.forEach((filter, index) => {
   render(filterListElement, new FilterComponent(filter, index === 0).getElement());
 });
 
-render(main, new SortingComponent().getElement());
-render(main, new BoardComponent().getElement());
-
-const mainMovieContainer = main.querySelector(`.films-list__container--main`);
-const mainShowingFilms = films.slice(0, INITIAL_MOVIE_COUNT);
-
-renderFilmCards(mainMovieContainer, mainShowingFilms);
-
-const sortButtons = document.querySelectorAll(`.sort__button`);
-const sortByDateButton = document.querySelector(`.sort__button--date`);
-const sortByRatingButton = document.querySelector(`.sort__button--rating`);
-const sortByDefaultButton = document.querySelector(`.sort__button--default`);
+const sortingComponent = new SortingComponent();
+const sortButtons = sortingComponent.getSortButtons();
+const sortByDateButton = sortingComponent.getSortByDateButton();
+const sortByRatingButton = sortingComponent.getSortByRatingButton();
+const sortByDefaultButton = sortingComponent.getSortByDefaultButton();
 
 for (let button of sortButtons) {
   button.addEventListener(`click`, () => {
@@ -114,6 +107,16 @@ sortByDefaultButton.addEventListener(`click`, () => {
   mainMovieContainer.innerHTML = ``;
   renderFilmCards(mainMovieContainer, sortedFilms);
 });
+
+render(main, sortingComponent.getElement());
+render(main, new BoardComponent().getElement());
+
+const mainMovieContainer = main.querySelector(`.films-list__container--main`);
+const mainShowingFilms = films.slice(0, INITIAL_MOVIE_COUNT);
+
+renderFilmCards(mainMovieContainer, mainShowingFilms);
+
+
 
 render(mainMovieContainer, new ShowMoreButtonComponent().getElement(), `afterend`);
 
