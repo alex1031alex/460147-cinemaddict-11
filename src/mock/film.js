@@ -35,6 +35,7 @@ const posters = [
 ];
 
 const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
+
 const SENTENCE_LIMIT = 5;
 const AGE_RAITINGS = [0, 6, 12, 16, 18];
 
@@ -54,29 +55,36 @@ const generateRandomDesc = (text, limit) => {
   descriptionItems.pop();
   const count = getRandomNumber(1, limit);
   const randomDescItems = [];
+
   for (let i = 0; i < count; i++) {
     randomDescItems
       .push(`${getRandomArrayItem(descriptionItems)}.`);
   }
+
   return randomDescItems.join(` `);
 };
 
 const generateFilmDurationData = () => {
   const hours = getRandomNumber(1, 2);
   const minutes = hours < 2 ? getRandomNumber(30, 60) : getRandomNumber(0, 30);
+
   if (minutes < 10) {
     return `${hours}h 0${minutes}m`;
   }
+
   return `${hours}h ${minutes}m`;
 };
 
 const generateGenres = () => {
   const genresCount = getRandomNumber(1, 3);
   const genresArray = [];
+
   for (let i = 0; i < genresCount; i++) {
     genresArray.push(getRandomArrayItem(genresNames));
   }
+
   const genres = Array.from(new Set(genresArray));
+
   return genres;
 };
 
@@ -89,6 +97,7 @@ const generateFilm = () => {
   const genres = generateGenres();
   const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
   const comments = generateComments();
+
   return {
     name,
     poster,

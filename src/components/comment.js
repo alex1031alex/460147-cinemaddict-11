@@ -1,4 +1,4 @@
-import {formatDateTime} from './utils.js';
+import {formatDateTime, createElement} from './utils.js';
 
 const createCommentMarkup = (comment) => {
   const {emoji, date, author, message} = comment;
@@ -21,10 +21,31 @@ const createCommentMarkup = (comment) => {
   );
 };
 
-const createCommentTemplate = (comments) => {
-  return comments
-    .map(createCommentMarkup)
-    .join(`\n`);
-};
+// const createCommentTemplate = (comments) => {
+//   return comments
+//     .map(createCommentMarkup)
+//     .join(`\n`);
+// };
 
-export {createCommentTemplate};
+export default class Comment {
+  constructor(comment) {
+    this._comment = comment;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCommentMarkup(this._comment);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

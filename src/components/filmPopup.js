@@ -1,5 +1,5 @@
-import {capitalizeWords, formatDate, formatRating} from './utils.js';
-import {createCommentTemplate} from './comment.js';
+import {capitalizeWords, formatDate, formatRating, createElement} from './utils.js';
+// import {createCommentTemplate} from './comment.js';
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
@@ -17,8 +17,7 @@ const createMovieDetailsTemplate = (film) => {
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
-
-  const commentTemplate = createCommentTemplate(comments);
+  // const commentTemplate = createCommentTemplate(comments);
 
   return (
     `<section class="film-details">
@@ -135,7 +134,7 @@ const createMovieDetailsTemplate = (film) => {
               Comments <span class="film-details__comments-count">${commentsQuantity}</span>
             </h3>
             <ul class="film-details__comments-list">
-              ${commentTemplate}
+
             </ul>
             <div class="film-details__new-comment">
               <div for="add-emoji" class="film-details__add-emoji-label"></div>
@@ -197,4 +196,25 @@ const createMovieDetailsTemplate = (film) => {
   );
 };
 
-export {createMovieDetailsTemplate};
+export default class FilmPopup {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMovieDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

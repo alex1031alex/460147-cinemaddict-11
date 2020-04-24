@@ -28,6 +28,7 @@ const generateCommentDate = () => {
   const targetDate = new Date();
   const diffValue = getRandomNumber(5, 360);
   targetDate.setDate(targetDate.getDate() - diffValue);
+
   return targetDate;
 };
 
@@ -46,6 +47,7 @@ const generateComments = () => {
   for (let i = 0; i < count; i++) {
     comments.push(generateComment());
   }
+
   return comments;
 };
 

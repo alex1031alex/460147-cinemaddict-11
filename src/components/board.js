@@ -1,8 +1,10 @@
+import {createElement} from "./utils";
+
 const createMovieBoardTemplate = () => (
   `<section class="films">
     <section class="films-list">
       <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-      <div class="films-list__container"></div>
+      <div class="films-list__container films-list__container--main"></div>
     </section>
 
     <section class="films-list--extra">
@@ -17,4 +19,24 @@ const createMovieBoardTemplate = () => (
   </section>`
 );
 
-export {createMovieBoardTemplate};
+export default class Board {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMovieBoardTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
