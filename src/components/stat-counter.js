@@ -1,6 +1,6 @@
 import {createElement} from './utils.js';
 
-const createStatCounterTemplate = (films) => `<p>${films.length} movies inside</p>`;
+const createStatCounterTemplate = (filmsCount) => `<p>${filmsCount} movies inside</p>`;
 
 export default class StatCounter {
   constructor(films) {

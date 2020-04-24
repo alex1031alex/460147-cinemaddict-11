@@ -142,7 +142,7 @@ const mostCommentedShowingFilms = films
 renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
 renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
 
-render(footer, new StatCounterComponent(films).getElement());
+render(footer, new StatCounterComponent(films.length).getElement());
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
 
