@@ -38,9 +38,9 @@ const renderFilmCard = (movieContainer, movie) => {
   };
 
   const filmCardComponent = new FilmComponent(movie);
-  const flimCardTitle = filmCardComponent.getElement().querySelector(`.film-card__title`);
-  const filmCardPoster = filmCardComponent.getElement().querySelector(`.film-card__poster`);
-  const filmCardComments = filmCardComponent.getElement().querySelector(`.film-card__comments`);
+  const flimCardTitle = filmCardComponent.getTitleElement();
+  const filmCardPoster = filmCardComponent.getPosterElement();
+  const filmCardComments = filmCardComponent.getCommentsElement();
 
   flimCardTitle.addEventListener(`click`, showPopup);
   filmCardPoster.addEventListener(`click`, showPopup);

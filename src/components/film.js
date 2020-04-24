@@ -85,6 +85,18 @@ export default class Film {
     return this._element;
   }
 
+  getTitleElement() {
+    return this.getElement().querySelector(`.film-card__title`);
+  }
+
+  getPosterElement() {
+    return this.getElement().querySelector(`.film-card__poster`);
+  }
+
+  getCommentsElement() {
+    return this.getElement().querySelector(`.film-card__comments`);
+  }
+
   removeElement() {
     this._element = null;
   }
