@@ -196,7 +196,7 @@ const createMovieDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmDescription {
+export default class FilmPopup {
   constructor(film) {
     this._film = film;
     this._element = null;

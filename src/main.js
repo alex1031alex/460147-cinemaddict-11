@@ -5,7 +5,7 @@ import SortingComponent from './components/sorting.js';
 import BoardComponent from './components/board.js';
 import FilmComponent from './components/film.js';
 import ShowMoreButtonComponent from './components/show-more-button.js';
-import FilmDescriptionComponent from './components/filmDescription.js';
+import FilmPopupComponent from './components/filmPopup.js';
 import StatCounterComponent from './components/stat-counter.js';
 import StatComponent from './components/stat.js';
 import {generateFilms} from './mock/film.js';
@@ -46,7 +46,7 @@ const renderFilmCard = (movieContainer, movie) => {
   filmCardPoster.addEventListener(`click`, showPopup);
   filmCardComments.addEventListener(`click`, showPopup);
 
-  const popupComponent = new FilmDescriptionComponent(movie);
+  const popupComponent = new FilmPopupComponent(movie);
   const popupCloseButton = popupComponent.getElement().querySelector(`.film-details__close-btn`);
 
   popupCloseButton.addEventListener(`click`, closePopup);
