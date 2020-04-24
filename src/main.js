@@ -37,6 +37,15 @@ const renderFilmCard = (movieContainer, movie) => {
     movieContainer.removeChild(popupComponent.getElement());
   };
 
+  const onEscKeyDown = (evt) => {
+    const ESC_KEY_CODE = 27;
+  
+    if (evt.keyCode === ESC_KEY_CODE) {
+      closePopup();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
   const filmCardComponent = new FilmComponent(movie);
   const flimCardTitle = filmCardComponent.getTitleElement();
   const filmCardPoster = filmCardComponent.getPosterElement();
@@ -50,6 +59,7 @@ const renderFilmCard = (movieContainer, movie) => {
   const popupCloseButton = popupComponent.getCloseButton();
 
   popupCloseButton.addEventListener(`click`, closePopup);
+  document.addEventListener(`keydown`, onEscKeyDown);
 
   render(movieContainer, filmCardComponent.getElement());
 };
