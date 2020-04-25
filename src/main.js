@@ -71,6 +71,41 @@ const renderFilmCards = (container, movies) => {
     });
 };
 
+const renderBoard = (boardComponent, movies ) => {
+  const mainMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--main`);
+  const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
+  
+  renderFilmCards(mainMovieContainer, mainShowingFilms);
+
+  const showMoreButtonComponent = new ShowMoreButtonComponent();
+  const showMoreButton = showMoreButtonComponent.getElement().querySelector(`.films-list__show-more`);
+
+  render(mainMovieContainer, showMoreButtonComponent.getElement(), `afterend`);
+
+  showMoreButton.addEventListener(`click`, () => {
+    const prevMovieCount = movieShowingCount;
+    movieShowingCount += MOVIE_COUNT_BY_BUTTON;
+    const showingFilms = movies.slice(prevMovieCount, movieShowingCount);
+    renderFilmCards(mainMovieContainer, showingFilms);
+  
+    if (movieShowingCount >= movies.length) {
+      showMoreButton.remove();
+    }
+  });
+  
+  const ratedMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--rate`);
+  const commentMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--comment`);
+  const topRatedShowingFilms = movies
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, EXTRA_MOVIE_COUNT);
+  const mostCommentedShowingFilms = movies
+    .sort((a, b) => b.comments.length - a.comments.length)
+    .slice(0, EXTRA_MOVIE_COUNT);
+  
+  renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
+  renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
+};
+
 render(header, new ProfileComponent(getUserTitle(watchedFilms)).getElement());
 render(main, new MenuComponent().getElement());
 
@@ -119,42 +154,11 @@ sortByDefaultButton.addEventListener(`click`, () => {
 });
 
 render(main, sortingComponent.getElement());
-render(main, new BoardComponent().getElement());
 
-const mainMovieContainer = main.querySelector(`.films-list__container--main`);
-const mainShowingFilms = films.slice(0, INITIAL_MOVIE_COUNT);
+const boardComponent = new BoardComponent();
 
-renderFilmCards(mainMovieContainer, mainShowingFilms);
-
-
-
-render(mainMovieContainer, new ShowMoreButtonComponent().getElement(), `afterend`);
-
-const showMoreButton = main.querySelector(`.films-list__show-more`);
-
-showMoreButton.addEventListener(`click`, () => {
-  const prevMovieCount = movieShowingCount;
-  movieShowingCount += MOVIE_COUNT_BY_BUTTON;
-  const showingFilms = films.slice(prevMovieCount, movieShowingCount);
-  renderFilmCards(mainMovieContainer, showingFilms);
-
-  if (movieShowingCount >= films.length) {
-    showMoreButton.remove();
-  }
-});
-
-const ratedMovieContainer = document.querySelector(`.films-list__container--rate`);
-const commentMovieContainer = document.querySelector(`.films-list__container--comment`);
-const topRatedShowingFilms = films
-  .sort((a, b) => b.rating - a.rating)
-  .slice(0, EXTRA_MOVIE_COUNT);
-const mostCommentedShowingFilms = films
-  .sort((a, b) => b.comments.length - a.comments.length)
-  .slice(0, EXTRA_MOVIE_COUNT);
-
-renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
-renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
-
+render(main, boardComponent.getElement());
+renderBoard(boardComponent, films);
 render(footer, new StatCounterComponent(films.length).getElement());
 
 const statsButton = document.querySelector(`.main-navigation__additional`);
