@@ -78,7 +78,7 @@ const renderBoard = (boardComponent, movies ) => {
   renderFilmCards(mainMovieContainer, mainShowingFilms);
 
   const showMoreButtonComponent = new ShowMoreButtonComponent();
-  const showMoreButton = showMoreButtonComponent.getElement().querySelector(`.films-list__show-more`);
+  const showMoreButton = showMoreButtonComponent.getElement();
 
   render(mainMovieContainer, showMoreButtonComponent.getElement(), `afterend`);
 
@@ -116,47 +116,9 @@ filters.forEach((filter, index) => {
 });
 
 const sortingComponent = new SortingComponent();
-const sortButtons = sortingComponent.getSortButtons();
-const sortByDateButton = sortingComponent.getSortByDateButton();
-const sortByRatingButton = sortingComponent.getSortByRatingButton();
-const sortByDefaultButton = sortingComponent.getSortByDefaultButton();
-
-for (let button of sortButtons) {
-  button.addEventListener(`click`, () => {
-    const activeClass = `sort__button--active`;
-    const activeButton = document.querySelector(`.${activeClass}`);
-
-    activeButton.classList.remove(activeClass);
-    button.classList.add(activeClass);
-  });
-}
-
-sortByDateButton.addEventListener(`click`, () => {
-  const sortedFilms = films
-    .sort((a, b) => b.details.releaseDate - a.details.releaseDate)
-    .slice(0, movieShowingCount);
-  mainMovieContainer.innerHTML = ``;
-  renderFilmCards(mainMovieContainer, sortedFilms);
-});
-
-sortByRatingButton.addEventListener(`click`, () => {
-  const sortedFilms = films
-    .sort((a, b) => b.rating - a.rating)
-    .slice(0, movieShowingCount);
-  mainMovieContainer.innerHTML = ``;
-  renderFilmCards(mainMovieContainer, sortedFilms);
-});
-
-sortByDefaultButton.addEventListener(`click`, () => {
-  const sortedFilms = filmsByInitialOrder.slice(0, movieShowingCount);
-  mainMovieContainer.innerHTML = ``;
-  renderFilmCards(mainMovieContainer, sortedFilms);
-});
-
-render(main, sortingComponent.getElement());
-
 const boardComponent = new BoardComponent();
 
+render(main, sortingComponent.getElement());
 render(main, boardComponent.getElement());
 renderBoard(boardComponent, films);
 render(footer, new StatCounterComponent(films.length).getElement());
