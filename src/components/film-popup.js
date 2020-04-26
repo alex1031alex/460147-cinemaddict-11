@@ -215,7 +215,7 @@ export default class FilmPopup {
   }
 
   getCloseButton() {
-   return this.getElement().querySelector(`.film-details__close-btn`);
+    return this.getElement().querySelector(`.film-details__close-btn`);
   }
 
   removeElement() {

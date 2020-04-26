@@ -20,17 +20,17 @@ const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
 
-/* Элементы страницы */ 
+/* Элементы страницы */
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
 
-/* Данные */ 
+/* Данные */
 const films = generateFilms(TOTAL_MOVIE_COUNT);
 const watchedFilms = films.filter((film) => film.isWatched).length;
 const filters = generateFilters(films);
 
-/* функция отрисовки карточки фильма */ 
+/* функция отрисовки карточки фильма */
 const renderFilmCard = (movieContainer, movie) => {
   const showPopup = () => {
     movieContainer.appendChild(popupComponent.getElement());
@@ -42,7 +42,7 @@ const renderFilmCard = (movieContainer, movie) => {
 
   const onEscKeyDown = (evt) => {
     const ESC_KEY_CODE = 27;
-  
+
     if (evt.keyCode === ESC_KEY_CODE) {
       closePopup();
       document.removeEventListener(`keydown`, onEscKeyDown);
@@ -76,10 +76,10 @@ const renderFilmCards = (container, movies) => {
 };
 
 /* Функция отрисовки доски с основным и дополнительными списками фильмов */
-const renderBoard = (boardComponent, movies ) => {
+const renderBoard = (boardComponent, movies) => {
   const mainMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--main`);
   const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
-  
+
   renderFilmCards(mainMovieContainer, mainShowingFilms);
 
   const showMoreButtonComponent = new ShowMoreButtonComponent();
@@ -92,12 +92,12 @@ const renderBoard = (boardComponent, movies ) => {
     movieShowingCount += MOVIE_COUNT_BY_BUTTON;
     const showingFilms = movies.slice(prevMovieCount, movieShowingCount);
     renderFilmCards(mainMovieContainer, showingFilms);
-  
+
     if (movieShowingCount >= movies.length) {
       showMoreButton.remove();
     }
   });
-  
+
   const ratedMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--rate`);
   const commentMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--comment`);
   const topRatedShowingFilms = movies
@@ -106,7 +106,7 @@ const renderBoard = (boardComponent, movies ) => {
   const mostCommentedShowingFilms = movies
     .sort((a, b) => b.comments.length - a.comments.length)
     .slice(0, EXTRA_MOVIE_COUNT);
-  
+
   renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
   renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
 };
