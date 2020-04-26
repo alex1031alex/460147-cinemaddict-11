@@ -19,15 +19,17 @@ const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
 
+/* Элементы страницы */ 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
 
+/* Данные */ 
 const films = generateFilms(TOTAL_MOVIE_COUNT);
-const filmsByInitialOrder = films.slice();
-const filters = generateFilters(films);
 const watchedFilms = films.filter((film) => film.isWatched).length;
+const filters = generateFilters(films);
 
+/* функция отрисовки карточки фильма */ 
 const renderFilmCard = (movieContainer, movie) => {
   const showPopup = () => {
     movieContainer.appendChild(popupComponent.getElement());
@@ -64,6 +66,7 @@ const renderFilmCard = (movieContainer, movie) => {
   render(movieContainer, filmCardComponent.getElement());
 };
 
+/* Функция отрисовки списка из нескольких фильмов */
 const renderFilmCards = (container, movies) => {
   movies
     .forEach((movie) => {
@@ -71,6 +74,7 @@ const renderFilmCards = (container, movies) => {
     });
 };
 
+/* Функция отрисовки доски с основным и дополнительными списками фильмов */
 const renderBoard = (boardComponent, movies ) => {
   const mainMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--main`);
   const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
@@ -106,23 +110,32 @@ const renderBoard = (boardComponent, movies ) => {
   renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
 };
 
+/* Отрисовка меню и профиля пользователя */
 render(header, new ProfileComponent(getUserTitle(watchedFilms)).getElement());
 render(main, new MenuComponent().getElement());
 
+/* Отрисовка фильтров */
 const filterListElement = document.querySelector(`.main-navigation__items`);
 
 filters.forEach((filter, index) => {
   render(filterListElement, new FilterComponent(filter, index === 0).getElement());
 });
 
+/* Отрисовка сотрировки */
 const sortingComponent = new SortingComponent();
-const boardComponent = new BoardComponent();
 
 render(main, sortingComponent.getElement());
+
+/* Отрисовка доски со списками фильмов */
+const boardComponent = new BoardComponent();
+
 render(main, boardComponent.getElement());
 renderBoard(boardComponent, films);
+
+/* Отрисовка счётчика в подвале страницы */
 render(footer, new StatCounterComponent(films.length).getElement());
 
+/* Установка обработчика на кнопку статистики */
 const statsButton = document.querySelector(`.main-navigation__additional`);
 
 statsButton.addEventListener(`click`, () => {
