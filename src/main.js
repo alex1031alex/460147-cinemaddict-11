@@ -6,6 +6,7 @@ import BoardComponent from './components/board.js';
 import FilmComponent from './components/film.js';
 import ShowMoreButtonComponent from './components/show-more-button.js';
 import FilmPopupComponent from './components/film-popup.js';
+import NoFilmsComponent from './components/no-films.js';
 import StatCounterComponent from './components/stat-counter.js';
 import StatComponent from './components/stat.js';
 import {generateFilms} from './mock/film.js';
@@ -127,10 +128,18 @@ const sortingComponent = new SortingComponent();
 render(main, sortingComponent.getElement());
 
 /* Отрисовка доски со списками фильмов */
-const boardComponent = new BoardComponent();
+const isFilmsInDatabase = !!films.length;
 
-render(main, boardComponent.getElement());
-renderBoard(boardComponent, films);
+if (isFilmsInDatabase) {
+  const boardComponent = new BoardComponent();
+
+  render(main, boardComponent.getElement());
+  renderBoard(boardComponent, films);
+} else {
+  const noFilmsComponent = new NoFilmsComponent();
+
+  render(main, noFilmsComponent.getElement());
+}
 
 /* Отрисовка счётчика в подвале страницы */
 render(footer, new StatCounterComponent(films.length).getElement());
