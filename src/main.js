@@ -18,6 +18,7 @@ const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
 const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
+const ESC_KEY_CODE = 27;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 /* Элементы страницы */
@@ -32,21 +33,20 @@ const filters = generateFilters(films);
 
 /* функция отрисовки карточки фильма */
 const renderFilmCard = (movieContainer, movie) => {
+  const onEscKeyDown = (evt) => {
+    if (evt.keyCode === ESC_KEY_CODE) {
+      closePopup();
+    }
+  };
+  
   const showPopup = () => {
     movieContainer.appendChild(popupComponent.getElement());
+    document.addEventListener(`keydown`, onEscKeyDown);
   };
 
   const closePopup = () => {
     movieContainer.removeChild(popupComponent.getElement());
-  };
-
-  const onEscKeyDown = (evt) => {
-    const ESC_KEY_CODE = 27;
-
-    if (evt.keyCode === ESC_KEY_CODE) {
-      closePopup();
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    }
+    document.removeEventListener(`keydown`, onEscKeyDown);
   };
 
   const filmCardComponent = new FilmComponent(movie);
@@ -59,10 +59,8 @@ const renderFilmCard = (movieContainer, movie) => {
   filmCardComments.addEventListener(`click`, showPopup);
 
   const popupComponent = new FilmPopupComponent(movie);
-  const popupCloseButton = popupComponent.getCloseButton();
-
+  const popupCloseButton = popupComponent.getElement().querySelector(`.film-details__close-btn`);
   popupCloseButton.addEventListener(`click`, closePopup);
-  document.addEventListener(`keydown`, onEscKeyDown);
 
   render(movieContainer, filmCardComponent.getElement());
 };
