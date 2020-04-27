@@ -214,6 +214,10 @@ export default class FilmPopup {
     return this._element;
   }
 
+  getCloseButton() {
+    return this.getElement().querySelector(`.film-details__close-btn`);
+  }
+
   removeElement() {
     this._element = null;
   }
