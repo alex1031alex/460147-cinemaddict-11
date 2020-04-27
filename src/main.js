@@ -126,9 +126,7 @@ const sortingComponent = new SortingComponent();
 render(main, sortingComponent.getElement());
 
 /* Отрисовка доски со списками фильмов */
-const isFilmsInDatabase = !!films.length;
-
-if (isFilmsInDatabase) {
+if (films.length > 0) {
   const boardComponent = new BoardComponent();
 
   render(main, boardComponent.getElement());
