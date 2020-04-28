@@ -9,41 +9,6 @@ const EXTRA_MOVIE_COUNT = 2;
 const INITIAL_MOVIE_COUNT = 5;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
 
-const renderFilmCard = (movieContainer, movie) => {
-  const onEscKeyDown = (evt) => {
-    if (evt.keyCode === ESC_KEY_CODE) {
-      closePopup();
-    }
-  };
-  
-  const showPopup = () => {
-    appendChildElement(movieContainer, popupComponent);
-    document.addEventListener(`keydown`, onEscKeyDown);
-  };
-
-  const closePopup = () => {
-    removeChildElement(movieContainer, popupComponent);
-    document.removeEventListener(`keydown`, onEscKeyDown);
-  };
-
-  const filmCardComponent = new FilmComponent(movie);
-  const popupComponent = new FilmPopupComponent(movie);
-
-  filmCardComponent.setTitleClickHandler(showPopup);
-  filmCardComponent.setPosterClickHandler(showPopup);
-  filmCardComponent.setCommentsClickHandler(showPopup);
-  popupComponent.setCloseButtonClickHandler(closePopup);
-
-  render(movieContainer, filmCardComponent);
-};
-
-const renderFilmCards = (container, movies) => {
-  movies
-    .forEach((movie) => {
-      renderFilmCard(container, movie);
-    });
-};
-
 export default class PageController {
   constructor(container) {
     this._container = container;
@@ -51,6 +16,41 @@ export default class PageController {
     this._commentMovieContainer = container.getCommentMovieContainer();
     this._mainMovieContainer = container.getMainMovieContainer();
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
+  }
+
+  _renderFilmCard(movieContainer, movie) {
+    const filmCardComponent = new FilmComponent(movie);
+    const popupComponent = new FilmPopupComponent(movie);
+
+    const onEscKeyDown = (evt) => {
+      if (evt.keyCode === ESC_KEY_CODE) {
+        closePopup();
+      }
+    };
+    
+    const showPopup = () => {
+      appendChildElement(movieContainer, popupComponent);
+      document.addEventListener(`keydown`, onEscKeyDown);
+    };
+  
+    const closePopup = () => {
+      removeChildElement(movieContainer, popupComponent);
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    };
+    
+    filmCardComponent.setTitleClickHandler(showPopup);
+    filmCardComponent.setPosterClickHandler(showPopup);
+    filmCardComponent.setCommentsClickHandler(showPopup);
+    popupComponent.setCloseButtonClickHandler(closePopup);
+  
+    render(movieContainer, filmCardComponent);
+  }
+
+  _renderFilmCards(movieContainer, movies) {
+    movies
+    .forEach((movie) => {
+      this._renderFilmCard(movieContainer, movie);
+    });
   }
 
   render(movies) {
@@ -62,9 +62,9 @@ export default class PageController {
       .slice(0, EXTRA_MOVIE_COUNT);
     const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
 
-    renderFilmCards(this._ratedMovieContainer, topRatedShowingFilms);
-    renderFilmCards(this._commentMovieContainer, mostCommentedShowingFilms);
-    renderFilmCards(this._mainMovieContainer, mainShowingFilms);
+    this._renderFilmCards(this._ratedMovieContainer, topRatedShowingFilms);
+    this._renderFilmCards(this._commentMovieContainer, mostCommentedShowingFilms);
+    this._renderFilmCards(this._mainMovieContainer, mainShowingFilms);
   
     render(this._mainMovieContainer, this._showMoreButtonComponent, `afterend`);
   
@@ -72,7 +72,7 @@ export default class PageController {
       const prevMovieCount = movieShowingCount;
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = movies.slice(prevMovieCount, movieShowingCount);
-      renderFilmCards(this._mainMovieContainer, showingFilms);
+      this._renderFilmCards(this._mainMovieContainer, showingFilms);
   
       if (movieShowingCount >= movies.length) {
         remove(this._showMoreButtonComponent);
