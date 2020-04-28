@@ -12,7 +12,7 @@ import StatComponent from './components/stat.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
-import {render, remove} from './utils/render.js';
+import {render, remove, appendChildElement, removeChildElement} from './utils/render.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
@@ -40,12 +40,12 @@ const renderFilmCard = (movieContainer, movie) => {
   };
   
   const showPopup = () => {
-    movieContainer.appendChild(popupComponent.getElement());
+    appendChildElement(movieContainer, popupComponent);
     document.addEventListener(`keydown`, onEscKeyDown);
   };
 
   const closePopup = () => {
-    movieContainer.removeChild(popupComponent.getElement());
+    removeChildElement(movieContainer, popupComponent);
     document.removeEventListener(`keydown`, onEscKeyDown);
   };
 
