@@ -3,9 +3,6 @@ import MenuComponent from './components/menu.js';
 import FilterComponent from './components/filter.js';
 import SortingComponent from './components/sorting.js';
 import BoardComponent from './components/board.js';
-import FilmComponent from './components/film.js';
-import ShowMoreButtonComponent from './components/show-more-button.js';
-import FilmPopupComponent from './components/film-popup.js';
 import NoFilmsComponent from './components/no-films.js';
 import StatCounterComponent from './components/stat-counter.js';
 import StatComponent from './components/stat.js';
@@ -16,11 +13,6 @@ import {render, remove, appendChildElement, removeChildElement} from './utils/re
 import PageController from './controllers/page-controller.js';
 
 const TOTAL_MOVIE_COUNT = 20;
-const INITIAL_MOVIE_COUNT = 5;
-const MOVIE_COUNT_BY_BUTTON = 5;
-const EXTRA_MOVIE_COUNT = 2;
-const ESC_KEY_CODE = 27;
-let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 /* Элементы страницы */
 const header = document.querySelector(`.header`);
@@ -57,7 +49,7 @@ if (films.length > 0) {
   render(main, boardComponent);
   const pageController = new PageController(boardComponent);
 
-  pageController.render();
+  pageController.render(films);
 } else {
   const noFilmsComponent = new NoFilmsComponent();
 
