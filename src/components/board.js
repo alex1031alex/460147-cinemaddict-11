@@ -23,4 +23,16 @@ export default class Board extends AbstractComponent {
   getTemplate() {
     return createMovieBoardTemplate();
   }
+
+  getMainMovieContainer() {
+   return this.getElement().querySelector(`.films-list__container--main`);
+  }
+
+  getRatedMovieContainer() {
+    return this.getElement().querySelector(`.films-list__container--rate`);
+  }
+
+  getCommentMovieContainer() {
+    return this.getElement().querySelector(`.films-list__container--comment`);
+  }
 }

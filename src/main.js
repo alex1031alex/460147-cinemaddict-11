@@ -59,7 +59,7 @@ const renderFilmCard = (movieContainer, movie) => {
   filmCardComments.addEventListener(`click`, showPopup);
 
   const popupComponent = new FilmPopupComponent(movie);
-  const popupCloseButton = popupComponent.getElement().querySelector(`.film-details__close-btn`);
+  const popupCloseButton = popupComponent.getCloseButton();
   popupCloseButton.addEventListener(`click`, closePopup);
 
   render(movieContainer, filmCardComponent.getElement());
@@ -75,7 +75,7 @@ const renderFilmCards = (container, movies) => {
 
 /* Функция отрисовки доски с основным и дополнительными списками фильмов */
 const renderBoard = (boardComponent, movies) => {
-  const mainMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--main`);
+  const mainMovieContainer = boardComponent.getMainMovieContainer();
   const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
 
   renderFilmCards(mainMovieContainer, mainShowingFilms);
@@ -96,8 +96,8 @@ const renderBoard = (boardComponent, movies) => {
     }
   });
 
-  const ratedMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--rate`);
-  const commentMovieContainer = boardComponent.getElement().querySelector(`.films-list__container--comment`);
+  const ratedMovieContainer = boardComponent.getRatedMovieContainer();
+  const commentMovieContainer = boardComponent.getCommentMovieContainer();
   const topRatedShowingFilms = movies
     .sort((a, b) => b.rating - a.rating)
     .slice(0, EXTRA_MOVIE_COUNT);
