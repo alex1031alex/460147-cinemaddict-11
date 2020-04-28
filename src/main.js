@@ -62,7 +62,7 @@ const renderFilmCard = (movieContainer, movie) => {
   const popupCloseButton = popupComponent.getCloseButton();
   popupCloseButton.addEventListener(`click`, closePopup);
 
-  render(movieContainer, filmCardComponent.getElement());
+  render(movieContainer, filmCardComponent);
 };
 
 /* Функция отрисовки списка из нескольких фильмов */
@@ -95,7 +95,7 @@ const renderBoard = (boardComponent, movies) => {
   const showMoreButtonComponent = new ShowMoreButtonComponent();
   const showMoreButton = showMoreButtonComponent.getElement();
 
-  render(mainMovieContainer, showMoreButtonComponent.getElement(), `afterend`);
+  render(mainMovieContainer, showMoreButtonComponent, `afterend`);
 
   showMoreButton.addEventListener(`click`, () => {
     const prevMovieCount = movieShowingCount;
@@ -111,35 +111,35 @@ const renderBoard = (boardComponent, movies) => {
 };
 
 /* Отрисовка меню и профиля пользователя */
-render(header, new ProfileComponent(getUserTitle(watchedFilms)).getElement());
-render(main, new MenuComponent().getElement());
+render(header, new ProfileComponent(getUserTitle(watchedFilms)));
+render(main, new MenuComponent());
 
 /* Отрисовка фильтров */
 const filterListElement = document.querySelector(`.main-navigation__items`);
 
 filters.forEach((filter, index) => {
-  render(filterListElement, new FilterComponent(filter, index === 0).getElement());
+  render(filterListElement, new FilterComponent(filter, index === 0));
 });
 
 /* Отрисовка сотрировки */
 const sortingComponent = new SortingComponent();
 
-render(main, sortingComponent.getElement());
+render(main, sortingComponent);
 
 /* Отрисовка доски со списками фильмов */
 if (films.length > 0) {
   const boardComponent = new BoardComponent();
 
-  render(main, boardComponent.getElement());
+  render(main, boardComponent);
   renderBoard(boardComponent, films);
 } else {
   const noFilmsComponent = new NoFilmsComponent();
 
-  render(main, noFilmsComponent.getElement());
+  render(main, noFilmsComponent);
 }
 
 /* Отрисовка счётчика в подвале страницы */
-render(footer, new StatCounterComponent(films.length).getElement());
+render(footer, new StatCounterComponent(films.length));
 
 /* Установка обработчика на кнопку статистики */
 const statsButton = document.querySelector(`.main-navigation__additional`);
@@ -151,5 +151,5 @@ statsButton.addEventListener(`click`, () => {
   sortingList.remove();
   filmsList.remove();
 
-  render(main, new StatComponent().getElement());
+  render(main, new StatComponent());
 });

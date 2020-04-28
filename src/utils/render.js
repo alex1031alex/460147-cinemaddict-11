@@ -4,16 +4,16 @@ const PlaceForRender = {
   AFTEREND: `afterend`,
 };
 
-const render = (container, element, place = `beforeend`) => {
+const render = (container, component, place = `beforeend`) => {
   switch (place) {
     case PlaceForRender.AFTERBEGIN:
-      container.prepend(element);
+      container.prepend(component.getElement());
       break;
     case PlaceForRender.BEFOREEND:
-      container.append(element);
+      container.append(component.getElement());
       break;
     case PlaceForRender.AFTEREND:
-      container.parentElement.append(element);
+      container.parentElement.append(component.getElement());
   }
 };
 
