@@ -12,7 +12,7 @@ import StatComponent from './components/stat.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
-import {render} from './components/utils.js';
+import {render} from './utils/render.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;

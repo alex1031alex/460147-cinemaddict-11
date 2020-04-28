@@ -1,4 +1,4 @@
-import {capitalizeWords, formatDate, formatRating} from './utils.js';
+import {capitalizeWords, formatDate, formatRating} from '../utils/utils.js';
 import AbstractComponent from './abstract-component.js';
 // import {createCommentTemplate} from './comment.js';
 

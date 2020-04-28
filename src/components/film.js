@@ -1,4 +1,4 @@
-import {capitalizeWords, formatRating, cutText} from './utils.js';
+import {capitalizeWords, formatRating, cutText} from '../utils/utils.js';
 import AbstractComponent from './abstract-component.js';
 
 const createMovieCardTemplate = (film) => {

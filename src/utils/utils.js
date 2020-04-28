@@ -13,12 +13,6 @@ const MONTHS = [
   `Dec`,
 ];
 
-const PlaceForRender = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`,
-  AFTEREND: `afterend`,
-};
-
 const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
 
 const getRandomArrayItem = (array) => array[getRandomNumber(0, array.length - 1)];
@@ -42,26 +36,6 @@ const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
 
 const cutText = (text, length) => text.length > length ? `${text.substring(0, length)}...` : text;
 
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
-};
-
-const render = (container, element, place = `beforeend`) => {
-  switch (place) {
-    case PlaceForRender.AFTERBEGIN:
-      container.prepend(element);
-      break;
-    case PlaceForRender.BEFOREEND:
-      container.append(element);
-      break;
-    case PlaceForRender.AFTEREND:
-      container.parentElement.append(element);
-  }
-};
-
 export {
   getRandomNumber,
   getRandomArrayItem,
@@ -69,7 +43,5 @@ export {
   formatDate,
   formatDateTime,
   formatRating,
-  cutText,
-  createElement,
-  render
+  cutText
 };
