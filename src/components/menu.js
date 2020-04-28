@@ -11,4 +11,12 @@ export default class Menu extends AbstractComponent {
   getTemplate() {
     return createMenuTemplate();
   }
+
+  getFilterContainer() {
+    return this.getElement().querySelector(`.main-navigation__items`);
+  }
+
+  setStatsButtonClickHandler(cb) {
+    this.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, cb);
+  }
 }
