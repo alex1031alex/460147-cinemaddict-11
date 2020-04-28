@@ -1,26 +1,14 @@
-import {createElement} from './utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const createStatCounterTemplate = (filmsCount) => `<p>${filmsCount} movies inside</p>`;
 
-export default class StatCounter {
+export default class StatCounter extends AbstractComponent {
   constructor(films) {
+    super();
     this._films = films;
-    this._element = null;
   }
 
   getTemplate() {
     return createStatCounterTemplate(this._films);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

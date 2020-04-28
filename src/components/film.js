@@ -1,4 +1,5 @@
-import {capitalizeWords, formatRating, cutText, createElement} from './utils.js';
+import {capitalizeWords, formatRating, cutText} from './utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const createMovieCardTemplate = (film) => {
   const {
@@ -67,22 +68,14 @@ const createMovieCardTemplate = (film) => {
   );
 };
 
-export default class Film {
+export default class Film extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createMovieCardTemplate(this._film);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
   }
 
   getTitleElement() {
@@ -95,9 +88,5 @@ export default class Film {
 
   getCommentsElement() {
     return this.getElement().querySelector(`.film-card__comments`);
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
