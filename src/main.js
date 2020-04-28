@@ -75,9 +75,21 @@ const renderFilmCards = (container, movies) => {
 
 /* Функция отрисовки доски с основным и дополнительными списками фильмов */
 const renderBoard = (boardComponent, movies) => {
+  const ratedMovieContainer = boardComponent.getRatedMovieContainer();
+  const commentMovieContainer = boardComponent.getCommentMovieContainer();
+  const topRatedShowingFilms = movies
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, EXTRA_MOVIE_COUNT);
+  const mostCommentedShowingFilms = movies
+    .sort((a, b) => b.comments.length - a.comments.length)
+    .slice(0, EXTRA_MOVIE_COUNT);
+
+  renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
+  renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
+
   const mainMovieContainer = boardComponent.getMainMovieContainer();
   const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
-
+  
   renderFilmCards(mainMovieContainer, mainShowingFilms);
 
   const showMoreButtonComponent = new ShowMoreButtonComponent();
@@ -96,17 +108,6 @@ const renderBoard = (boardComponent, movies) => {
     }
   });
 
-  const ratedMovieContainer = boardComponent.getRatedMovieContainer();
-  const commentMovieContainer = boardComponent.getCommentMovieContainer();
-  const topRatedShowingFilms = movies
-    .sort((a, b) => b.rating - a.rating)
-    .slice(0, EXTRA_MOVIE_COUNT);
-  const mostCommentedShowingFilms = movies
-    .sort((a, b) => b.comments.length - a.comments.length)
-    .slice(0, EXTRA_MOVIE_COUNT);
-
-  renderFilmCards(ratedMovieContainer, topRatedShowingFilms);
-  renderFilmCards(commentMovieContainer, mostCommentedShowingFilms);
 };
 
 /* Отрисовка меню и профиля пользователя */
