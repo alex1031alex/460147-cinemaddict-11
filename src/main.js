@@ -12,7 +12,7 @@ import StatComponent from './components/stat.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
-import {render} from './utils/render.js';
+import {render, remove} from './utils/render.js';
 
 const TOTAL_MOVIE_COUNT = 20;
 const INITIAL_MOVIE_COUNT = 5;
@@ -72,7 +72,7 @@ const renderFilmCards = (container, movies) => {
       renderFilmCard(container, movie);
     });
 };
-
+remove
 /* Функция отрисовки доски с основным и дополнительными списками фильмов */
 const renderBoard = (boardComponent, movies) => {
   const ratedMovieContainer = boardComponent.getRatedMovieContainer();
@@ -104,7 +104,7 @@ const renderBoard = (boardComponent, movies) => {
     renderFilmCards(mainMovieContainer, showingFilms);
 
     if (movieShowingCount >= movies.length) {
-      showMoreButton.remove();
+      remove(showMoreButtonComponent);
     }
   });
 

@@ -4,6 +4,13 @@ const PlaceForRender = {
   AFTEREND: `afterend`,
 };
 
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
 const render = (container, component, place = `beforeend`) => {
   switch (place) {
     case PlaceForRender.AFTERBEGIN:
@@ -17,11 +24,9 @@ const render = (container, component, place = `beforeend`) => {
   }
 };
 
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
+const remove = (component) => {
+  component.getElement().remove();
+  component.removeElement();
 };
 
-export {createElement, render};
+export {createElement, render, remove};
