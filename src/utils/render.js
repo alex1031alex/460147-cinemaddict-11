@@ -35,6 +35,6 @@ const appendChildElement = (container, childComponent) => {
 
 const removeChildElement = (container, childComponent) => {
   container.removeChild(childComponent.getElement());
-}; 
+};
 
 export {createElement, render, remove, appendChildElement, removeChildElement};

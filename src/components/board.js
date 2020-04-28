@@ -25,7 +25,7 @@ export default class Board extends AbstractComponent {
   }
 
   getMainMovieContainer() {
-   return this.getElement().querySelector(`.films-list__container--main`);
+    return this.getElement().querySelector(`.films-list__container--main`);
   }
 
   getRatedMovieContainer() {

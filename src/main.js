@@ -5,11 +5,10 @@ import SortingComponent from './components/sorting.js';
 import BoardComponent from './components/board.js';
 import NoFilmsComponent from './components/no-films.js';
 import StatCounterComponent from './components/stat-counter.js';
-import StatComponent from './components/stat.js';
 import {generateFilms} from './mock/film.js';
 import {generateFilters} from './mock/filter.js';
 import {getUserTitle} from './mock/profile.js';
-import {render, remove, appendChildElement, removeChildElement} from './utils/render.js';
+import {render} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
 
 const TOTAL_MOVIE_COUNT = 20;
@@ -45,10 +44,9 @@ render(main, sortingComponent);
 /* Отрисовка доски со списками фильмов */
 if (films.length > 0) {
   const boardComponent = new BoardComponent();
-
-  render(main, boardComponent);
   const pageController = new PageController(boardComponent);
 
+  render(main, boardComponent);
   pageController.render(films);
 } else {
   const noFilmsComponent = new NoFilmsComponent();

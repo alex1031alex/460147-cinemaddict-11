@@ -27,22 +27,22 @@ export default class PageController {
         closePopup();
       }
     };
-    
+
     const showPopup = () => {
       appendChildElement(movieContainer, popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
     };
-  
+
     const closePopup = () => {
       removeChildElement(movieContainer, popupComponent);
       document.removeEventListener(`keydown`, onEscKeyDown);
     };
-    
+
     filmCardComponent.setTitleClickHandler(showPopup);
     filmCardComponent.setPosterClickHandler(showPopup);
     filmCardComponent.setCommentsClickHandler(showPopup);
     popupComponent.setCloseButtonClickHandler(closePopup);
-  
+
     render(movieContainer, filmCardComponent);
   }
 
@@ -65,15 +65,15 @@ export default class PageController {
     this._renderFilmCards(this._ratedMovieContainer, topRatedShowingFilms);
     this._renderFilmCards(this._commentMovieContainer, mostCommentedShowingFilms);
     this._renderFilmCards(this._mainMovieContainer, mainShowingFilms);
-  
+
     render(this._mainMovieContainer, this._showMoreButtonComponent, `afterend`);
-  
+
     this._showMoreButtonComponent.setClickHandler(() => {
       const prevMovieCount = movieShowingCount;
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = movies.slice(prevMovieCount, movieShowingCount);
       this._renderFilmCards(this._mainMovieContainer, showingFilms);
-  
+
       if (movieShowingCount >= movies.length) {
         remove(this._showMoreButtonComponent);
       }
