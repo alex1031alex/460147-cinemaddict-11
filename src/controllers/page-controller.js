@@ -2,7 +2,7 @@ import FilmComponent from './../components/film.js';
 import CommentComponent from './../components/comment.js';
 import ShowMoreButtonComponent from './../components/show-more-button.js';
 import FilmPopupComponent from './../components/film-popup.js';
-import {render, remove, appendChildElement, removeChildElement} from './../utils/render.js';
+import {render, remove, appendChildComponent, removeChildElement} from './../utils/render.js';
 
 const ESC_KEY_CODE = 27;
 const MOVIE_COUNT_BY_BUTTON = 5;
@@ -23,9 +23,8 @@ export default class PageController {
     const comments = popup.getComments();
     const commentsList = popup.getElement().querySelector(`.film-details__comments-list`);
     comments.forEach((comment) => {
-      console.log(new CommentComponent(comment));
       const commentElement = new CommentComponent(comment);
-      appendChildElement(commentsList, commentElement);
+      appendChildComponent(commentsList, commentElement);
     });
   }
 
@@ -35,7 +34,7 @@ export default class PageController {
   
     const showPopup = () => {
       this._renderComments(popupComponent);
-      appendChildElement(movieContainer, popupComponent);
+      appendChildComponent(movieContainer, popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
     };
 

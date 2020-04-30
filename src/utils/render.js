@@ -29,7 +29,7 @@ const remove = (component) => {
   component.removeElement();
 };
 
-const appendChildElement = (container, childComponent) => {
+const appendChildComponent = (container, childComponent) => {
   container.appendChild(childComponent.getElement());
 };
 
@@ -37,4 +37,4 @@ const removeChildElement = (container, childComponent) => {
   container.removeChild(childComponent.getElement());
 };
 
-export {createElement, render, remove, appendChildElement, removeChildElement};
+export {createElement, render, remove, appendChildComponent, removeChildElement};
