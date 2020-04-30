@@ -22,12 +22,6 @@ export default class PageController {
     const filmCardComponent = new FilmComponent(movie);
     const popupComponent = new FilmPopupComponent(movie);
 
-    const onEscKeyDown = (evt) => {
-      if (evt.keyCode === ESC_KEY_CODE) {
-        closePopup();
-      }
-    };
-
     const showPopup = () => {
       appendChildElement(movieContainer, popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
@@ -36,6 +30,12 @@ export default class PageController {
     const closePopup = () => {
       removeChildElement(movieContainer, popupComponent);
       document.removeEventListener(`keydown`, onEscKeyDown);
+    };
+
+    const onEscKeyDown = (evt) => {
+      if (evt.keyCode === ESC_KEY_CODE) {
+        closePopup();
+      }
     };
 
     filmCardComponent.setPopupOpenHandler(showPopup);
