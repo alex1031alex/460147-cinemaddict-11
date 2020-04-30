@@ -37,4 +37,4 @@ const removeChildElement = (container, childComponent) => {
   container.removeChild(childComponent.getElement());
 };
 
-export {createElement, render, remove, appendChildComponent, removeChildElement};
+export {createElement, render, removeComponent, appendChildComponent, removeChildElement};
