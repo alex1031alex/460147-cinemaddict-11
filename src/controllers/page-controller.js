@@ -84,7 +84,7 @@ export default class PageController {
       this._renderFilmCards(this._mainMovieElement, showingFilms);
 
       if (movieShowingCount >= movies.length) {
-        remove(this._showMoreButtonComponent);
+        removeComponent(this._showMoreButtonComponent);
       }
     });
   }

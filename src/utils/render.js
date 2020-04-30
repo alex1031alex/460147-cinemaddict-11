@@ -24,7 +24,7 @@ const render = (container, component, place = `beforeend`) => {
   }
 };
 
-const remove = (component) => {
+const removeComponent = (component) => {
   component.getElement().remove();
   component.removeElement();
 };
