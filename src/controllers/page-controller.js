@@ -12,9 +12,9 @@ let movieShowingCount = INITIAL_MOVIE_COUNT;
 export default class PageController {
   constructor(boardComponent) {
     this._board = boardComponent;
-    this._ratedMovieContainer = boardComponent.getRatedMovieContainer();
-    this._commentMovieContainer = boardComponent.getCommentMovieContainer();
-    this._mainMovieContainer = boardComponent.getMainMovieContainer();
+    this._ratedMovieElement = boardComponent.getRatedMovieElement();
+    this._commentMovieElement = boardComponent.getCommentMovieElement();
+    this._mainMovieElement = boardComponent.getMainMovieElement();
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
@@ -60,17 +60,17 @@ export default class PageController {
       .slice(0, EXTRA_MOVIE_COUNT);
     const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
 
-    this._renderFilmCards(this._ratedMovieContainer, topRatedShowingFilms);
-    this._renderFilmCards(this._commentMovieContainer, mostCommentedShowingFilms);
-    this._renderFilmCards(this._mainMovieContainer, mainShowingFilms);
+    this._renderFilmCards(this._ratedMovieElement, topRatedShowingFilms);
+    this._renderFilmCards(this._commentMovieElement, mostCommentedShowingFilms);
+    this._renderFilmCards(this._mainMovieElement, mainShowingFilms);
 
-    render(this._mainMovieContainer, this._showMoreButtonComponent, `afterend`);
+    render(this._mainMovieElement, this._showMoreButtonComponent, `afterend`);
 
     this._showMoreButtonComponent.setClickHandler(() => {
       const prevMovieCount = movieShowingCount;
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = movies.slice(prevMovieCount, movieShowingCount);
-      this._renderFilmCards(this._mainMovieContainer, showingFilms);
+      this._renderFilmCards(this._mainMovieElement, showingFilms);
 
       if (movieShowingCount >= movies.length) {
         remove(this._showMoreButtonComponent);
