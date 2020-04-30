@@ -2,7 +2,7 @@ import FilmComponent from './../components/film.js';
 import CommentComponent from './../components/comment.js';
 import ShowMoreButtonComponent from './../components/show-more-button.js';
 import FilmPopupComponent from './../components/film-popup.js';
-import {render, remove, appendChildComponent, removeChildElement} from './../utils/render.js';
+import {render, removeComponent, appendChildComponent, removeChildElement} from './../utils/render.js';
 
 const ESC_KEY_CODE = 27;
 const MOVIE_COUNT_BY_BUTTON = 5;
@@ -32,7 +32,7 @@ export default class PageController {
   _renderFilmCard(movieContainer, movie) {
     const filmCardComponent = new FilmComponent(movie);
     const popupComponent = new FilmPopupComponent(movie);
-  
+
     const showPopup = () => {
       this._renderComments(popupComponent);
       appendChildComponent(page, popupComponent);

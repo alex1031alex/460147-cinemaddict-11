@@ -1,6 +1,5 @@
 import {capitalizeWords, formatDate, formatRating} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
-import CommentComponent from './comment.js';
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
@@ -18,7 +17,7 @@ const createMovieDetailsTemplate = (film) => {
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
- 
+
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
