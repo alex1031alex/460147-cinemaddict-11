@@ -10,11 +10,11 @@ const INITIAL_MOVIE_COUNT = 5;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 export default class PageController {
-  constructor(container) {
-    this._container = container;
-    this._ratedMovieContainer = container.getRatedMovieContainer();
-    this._commentMovieContainer = container.getCommentMovieContainer();
-    this._mainMovieContainer = container.getMainMovieContainer();
+  constructor(boardComponent) {
+    this._board = boardComponent;
+    this._ratedMovieContainer = boardComponent.getRatedMovieContainer();
+    this._commentMovieContainer = boardComponent.getCommentMovieContainer();
+    this._mainMovieContainer = boardComponent.getMainMovieContainer();
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
@@ -38,9 +38,7 @@ export default class PageController {
       document.removeEventListener(`keydown`, onEscKeyDown);
     };
 
-    filmCardComponent.setTitleClickHandler(showPopup);
-    filmCardComponent.setPosterClickHandler(showPopup);
-    filmCardComponent.setCommentsClickHandler(showPopup);
+    filmCardComponent.setPopupOpenHandler(showPopup);
     popupComponent.setCloseButtonClickHandler(closePopup);
 
     render(movieContainer, filmCardComponent);
