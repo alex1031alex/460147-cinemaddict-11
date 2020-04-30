@@ -9,6 +9,7 @@ const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
 const INITIAL_MOVIE_COUNT = 5;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
+const page = document.querySelector(`body`);
 
 export default class PageController {
   constructor(boardComponent) {
@@ -34,12 +35,12 @@ export default class PageController {
   
     const showPopup = () => {
       this._renderComments(popupComponent);
-      appendChildComponent(movieContainer, popupComponent);
+      appendChildComponent(page, popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
     };
 
     const closePopup = () => {
-      removeChildElement(movieContainer, popupComponent);
+      removeChildElement(page, popupComponent);
       document.removeEventListener(`keydown`, onEscKeyDown);
     };
 
