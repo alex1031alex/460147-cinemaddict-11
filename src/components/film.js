@@ -78,15 +78,9 @@ export default class Film extends AbstractComponent {
     return createMovieCardTemplate(this._film);
   }
 
-  setTitleClickHandler(cb) {
+  setPopupOpenHandler(cb) {
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, cb);
-  }
-
-  setPosterClickHandler(cb) {
     this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, cb);
-  }
-
-  setCommentsClickHandler(cb) {
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, cb);
   }
 }
