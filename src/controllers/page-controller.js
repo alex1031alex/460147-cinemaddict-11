@@ -1,4 +1,5 @@
 import FilmComponent from './../components/film.js';
+import CommentComponent from './../components/comment.js';
 import ShowMoreButtonComponent from './../components/show-more-button.js';
 import FilmPopupComponent from './../components/film-popup.js';
 import {render, remove, appendChildElement, removeChildElement} from './../utils/render.js';
@@ -18,11 +19,22 @@ export default class PageController {
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
+  _renderComments(popup) {
+    const comments = popup.getComments();
+    const commentsList = popup.getElement().querySelector(`.film-details__comments-list`);
+    comments.forEach((comment) => {
+      console.log(new CommentComponent(comment));
+      const commentElement = new CommentComponent(comment);
+      appendChildElement(commentsList, commentElement);
+    });
+  }
+
   _renderFilmCard(movieContainer, movie) {
     const filmCardComponent = new FilmComponent(movie);
     const popupComponent = new FilmPopupComponent(movie);
-
+  
     const showPopup = () => {
+      this._renderComments(popupComponent);
       appendChildElement(movieContainer, popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
     };
