@@ -1,5 +1,5 @@
-import {capitalizeWords, formatDate, formatRating, createElement} from './utils.js';
-// import {createCommentTemplate} from './comment.js';
+import {capitalizeWords, formatDate, formatRating} from '../utils/common.js';
+import AbstractComponent from './abstract-component.js';
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
@@ -17,7 +17,6 @@ const createMovieDetailsTemplate = (film) => {
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
-  // const commentTemplate = createCommentTemplate(comments);
 
   return (
     `<section class="film-details">
@@ -196,29 +195,21 @@ const createMovieDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmPopup {
+export default class FilmPopup extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createMovieDetailsTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  getComments() {
+    return this._film.comments;
   }
 
-  getCloseButton() {
-    return this.getElement().querySelector(`.film-details__close-btn`);
-  }
-
-  removeElement() {
-    this._element = null;
+  setCloseButtonClickHandler(cb) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, cb);
   }
 }

@@ -1,6 +1,7 @@
-import {formatDateTime, createElement} from './utils.js';
+import {formatDateTime} from './../utils/common.js';
+import AbstractComponent from './abstract-component.js';
 
-const createCommentMarkup = (comment) => {
+const createCommentTemplate = (comment) => {
   const {emoji, date, author, message} = comment;
   const fullCommentDate = formatDateTime(date);
 
@@ -21,31 +22,13 @@ const createCommentMarkup = (comment) => {
   );
 };
 
-// const createCommentTemplate = (comments) => {
-//   return comments
-//     .map(createCommentMarkup)
-//     .join(`\n`);
-// };
-
-export default class Comment {
+export default class Comment extends AbstractComponent {
   constructor(comment) {
+    super();
     this._comment = comment;
-    this._element = null;
   }
 
   getTemplate() {
-    return createCommentMarkup(this._comment);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+    return createCommentTemplate(this._comment);
   }
 }

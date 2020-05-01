@@ -1,4 +1,5 @@
-import {capitalizeWords, formatRating, cutText, createElement} from './utils.js';
+import {capitalizeWords, formatRating, cutText} from '../utils/common.js';
+import AbstractComponent from './abstract-component.js';
 
 const createMovieCardTemplate = (film) => {
   const {
@@ -67,37 +68,19 @@ const createMovieCardTemplate = (film) => {
   );
 };
 
-export default class Film {
+export default class Film extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createMovieCardTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  getTitleElement() {
-    return this.getElement().querySelector(`.film-card__title`);
-  }
-
-  getPosterElement() {
-    return this.getElement().querySelector(`.film-card__poster`);
-  }
-
-  getCommentsElement() {
-    return this.getElement().querySelector(`.film-card__comments`);
-  }
-
-  removeElement() {
-    this._element = null;
+  setPopupOpenHandler(cb) {
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, cb);
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, cb);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, cb);
   }
 }

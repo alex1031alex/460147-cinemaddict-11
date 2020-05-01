@@ -1,4 +1,4 @@
-import {createElement} from './utils.js';
+import AbstractComponent from './abstract-component.js';
 
 const createUserProfileTemplate = (userTitle) => (
   `<section class="header__profile profile">
@@ -12,25 +12,13 @@ const createUserProfileTemplate = (userTitle) => (
   </section>`
 );
 
-export default class Profile {
+export default class Profile extends AbstractComponent {
   constructor(userTitle) {
+    super();
     this._userTitle = userTitle;
-    this._element = null;
   }
 
   getTemplate() {
     return createUserProfileTemplate(this._userTitle);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
