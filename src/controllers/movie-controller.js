@@ -7,9 +7,9 @@ const ESC_KEY_CODE = 27;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
-  constructor(container, onDateChange) {
+  constructor(container, onDataChange) {
     this._container = container;
-    this._onDateChange = onDateChange;
+    this._onDataChange = onDataChange;
   }
 
   _renderComments(popup) {
@@ -43,27 +43,38 @@ export default class MovieController {
     };
 
     const watchlistButtonClickHandler = () => {
-      this._onDateChange(this, film, Object.assign({}, film, {
-        isAtWhatchlist: !film.isAtWhatchlist,
+      this._onDataChange(this, film, Object.assign({}, film, {
+        isAtWatchlist: !film.isAtWatchlist,
       }));
     };
 
     const watchedButtonClickHandler = () => {
-      this._onDateChange(this, film, Object.assign({}, film, {
+      this._onDataChange(this, film, Object.assign({}, film, {
         isWhatched: !film.isWhatched,
       }));
     };
 
     const favoriteButtonClickHandler = () => {
-      this._onDateChange(this, film, Object.assign({}, film, {
+      this._onDataChange(this, film, Object.assign({}, film, {
         isFavorite: !film.isFavorite,
       }));
     };
 
     filmCardComponent.setPopupOpenHandler(showPopup);
-    filmCardComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
-    filmCardComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
-    filmCardComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
+    filmCardComponent.setWatchlistButtonClickHandler((evt) => {
+      evt.preventDefault();
+      watchlistButtonClickHandler();
+    });
+
+    filmCardComponent.setWatchedButtonClickHandler((evt) => {
+      evt.preventDefault();
+      watchedButtonClickHandler();
+    });
+
+    filmCardComponent.setFavoriteButtonClickHandler((evt) => {
+      evt.preventDefault();
+      favoriteButtonClickHandler();
+    });
 
     popupComponent.setCloseButtonClickHandler(closePopup);
     popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
