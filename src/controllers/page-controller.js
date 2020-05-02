@@ -1,15 +1,11 @@
-import FilmComponent from './../components/film.js';
-import CommentComponent from './../components/comment.js';
 import ShowMoreButtonComponent from './../components/show-more-button.js';
-import FilmPopupComponent from './../components/film-popup.js';
-import {render, removeComponent, appendChildComponent, removeChildElement} from './../utils/render.js';
+import {render, removeComponent} from './../utils/render.js';
+import MovieController from './movie-controller.js';
 
-const ESC_KEY_CODE = 27;
 const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
 const INITIAL_MOVIE_COUNT = 5;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
-const page = document.querySelector(`body`);
 
 export default class PageController {
   constructor(boardComponent) {
@@ -20,46 +16,11 @@ export default class PageController {
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
-  _renderComments(popup) {
-    const comments = popup.getComments();
-    const commentsList = popup.getCommentsList();
-    comments.forEach((comment) => {
-      const commentElement = new CommentComponent(comment);
-      appendChildComponent(commentsList, commentElement);
-    });
-  }
-
-  _renderFilmCard(movieContainer, movie) {
-    const filmCardComponent = new FilmComponent(movie);
-    const popupComponent = new FilmPopupComponent(movie);
-
-    const showPopup = () => {
-      this._renderComments(popupComponent);
-      appendChildComponent(page, popupComponent);
-      document.addEventListener(`keydown`, onEscKeyDown);
-    };
-
-    const closePopup = () => {
-      removeChildElement(page, popupComponent);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    };
-
-    const onEscKeyDown = (evt) => {
-      if (evt.keyCode === ESC_KEY_CODE) {
-        closePopup();
-      }
-    };
-
-    filmCardComponent.setPopupOpenHandler(showPopup);
-    popupComponent.setCloseButtonClickHandler(closePopup);
-
-    render(movieContainer, filmCardComponent);
-  }
-
   _renderFilmCards(movieContainer, movies) {
     movies
     .forEach((movie) => {
-      this._renderFilmCard(movieContainer, movie);
+      const movieController = new MovieController(movieContainer);
+      movieController.render(movie);
     });
   }
 
