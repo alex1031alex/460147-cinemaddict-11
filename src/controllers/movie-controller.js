@@ -7,8 +7,9 @@ const ESC_KEY_CODE = 27;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
-  constructor(container) {
+  constructor(container, onDateChange) {
     this._container = container;
+    this._onDateChange = onDateChange;
   }
 
   _renderComments(popup) {
@@ -42,7 +43,26 @@ export default class MovieController {
     };
 
     filmCardComponent.setPopupOpenHandler(showPopup);
+    filmCardComponent.setWatchlistButtonClickHandler(() => {
+
+    });
+    filmCardComponent.setWatchedButtonClickHandler(() => {
+      
+    });
+    filmCardComponent.setFavoriteButtonClickHandler(() => {
+      
+    });
+
     popupComponent.setCloseButtonClickHandler(closePopup);
+    popupComponent.setWatchlistButtonClickHandler(() => {
+
+    });
+    popupComponent.setWatchedButtonClickHandler(() => {
+      
+    });
+    popupComponent.setFavoriteButtonClickHandler(() => {
+      
+    });
 
     render(this._container, filmCardComponent);
   }
