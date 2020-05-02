@@ -11,7 +11,7 @@ const createMovieCardTemplate = (film) => {
     genres,
     rating,
     comments,
-    isAtWhatchlist,
+    isAtWatchlist,
     isWatched,
     isFavorite,
   } = film;
@@ -20,7 +20,7 @@ const createMovieCardTemplate = (film) => {
   const formattedRating = formatRating(rating);
   const brief = cutText(description, 140);
   const commentOrComments = comments.length === 1 ? `comment` : `comments`;
-  const watchlistActiveClass = isAtWhatchlist ? `film-card__controls-item--active` : ``;
+  const watchlistActiveClass = isAtWatchlist ? `film-card__controls-item--active` : ``;
   const historyActiveClass = isWatched ? `film-card__controls-item--active` : ``;
   const favoriteActiveClass = isFavorite ? `film-card__controls-item--active` : ``;
 

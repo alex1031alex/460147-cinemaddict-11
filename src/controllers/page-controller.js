@@ -17,10 +17,22 @@ export default class PageController {
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
+  _onDataChange(movieController, oldData, newData) { 
+    const index = this._movies.findIndex((it) => it === oldData);
+
+    if (index === -1) {
+      return;
+    }
+
+    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
+
+    movieController.render(this._movies[index]);
+  }
+
   _renderFilmCards(movieContainer, movies) {
     movies
     .forEach((movie) => {
-      const movieController = new MovieController(movieContainer);
+      const movieController = new MovieController(movieContainer, this._onDataChange.bind(this));
       movieController.render(movie);
     });
   }
@@ -42,18 +54,6 @@ export default class PageController {
         removeComponent(this._showMoreButtonComponent);
       }
     });
-  }
-
-  _onDataChange(movieController, oldData, newData) {
-    const index = this._movies.findIndex((it) => it === oldData);
-
-    if (index === -1) {
-      return;
-    }
-
-    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
-
-    movieController.render(this._movies[index]);
   }
 
   render(movies) {
