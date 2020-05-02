@@ -42,27 +42,33 @@ export default class MovieController {
       }
     };
 
-    filmCardComponent.setPopupOpenHandler(showPopup);
-    filmCardComponent.setWatchlistButtonClickHandler(() => {
+    const watchlistButtonClickHandler = () => {
+      this._onDateChange(this, film, Object.assign({}, film, {
+        isAtWhatchlist: !film.isAtWhatchlist,
+      }));
+    };
 
-    });
-    filmCardComponent.setWatchedButtonClickHandler(() => {
-      
-    });
-    filmCardComponent.setFavoriteButtonClickHandler(() => {
-      
-    });
+    const watchedButtonClickHandler = () => {
+      this._onDateChange(this, film, Object.assign({}, film, {
+        isWhatched: !film.isWhatched,
+      }));
+    };
+
+    const favoriteButtonClickHandler = () => {
+      this._onDateChange(this, film, Object.assign({}, film, {
+        isFavorite: !film.isFavorite,
+      }));
+    };
+
+    filmCardComponent.setPopupOpenHandler(showPopup);
+    filmCardComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
+    filmCardComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
+    filmCardComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
 
     popupComponent.setCloseButtonClickHandler(closePopup);
-    popupComponent.setWatchlistButtonClickHandler(() => {
-
-    });
-    popupComponent.setWatchedButtonClickHandler(() => {
-      
-    });
-    popupComponent.setFavoriteButtonClickHandler(() => {
-      
-    });
+    popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
+    popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
+    popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
 
     render(this._container, filmCardComponent);
   }

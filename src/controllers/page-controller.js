@@ -44,6 +44,18 @@ export default class PageController {
     });
   }
 
+  _onDataChange(movieController, oldData, newData) {
+    const index = this._movies.findIndex((it) => it === oldData);
+
+    if (index === -1) {
+      return;
+    }
+
+    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
+
+    movieController.render(this._movies[index]);
+  }
+
   render(movies) {
     this._movies = movies;
     const topRatedShowingFilms = this._movies
