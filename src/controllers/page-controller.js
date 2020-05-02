@@ -22,7 +22,7 @@ export default class PageController {
 
   _renderComments(popup) {
     const comments = popup.getComments();
-    const commentsList = popup.getElement().querySelector(`.film-details__comments-list`);
+    const commentsList = popup.getCommentsList();
     comments.forEach((comment) => {
       const commentElement = new CommentComponent(comment);
       appendChildComponent(commentsList, commentElement);

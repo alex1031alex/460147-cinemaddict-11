@@ -209,6 +209,10 @@ export default class FilmPopup extends AbstractComponent {
     return this._film.comments;
   }
 
+  getCommentsList() {
+    return this.getElement().querySelector(`.film-details__comments-list`);
+  }
+
   setCloseButtonClickHandler(cb) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, cb);
   }
