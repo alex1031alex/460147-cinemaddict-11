@@ -85,17 +85,17 @@ export default class Film extends AbstractComponent {
   }
 
   setWatchlistButtonClickHandler(handler) {
-    const button = this._getElement().querySelector(`.film-card__controls-item--add-to-watchlist`);
+    const button = this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`);
     button.addEventListener(`click`, handler);
   }
 
   setWatchedButtonClickHandler(handler) {
-    const button = this._getElement().querySelector(`.film-card__controls-item--mark-as-watched`);
+    const button = this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`);
     button.addEventListener(`click`, handler);
   }
 
   setFavoriteButtonClickHandler(handler) {
-    const button = this._getElement().querySelector(`.film-card__controls-item--favorite`);
+    const button = this.getElement().querySelector(`.film-card__controls-item--favorite`);
     button.addEventListener(`click`, handler);
   }
 }
