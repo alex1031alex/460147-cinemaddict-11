@@ -1,7 +1,7 @@
 import FilmComponent from './../components/film.js';
 import CommentComponent from './../components/comment.js';
 import FilmPopupComponent from './../components/film-popup.js';
-import {render, appendChildComponent, removeChildElement} from './../utils/render.js';
+import {render, appendChildComponent, removeChildElement, replaceComponent} from './../utils/render.js';
 
 const ESC_KEY_CODE = 27;
 const page = document.querySelector(`body`);
@@ -55,7 +55,7 @@ export default class MovieController {
 
     const watchedButtonClickHandler = () => {
       this._onDataChange(this, film, Object.assign({}, film, {
-        isWhatched: !film.isWhatched,
+        isWatched: !film.isWatched,
       }));
     };
 
@@ -86,6 +86,11 @@ export default class MovieController {
     this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
 
-    render(this._container, this._filmCardComponent);
+    if (oldFilmCardComponent && oldPopupComponent) {
+      replaceComponent(this._filmCardComponent, oldFilmCardComponent);
+      replaceComponent(this._popupComponent, oldPopupComponent)
+    } else {
+      render(this._container, this._filmCardComponent);
+    }   
   }
 }
