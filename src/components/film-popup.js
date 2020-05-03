@@ -1,5 +1,5 @@
 import {capitalizeWords, formatDate, formatRating} from '../utils/common.js';
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
@@ -195,7 +195,7 @@ const createMovieDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmPopup extends AbstractComponent {
+export default class FilmPopup extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
