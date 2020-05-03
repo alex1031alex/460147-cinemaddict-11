@@ -10,6 +10,8 @@ export default class MovieController {
   constructor(container, onDataChange) {
     this._container = container;
     this._onDataChange = onDataChange;
+    this._filmCardComponent = null;
+    this._popupComponent = null;
   }
 
   _renderComments(popup) {
@@ -22,17 +24,20 @@ export default class MovieController {
   }
 
   render(film) {
-    const filmCardComponent = new FilmComponent(film);
-    const popupComponent = new FilmPopupComponent(film);
+    const oldFilmCardComponent = this._filmCardComponent;
+    const oldPopupComponent = this._popupComponent;
+
+    this._filmCardComponent = new FilmComponent(film);
+    this._popupComponent = new FilmPopupComponent(film);
 
     const showPopup = () => {
-      this._renderComments(popupComponent);
-      appendChildComponent(page, popupComponent);
+      this._renderComments(this._popupComponent);
+      appendChildComponent(page, this._popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
     };
 
     const closePopup = () => {
-      removeChildElement(page, popupComponent);
+      removeChildElement(page, this._popupComponent);
       document.removeEventListener(`keydown`, onEscKeyDown);
     };
 
@@ -60,27 +65,27 @@ export default class MovieController {
       }));
     };
 
-    filmCardComponent.setPopupOpenHandler(showPopup);
-    filmCardComponent.setWatchlistButtonClickHandler((evt) => {
+    this._filmCardComponent.setPopupOpenHandler(showPopup);
+    this._filmCardComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
       watchlistButtonClickHandler();
     });
 
-    filmCardComponent.setWatchedButtonClickHandler((evt) => {
+    this._filmCardComponent.setWatchedButtonClickHandler((evt) => {
       evt.preventDefault();
       watchedButtonClickHandler();
     });
 
-    filmCardComponent.setFavoriteButtonClickHandler((evt) => {
+    this._filmCardComponent.setFavoriteButtonClickHandler((evt) => {
       evt.preventDefault();
       favoriteButtonClickHandler();
     });
 
-    popupComponent.setCloseButtonClickHandler(closePopup);
-    popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
-    popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
-    popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
+    this._popupComponent.setCloseButtonClickHandler(closePopup);
+    this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
+    this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
+    this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
 
-    render(this._container, filmCardComponent);
+    render(this._container, this._filmCardComponent);
   }
 }
