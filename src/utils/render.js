@@ -41,9 +41,7 @@ const removeChildElement = (container, childComponent) => {
 
 const replaceComponent = (newComponent, oldComponent) => {
   const parentElement = oldComponent.getElement().parentElement;
-  console.log(parentElement);
   const newElement = newComponent.getElement();
-  console.log(newElement, oldElement);
   const oldElement = oldComponent.getElement();
 
   const isExistElements = !!(parentElement && newElement && oldElement);

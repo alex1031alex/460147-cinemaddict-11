@@ -31,7 +31,6 @@ export default class MovieController {
   _onEscKeyDown(evt) {
     if (evt.keyCode === ESC_KEY_CODE) {
       this._closePopup();
-      console.log(`work`);
     }
   }
 

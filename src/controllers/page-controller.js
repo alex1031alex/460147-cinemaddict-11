@@ -31,19 +31,19 @@ export default class PageController {
   }
 
   _onViewChange() {
-    this._showedMovieControllers.forEach((it) => {it.setDefaultView()});
+    this._showedMovieControllers.forEach((it) => it.setDefaultView());
   }
 
   _renderFilmCards(movieContainer, movies, onDataChange, onViewChange) {
     return movies
     .map((movie) => {
       const movieController = new MovieController(
-        movieContainer, 
-        onDataChange, 
-        onViewChange
+          movieContainer,
+          onDataChange,
+          onViewChange
       );
       movieController.render(movie);
- 
+
       return movieController;
     });
   }
@@ -60,10 +60,10 @@ export default class PageController {
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = this._movies.slice(prevMovieCount, movieShowingCount);
       this._showedMovieControllers = this._renderFilmCards(
-        this._mainMovieElement, 
-        showingFilms, 
-        this._onDataChange.bind(this), 
-        this._onViewChange.bind(this)
+          this._mainMovieElement,
+          showingFilms,
+          this._onDataChange.bind(this),
+          this._onViewChange.bind(this)
       );
 
       if (movieShowingCount >= this._movies.length) {
@@ -83,22 +83,22 @@ export default class PageController {
     const mainShowingFilms = this._movies.slice(0, INITIAL_MOVIE_COUNT);
 
     this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
-      this._ratedMovieElement, 
-      topRatedShowingFilms, 
-      this._onDataChange.bind(this), 
-      this._onViewChange.bind(this)
+        this._ratedMovieElement,
+        topRatedShowingFilms,
+        this._onDataChange.bind(this),
+        this._onViewChange.bind(this)
     ));
     this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
-      this._commentMovieElement, 
-      mostCommentedShowingFilms,
-      this._onDataChange.bind(this),
-      this._onViewChange.bind(this)
+        this._commentMovieElement,
+        mostCommentedShowingFilms,
+        this._onDataChange.bind(this),
+        this._onViewChange.bind(this)
     ));
     this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
-      this._mainMovieElement, 
-      mainShowingFilms, 
-      this._onDataChange.bind(this), 
-      this._onViewChange.bind(this)
+        this._mainMovieElement,
+        mainShowingFilms,
+        this._onDataChange.bind(this),
+        this._onViewChange.bind(this)
     ));
     this._renderShowMoreButton();
   }
