@@ -4,6 +4,8 @@ import FilmPopupComponent from './../components/film-popup.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent} from './../utils/render.js';
 
 const ESC_KEY_CODE = 27;
+const EMOJI_WIDTH = 55;
+const EMOJI_HEIGHT = 55;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
@@ -65,6 +67,23 @@ export default class MovieController {
       }));
     };
 
+    const emojiClickHandler = (evt) => {
+      const emojiContainer = this._popupComponent.getEmojiContainer();
+      const emojiElement = this._popupComponent
+        .getElement()
+        .querySelector(`[for="${evt.target.id}"] img`)
+        .cloneNode(true);
+
+      emojiElement.width = EMOJI_WIDTH;
+      emojiElement.height = EMOJI_HEIGHT;
+
+      if (emojiContainer.innerHTML !== ``) {
+        emojiContainer.innerHTML = ``;
+      }
+
+      emojiContainer.appendChild(emojiElement);
+    };
+
     this._filmCardComponent.setPopupOpenHandler(showPopup);
     this._filmCardComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
@@ -85,6 +104,7 @@ export default class MovieController {
     this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
     this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
+    this._popupComponent.setEmojiClickHandler(emojiClickHandler);
 
     if (oldFilmCardComponent && oldPopupComponent) {
       replaceComponent(this._filmCardComponent, oldFilmCardComponent);

@@ -217,6 +217,10 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__comments-list`);
   }
 
+  getEmojiContainer() {
+    return this.getElement().querySelector(`.film-details__add-emoji-label`);
+  }
+
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
     this._closeButtonClickHandler = handler;
@@ -238,6 +242,13 @@ export default class FilmPopup extends AbstractSmartComponent {
     const button = this.getElement().querySelector(`#favorite`);
     button.addEventListener(`click`, handler);
     this._favoriteButtonClickHandler = handler;
+  }
+
+  setEmojiClickHandler(handler) {
+    const emojis = this.getElement().querySelectorAll(`.film-details__emoji-item`);
+    emojis.forEach((it) => {
+      it.addEventListener(`change`, handler);
+    });
   }
 
   recoveryListeners() {
