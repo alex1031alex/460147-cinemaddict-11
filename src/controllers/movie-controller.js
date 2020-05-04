@@ -108,9 +108,9 @@ export default class MovieController {
 
     if (oldFilmCardComponent && oldPopupComponent) {
       replaceComponent(this._filmCardComponent, oldFilmCardComponent);
-      replaceComponent(this._popupComponent, oldPopupComponent)
+      replaceComponent(this._popupComponent, oldPopupComponent);
     } else {
       render(this._container, this._filmCardComponent);
-    }   
+    }
   }
 }

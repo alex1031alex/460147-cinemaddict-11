@@ -17,7 +17,7 @@ export default class PageController {
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
   }
 
-  _onDataChange(movieController, oldData, newData) { 
+  _onDataChange(movieController, oldData, newData) {
     const index = this._movies.findIndex((it) => it === oldData);
 
     if (index === -1) {
