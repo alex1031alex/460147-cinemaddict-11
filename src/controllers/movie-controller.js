@@ -113,4 +113,8 @@ export default class MovieController {
       render(this._container, this._filmCardComponent);
     }
   }
+
+  setDefaultView() {
+
+  }
 }
