@@ -71,4 +71,8 @@ export default class PageController {
     this._renderFilmCards(this._mainMovieElement, mainShowingFilms);
     this._renderShowMoreButton();
   }
+
+  _onViewChange() {
+
+  }
 }
