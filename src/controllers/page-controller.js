@@ -15,6 +15,7 @@ export default class PageController {
     this._commentMovieElement = boardComponent.getCommentMovieElement();
     this._mainMovieElement = boardComponent.getMainMovieElement();
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
+    this._showedMovieControllers = [];
   }
 
   _onDataChange(movieController, oldData, newData) {
@@ -29,11 +30,21 @@ export default class PageController {
     movieController.render(this._movies[index]);
   }
 
-  _renderFilmCards(movieContainer, movies) {
-    movies
-    .forEach((movie) => {
-      const movieController = new MovieController(movieContainer, this._onDataChange.bind(this));
+  _onViewChange() {
+    this._showedMovieControllers.forEach((it) => {it.setDefaultView()});
+  }
+
+  _renderFilmCards(movieContainer, movies, onDataChange, onViewChange) {
+    return movies
+    .map((movie) => {
+      const movieController = new MovieController(
+        movieContainer, 
+        onDataChange, 
+        onViewChange
+      );
       movieController.render(movie);
+ 
+      return movieController;
     });
   }
 
@@ -48,7 +59,12 @@ export default class PageController {
       const prevMovieCount = movieShowingCount;
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = this._movies.slice(prevMovieCount, movieShowingCount);
-      this._renderFilmCards(this._mainMovieElement, showingFilms);
+      this._showedMovieControllers = this._renderFilmCards(
+        this._mainMovieElement, 
+        showingFilms, 
+        this._onDataChange.bind(this), 
+        this._onViewChange.bind(this)
+      );
 
       if (movieShowingCount >= this._movies.length) {
         removeComponent(this._showMoreButtonComponent);
@@ -66,13 +82,24 @@ export default class PageController {
       .slice(0, EXTRA_MOVIE_COUNT);
     const mainShowingFilms = this._movies.slice(0, INITIAL_MOVIE_COUNT);
 
-    this._renderFilmCards(this._ratedMovieElement, topRatedShowingFilms);
-    this._renderFilmCards(this._commentMovieElement, mostCommentedShowingFilms);
-    this._renderFilmCards(this._mainMovieElement, mainShowingFilms);
+    this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
+      this._ratedMovieElement, 
+      topRatedShowingFilms, 
+      this._onDataChange.bind(this), 
+      this._onViewChange.bind(this)
+    ));
+    this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
+      this._commentMovieElement, 
+      mostCommentedShowingFilms,
+      this._onDataChange.bind(this),
+      this._onViewChange.bind(this)
+    ));
+    this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
+      this._mainMovieElement, 
+      mainShowingFilms, 
+      this._onDataChange.bind(this), 
+      this._onViewChange.bind(this)
+    ));
     this._renderShowMoreButton();
-  }
-
-  _onViewChange() {
-
   }
 }

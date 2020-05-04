@@ -15,6 +15,8 @@ export default class MovieController {
     this._onViewChange = onViewChange;
     this._filmCardComponent = null;
     this._popupComponent = null;
+    this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._closePopup = this._closePopup.bind(this);
   }
 
   _renderComments(popup) {
@@ -24,6 +26,18 @@ export default class MovieController {
       const commentElement = new CommentComponent(comment);
       appendChildComponent(commentsList, commentElement);
     });
+  }
+
+  _onEscKeyDown(evt) {
+    if (evt.keyCode === ESC_KEY_CODE) {
+      this._closePopup();
+      console.log(`work`);
+    }
+  }
+
+  _closePopup() {
+    removeChildElement(page, this._popupComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   render(film) {
@@ -37,18 +51,7 @@ export default class MovieController {
       this._onViewChange();
       this._renderComments(this._popupComponent);
       appendChildComponent(page, this._popupComponent);
-      document.addEventListener(`keydown`, onEscKeyDown);
-    };
-
-    const closePopup = () => {
-      removeChildElement(page, this._popupComponent);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    };
-
-    const onEscKeyDown = (evt) => {
-      if (evt.keyCode === ESC_KEY_CODE) {
-        closePopup();
-      }
+      document.addEventListener(`keydown`, this._onEscKeyDown);
     };
 
     const watchlistButtonClickHandler = () => {
@@ -102,7 +105,7 @@ export default class MovieController {
       favoriteButtonClickHandler();
     });
 
-    this._popupComponent.setCloseButtonClickHandler(closePopup);
+    this._popupComponent.setCloseButtonClickHandler(this._closePopup);
     this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
     this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
@@ -117,6 +120,6 @@ export default class MovieController {
   }
 
   setDefaultView() {
-
+    this._closePopup();
   }
 }

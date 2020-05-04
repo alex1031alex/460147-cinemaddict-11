@@ -34,12 +34,16 @@ const appendChildComponent = (container, childComponent) => {
 };
 
 const removeChildElement = (container, childComponent) => {
-  container.removeChild(childComponent.getElement());
+  if (childComponent.getElement().parentElement === container) {
+    container.removeChild(childComponent.getElement());
+  }
 };
 
 const replaceComponent = (newComponent, oldComponent) => {
   const parentElement = oldComponent.getElement().parentElement;
+  console.log(parentElement);
   const newElement = newComponent.getElement();
+  console.log(newElement, oldElement);
   const oldElement = oldComponent.getElement();
 
   const isExistElements = !!(parentElement && newElement && oldElement);
