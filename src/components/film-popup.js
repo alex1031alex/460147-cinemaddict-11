@@ -203,6 +203,7 @@ export default class FilmPopup extends AbstractSmartComponent {
     this._watchlistButtonClickHandler = null;
     this._watchedButtonClickHandler = null;
     this._favoriteButtonClickHandler = null;
+    this._emojiClickHandler = null;
   }
 
   getTemplate() {
@@ -249,6 +250,7 @@ export default class FilmPopup extends AbstractSmartComponent {
     emojis.forEach((it) => {
       it.addEventListener(`change`, handler);
     });
+    this._emojiClickHandler = handler;
   }
 
   recoveryListeners() {
@@ -256,5 +258,6 @@ export default class FilmPopup extends AbstractSmartComponent {
     this.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
     this.setWatchedButtonClickHandler(this._watchedButtonClickHandler);
     this.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
+    this.setEmojiClickHandler(this._emojiClickHandler);
   }
 }
