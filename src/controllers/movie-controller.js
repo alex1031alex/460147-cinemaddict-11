@@ -9,9 +9,10 @@ const EMOJI_HEIGHT = 55;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
     this._filmCardComponent = null;
     this._popupComponent = null;
   }
@@ -33,6 +34,7 @@ export default class MovieController {
     this._popupComponent = new FilmPopupComponent(film);
 
     const showPopup = () => {
+      this._onViewChange();
       this._renderComments(this._popupComponent);
       appendChildComponent(page, this._popupComponent);
       document.addEventListener(`keydown`, onEscKeyDown);
