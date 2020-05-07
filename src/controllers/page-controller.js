@@ -34,18 +34,20 @@ export default class PageController {
     this._showedMovieControllers.forEach((it) => it.setDefaultView());
   }
 
-  _renderFilmCards(movieContainer, movies, onDataChange, onViewChange) {
-    return movies
-    .map((movie) => {
-      const movieController = new MovieController(
-          movieContainer,
-          onDataChange,
-          onViewChange
-      );
-      movieController.render(movie);
+  _renderMoviesBlock(container, movies) {
+    const movieControllers = movies.
+      map((movie) => {
+        const movieController = new MovieController(
+          container,
+          this._onDataChange.bind(this),
+          this._onViewChange.bind(this)
+        );
+        movieController.render(movie);
 
-      return movieController;
-    });
+        return movieController;
+      });
+
+    this._showedMovieControllers = this._showedMovieControllers.concat(movieControllers);
   }
 
   _renderShowMoreButton() {
@@ -85,24 +87,9 @@ export default class PageController {
 
     const mainShowingFilms = this._movies.slice(0, INITIAL_MOVIE_COUNT);
 
-    this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
-        this._ratedMovieElement,
-        topRatedShowingFilms,
-        this._onDataChange.bind(this),
-        this._onViewChange.bind(this)
-    ));
-    this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
-        this._commentMovieElement,
-        mostCommentedShowingFilms,
-        this._onDataChange.bind(this),
-        this._onViewChange.bind(this)
-    ));
-    this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
-        this._mainMovieElement,
-        mainShowingFilms,
-        this._onDataChange.bind(this),
-        this._onViewChange.bind(this)
-    ));
+    this._renderMoviesBlock(this._ratedMovieElement, topRatedShowingFilms);
+    this._renderMoviesBlock(this._commentMovieElement, mostCommentedShowingFilms);
+    this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
     this._renderShowMoreButton();
   }
 }
