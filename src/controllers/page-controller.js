@@ -61,11 +61,12 @@ export default class PageController {
       const prevMovieCount = movieShowingCount;
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = this._movies.slice(prevMovieCount, movieShowingCount);
+
       this._showedMovieControllers = this._renderFilmCards(
-          this._mainMovieElement,
-          showingFilms,
-          this._onDataChange.bind(this),
-          this._onViewChange.bind(this)
+        this._mainMovieElement,
+        showingFilms,
+        this._onDataChange.bind(this),
+        this._onViewChange.bind(this)
       );
 
       if (movieShowingCount >= this._movies.length) {
