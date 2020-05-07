@@ -54,21 +54,15 @@ export default class MovieController {
     };
 
     const watchlistButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
-        isAtWatchlist: !this._film.isAtWatchlist,
-      }));
+      this._onDataChange(this, this._film, {...this._film, isAtWatchlist: !this._film.isAtWatchlist});
     };
 
     const watchedButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
-        isWatched: !this._film.isWatched,
-      }));
+      this._onDataChange(this, this._film, {...this._film, isWatched: !this._film.isWatched});
     };
 
     const favoriteButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
-        isFavorite: !this._film.isFavorite,
-      }));
+      this._onDataChange(this, this._film, {...this._film, isFavorite: !this._film.isFavorite});
     };
 
     const emojiClickHandler = (evt) => {
