@@ -9,8 +9,8 @@ const createMovieDetailsTemplate = (film) => {
     isAtWatchlist, isWatched, isFavorite} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const formattedGenres = capitalizeWords(genres)
-  .map((it) => `<span class="film-details__genre">${it}</span>`)
-  .join(`\n`);
+    .map((it) => `<span class="film-details__genre">${it}</span>`)
+    .join(`\n`);
   const formattedRating = formatRating(rating);
   const writersList = writers.join(`, `);
   const actorsList = actors.join(`, `);
