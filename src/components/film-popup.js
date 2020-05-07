@@ -1,6 +1,9 @@
 import {capitalizeWords, formatDate, formatRating} from '../utils/common.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
+const EMOJI_WIDTH = 55;
+const EMOJI_HEIGHT = 55;
+
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
     isAtWatchlist, isWatched, isFavorite} = film;
@@ -218,10 +221,6 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__comments-list`);
   }
 
-  getEmojiContainer() {
-    return this.getElement().querySelector(`.film-details__add-emoji-label`);
-  }
-
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
     this._closeButtonClickHandler = handler;
@@ -243,6 +242,20 @@ export default class FilmPopup extends AbstractSmartComponent {
     const button = this.getElement().querySelector(`#favorite`);
     button.addEventListener(`click`, handler);
     this._favoriteButtonClickHandler = handler;
+  }
+
+  setEmojiById(id) {
+    const emojiContainer = this.getElement().querySelector(`.film-details__add-emoji-label`);
+    const emojiElement = this.getElement().querySelector(`[for="${id}"] img`).cloneNode(true);
+
+    emojiElement.width = EMOJI_WIDTH;
+    emojiElement.height = EMOJI_HEIGHT;
+
+    if (emojiContainer.innerHTML !== ``) {
+      emojiContainer.innerHTML = ``;
+    }
+
+    emojiContainer.appendChild(emojiElement);
   }
 
   setEmojiClickHandler(handler) {

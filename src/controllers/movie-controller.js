@@ -4,8 +4,6 @@ import FilmPopupComponent from './../components/film-popup.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent} from './../utils/render.js';
 
 const ESC_KEY = `Escape`;
-const EMOJI_WIDTH = 55;
-const EMOJI_HEIGHT = 55;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
@@ -74,20 +72,7 @@ export default class MovieController {
     };
 
     const emojiClickHandler = (evt) => {
-      const emojiContainer = this._popupComponent.getEmojiContainer();
-      const emojiElement = this._popupComponent
-        .getElement()
-        .querySelector(`[for="${evt.target.id}"] img`)
-        .cloneNode(true);
-
-      emojiElement.width = EMOJI_WIDTH;
-      emojiElement.height = EMOJI_HEIGHT;
-
-      if (emojiContainer.innerHTML !== ``) {
-        emojiContainer.innerHTML = ``;
-      }
-
-      emojiContainer.appendChild(emojiElement);
+      this._popupComponent.setEmojiById(evt.target.id);
     };
 
     this._filmCardComponent.setPopupOpenHandler(showPopup);
