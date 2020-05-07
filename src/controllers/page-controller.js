@@ -74,12 +74,15 @@ export default class PageController {
 
   render(movies) {
     this._movies = movies;
+
     const topRatedShowingFilms = this._movies
       .sort((a, b) => b.rating - a.rating)
       .slice(0, EXTRA_MOVIE_COUNT);
+
     const mostCommentedShowingFilms = this._movies
       .sort((a, b) => b.comments.length - a.comments.length)
       .slice(0, EXTRA_MOVIE_COUNT);
+
     const mainShowingFilms = this._movies.slice(0, INITIAL_MOVIE_COUNT);
 
     this._showedMovieControllers = this._showedMovieControllers.concat(this._renderFilmCards(
