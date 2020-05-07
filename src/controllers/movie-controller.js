@@ -3,7 +3,7 @@ import CommentComponent from './../components/comment.js';
 import FilmPopupComponent from './../components/film-popup.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent} from './../utils/render.js';
 
-const ESC_KEY_CODE = 27;
+const ESC_KEY = `Escape`;
 const EMOJI_WIDTH = 55;
 const EMOJI_HEIGHT = 55;
 const page = document.querySelector(`body`);
@@ -17,6 +17,7 @@ export default class MovieController {
     this._popupComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._closePopup = this._closePopup.bind(this);
+    this._film = null;
   }
 
   _renderComments(popup) {
@@ -29,7 +30,7 @@ export default class MovieController {
   }
 
   _onEscKeyDown(evt) {
-    if (evt.keyCode === ESC_KEY_CODE) {
+    if (evt.key === ESC_KEY) {
       this._closePopup();
     }
   }
@@ -40,11 +41,12 @@ export default class MovieController {
   }
 
   render(film) {
+    this._film = film;
     const oldFilmCardComponent = this._filmCardComponent;
     const oldPopupComponent = this._popupComponent;
 
-    this._filmCardComponent = new FilmComponent(film);
-    this._popupComponent = new FilmPopupComponent(film);
+    this._filmCardComponent = new FilmComponent(this._film);
+    this._popupComponent = new FilmPopupComponent(this._film);
 
     const showPopup = () => {
       this._onViewChange();
@@ -54,20 +56,20 @@ export default class MovieController {
     };
 
     const watchlistButtonClickHandler = () => {
-      this._onDataChange(this, film, Object.assign({}, film, {
-        isAtWatchlist: !film.isAtWatchlist,
+      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+        isAtWatchlist: !this._film.isAtWatchlist,
       }));
     };
 
     const watchedButtonClickHandler = () => {
-      this._onDataChange(this, film, Object.assign({}, film, {
-        isWatched: !film.isWatched,
+      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+        isWatched: !this._film.isWatched,
       }));
     };
 
     const favoriteButtonClickHandler = () => {
-      this._onDataChange(this, film, Object.assign({}, film, {
-        isFavorite: !film.isFavorite,
+      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+        isFavorite: !this._film.isFavorite,
       }));
     };
 
