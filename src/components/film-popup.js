@@ -201,6 +201,7 @@ const createMovieDetailsTemplate = (film) => {
 export default class FilmPopup extends AbstractSmartComponent {
   constructor(film) {
     super();
+
     this._film = film;
     this._closeButtonClickHandler = null;
     this._watchlistButtonClickHandler = null;
