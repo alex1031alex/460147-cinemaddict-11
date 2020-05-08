@@ -1,5 +1,5 @@
-import ShowMoreButtonComponent from './../components/show-more-button.js';
-import {render, removeComponent} from './../utils/render.js';
+import ShowMoreButtonComponent from '../components/show-more-button.js';
+import {render, removeComponent} from '../utils/render.js';
 import MovieController from './movie-controller.js';
 
 const MOVIE_COUNT_BY_BUTTON = 5;
@@ -62,12 +62,7 @@ export default class PageController {
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
       const showingFilms = this._movies.slice(prevMovieCount, movieShowingCount);
 
-      this._showedMovieControllers = this._renderFilmCards(
-        this._mainMovieElement,
-        showingFilms,
-        this._onDataChange.bind(this),
-        this._onViewChange.bind(this)
-      );
+      this._renderMoviesBlock(this._mainMovieElement, showingFilms);
 
       if (movieShowingCount >= this._movies.length) {
         removeComponent(this._showMoreButtonComponent);
