@@ -1,7 +1,7 @@
-import FilmComponent from './../components/film.js';
-import CommentComponent from './../components/comment.js';
-import FilmPopupComponent from './../components/film-popup.js';
-import {render, appendChildComponent, removeChildElement, replaceComponent} from './../utils/render.js';
+import FilmComponent from '../components/film.js';
+import CommentComponent from '../components/comment.js';
+import FilmPopupComponent from '../components/film-popup.js';
+import {render, appendChildComponent, removeChildElement, replaceComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
 const page = document.querySelector(`body`);
