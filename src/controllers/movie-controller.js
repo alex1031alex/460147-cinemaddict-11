@@ -38,8 +38,19 @@ export default class MovieController {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
+  _showPopup() {
+    this._onViewChange();
+    this._renderComments(this._popupComponent);
+    appendChildComponent(page, this._popupComponent);
+    document.addEventListener(`keydown`, this._onEscKeyDown);
+  }
+
   _onCloseButtonClickHandler() {
     this._closePopup();
+  }
+
+  _emojiClickHandler(evt) {
+    this._popupComponent.setEmojiById(evt.target.id);
   }
 
   render(film) {
@@ -49,13 +60,6 @@ export default class MovieController {
 
     this._filmCardComponent = new FilmComponent(this._film);
     this._popupComponent = new FilmPopupComponent(this._film);
-
-    const showPopup = () => {
-      this._onViewChange();
-      this._renderComments(this._popupComponent);
-      appendChildComponent(page, this._popupComponent);
-      document.addEventListener(`keydown`, this._onEscKeyDown);
-    };
 
     const watchlistButtonClickHandler = () => {
       this._onDataChange(this, this._film, {...this._film, isAtWatchlist: !this._film.isAtWatchlist});
@@ -69,11 +73,7 @@ export default class MovieController {
       this._onDataChange(this, this._film, {...this._film, isFavorite: !this._film.isFavorite});
     };
 
-    const emojiClickHandler = (evt) => {
-      this._popupComponent.setEmojiById(evt.target.id);
-    };
-
-    this._filmCardComponent.setPopupOpenHandler(showPopup);
+    this._filmCardComponent.setPopupOpenHandler(this._showPopup);
     this._filmCardComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
       watchlistButtonClickHandler();
@@ -93,7 +93,7 @@ export default class MovieController {
     this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
     this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
-    this._popupComponent.setEmojiClickHandler(emojiClickHandler);
+    this._popupComponent.setEmojiClickHandler(this._emojiClickHandler);
 
     if (oldFilmCardComponent && oldPopupComponent) {
       replaceComponent(this._filmCardComponent, oldFilmCardComponent);
