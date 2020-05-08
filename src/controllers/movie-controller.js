@@ -38,6 +38,10 @@ export default class MovieController {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
+  _onCloseButtonClickHandler() {
+    this._closePopup();
+  }
+
   render(film) {
     this._film = film;
     const oldFilmCardComponent = this._filmCardComponent;
@@ -85,7 +89,7 @@ export default class MovieController {
       favoriteButtonClickHandler();
     });
 
-    this._popupComponent.setCloseButtonClickHandler(this._closePopup);
+    this._popupComponent.setCloseButtonClickHandler(this._onCloseButtonClickHandler);
     this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
     this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
