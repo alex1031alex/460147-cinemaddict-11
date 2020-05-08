@@ -39,6 +39,14 @@ export default class MovieController {
   }
 
   _showPopup() {
+    this._popupComponent = new FilmPopupComponent(this._film);
+
+    this._popupComponent.setCloseButtonClickHandler(this._onCloseButtonClickHandler);
+    this._popupComponent.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
+    this._popupComponent.setWatchedButtonClickHandler(this._watchedButtonClickHandler);
+    this._popupComponent.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
+    this._popupComponent.setEmojiClickHandler(this._emojiClickHandler);
+
     this._onViewChange();
     this._renderComments(this._popupComponent);
     appendChildComponent(page, this._popupComponent);
@@ -53,25 +61,24 @@ export default class MovieController {
     this._popupComponent.setEmojiById(evt.target.id);
   }
 
+  _watchlistButtonClickHandler() {
+    this._onDataChange(this, this._film, {...this._film, isAtWatchlist: !this._film.isAtWatchlist});
+  }
+
+  _watchedButtonClickHandler() {
+    this._onDataChange(this, this._film, {...this._film, isWatched: !this._film.isWatched});
+  }
+
+  _favoriteButtonClickHandler() {
+    this._onDataChange(this, this._film, {...this._film, isFavorite: !this._film.isFavorite});
+  }
+
   render(film) {
     this._film = film;
     const oldFilmCardComponent = this._filmCardComponent;
     const oldPopupComponent = this._popupComponent;
 
     this._filmCardComponent = new FilmComponent(this._film);
-    this._popupComponent = new FilmPopupComponent(this._film);
-
-    const watchlistButtonClickHandler = () => {
-      this._onDataChange(this, this._film, {...this._film, isAtWatchlist: !this._film.isAtWatchlist});
-    };
-
-    const watchedButtonClickHandler = () => {
-      this._onDataChange(this, this._film, {...this._film, isWatched: !this._film.isWatched});
-    };
-
-    const favoriteButtonClickHandler = () => {
-      this._onDataChange(this, this._film, {...this._film, isFavorite: !this._film.isFavorite});
-    };
 
     this._filmCardComponent.setPopupOpenHandler(this._showPopup);
     this._filmCardComponent.setWatchlistButtonClickHandler((evt) => {
@@ -88,12 +95,6 @@ export default class MovieController {
       evt.preventDefault();
       favoriteButtonClickHandler();
     });
-
-    this._popupComponent.setCloseButtonClickHandler(this._onCloseButtonClickHandler);
-    this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
-    this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
-    this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
-    this._popupComponent.setEmojiClickHandler(this._emojiClickHandler);
 
     if (oldFilmCardComponent && oldPopupComponent) {
       replaceComponent(this._filmCardComponent, oldFilmCardComponent);
