@@ -38,9 +38,9 @@ export default class PageController {
     const movieControllers = movies.
       map((movie) => {
         const movieController = new MovieController(
-          container,
-          this._onDataChange.bind(this),
-          this._onViewChange.bind(this)
+            container,
+            this._onDataChange.bind(this),
+            this._onViewChange.bind(this)
         );
         movieController.render(movie);
 

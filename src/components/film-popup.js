@@ -261,7 +261,7 @@ export default class FilmPopup extends AbstractSmartComponent {
 
   setEmojiClickHandler(handler) {
     const emojis = this.getElement().querySelectorAll(`.film-details__emoji-item`);
-  
+
     emojis.forEach((it) => {
       it.addEventListener(`change`, handler);
     });
