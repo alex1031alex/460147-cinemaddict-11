@@ -48,7 +48,6 @@ export default class MovieController {
 
     const showPopup = () => {
       this._onViewChange();
-      this._renderComments(this._popupComponent);
       appendChildComponent(page, this._popupComponent);
       document.addEventListener(`keydown`, this._onEscKeyDown);
     };
@@ -96,6 +95,8 @@ export default class MovieController {
     this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
     this._popupComponent.setEmojiClickHandler(emojiClickHandler);
+
+    this._renderComments(this._popupComponent);
 
     if (oldFilmCardComponent && oldPopupComponent) {
       replaceComponent(this._filmCardComponent, oldFilmCardComponent);
