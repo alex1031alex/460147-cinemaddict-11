@@ -51,11 +51,11 @@ export default class MovieController {
       this._renderComments(this._popupComponent);
       appendChildComponent(page, this._popupComponent);
       document.addEventListener(`keydown`, this._onEscKeyDown);
-    }
+    };
 
     const emojiClickHandler = (evt) => {
       this._popupComponent.setEmojiById(evt.target.id);
-    }
+    };
 
     const watchlistButtonClickHandler = () => {
       this._onDataChange(this, this._film, Object.assign({}, this._film, {
@@ -67,7 +67,7 @@ export default class MovieController {
       this._onDataChange(this, this._film, Object.assign({}, this._film, {
         isWatched: !this._film.isWatched
       }));
-    }
+    };
 
     const favoriteButtonClickHandler = () => {
       this._onDataChange(this, this._film, Object.assign({}, this._film, {
