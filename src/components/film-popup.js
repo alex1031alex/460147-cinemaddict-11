@@ -1,19 +1,22 @@
 import {capitalizeWords, formatDate, formatRating} from '../utils/common.js';
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
+
+const EMOJI_WIDTH = 55;
+const EMOJI_HEIGHT = 55;
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, duration, genres, rating, comments,
-    isAtWhatchlist, isWatched, isFavorite} = film;
+    isAtWatchlist, isWatched, isFavorite} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const formattedGenres = capitalizeWords(genres)
-  .map((it) => `<span class="film-details__genre">${it}</span>`)
-  .join(`\n`);
+    .map((it) => `<span class="film-details__genre">${it}</span>`)
+    .join(`\n`);
   const formattedRating = formatRating(rating);
   const writersList = writers.join(`, `);
   const actorsList = actors.join(`, `);
   const formattedReleaseDate = formatDate(releaseDate);
   const genreOrGenres = genres.length > 1 ? `Genres` : `Genre`;
-  const isWatchlistChecked = isAtWhatchlist ? `checked` : ``;
+  const isWatchlistChecked = isAtWatchlist ? `checked` : ``;
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
@@ -195,10 +198,16 @@ const createMovieDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmPopup extends AbstractComponent {
+export default class FilmPopup extends AbstractSmartComponent {
   constructor(film) {
     super();
+
     this._film = film;
+    this._closeButtonClickHandler = null;
+    this._watchlistButtonClickHandler = null;
+    this._watchedButtonClickHandler = null;
+    this._favoriteButtonClickHandler = null;
+    this._emojiClickHandler = null;
   }
 
   getTemplate() {
@@ -209,7 +218,62 @@ export default class FilmPopup extends AbstractComponent {
     return this._film.comments;
   }
 
-  setCloseButtonClickHandler(cb) {
-    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, cb);
+  getCommentsList() {
+    return this.getElement().querySelector(`.film-details__comments-list`);
+  }
+
+  setCloseButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+    this._closeButtonClickHandler = handler;
+  }
+
+  setWatchlistButtonClickHandler(handler) {
+    const button = this.getElement().querySelector(`#watchlist`);
+    button.addEventListener(`click`, handler);
+    this._watchlistButtonClickHandler = handler;
+  }
+
+  setWatchedButtonClickHandler(handler) {
+    const button = this.getElement().querySelector(`#watched`);
+    button.addEventListener(`click`, handler);
+    this._watchedButtonClickHandler = handler;
+  }
+
+  setFavoriteButtonClickHandler(handler) {
+    const button = this.getElement().querySelector(`#favorite`);
+    button.addEventListener(`click`, handler);
+    this._favoriteButtonClickHandler = handler;
+  }
+
+  setEmojiById(id) {
+    const emojiContainer = this.getElement().querySelector(`.film-details__add-emoji-label`);
+    const emojiElement = this.getElement().querySelector(`[for="${id}"] img`).cloneNode(true);
+
+    emojiElement.width = EMOJI_WIDTH;
+    emojiElement.height = EMOJI_HEIGHT;
+
+    if (emojiContainer.innerHTML !== ``) {
+      emojiContainer.innerHTML = ``;
+    }
+
+    emojiContainer.appendChild(emojiElement);
+  }
+
+  setEmojiClickHandler(handler) {
+    const emojis = this.getElement().querySelectorAll(`.film-details__emoji-item`);
+
+    emojis.forEach((it) => {
+      it.addEventListener(`change`, handler);
+    });
+
+    this._emojiClickHandler = handler;
+  }
+
+  recoveryListeners() {
+    this.setCloseButtonClickHandler(this._closeButtonClickHandler);
+    this.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
+    this.setWatchedButtonClickHandler(this._watchedButtonClickHandler);
+    this.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
+    this.setEmojiClickHandler(this._emojiClickHandler);
   }
 }
