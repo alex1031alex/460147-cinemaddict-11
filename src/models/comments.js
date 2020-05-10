@@ -13,8 +13,8 @@ export default class Comments {
     this._callHandlers(this._dataChangeHandlers);
   }
 
-  addComment() {
-
+  addComment(comment) {
+    this._comments.push(comment);
   }
 
   deleteComment() {

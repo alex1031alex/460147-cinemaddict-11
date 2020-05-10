@@ -1,6 +1,7 @@
 import FilmComponent from '../components/film.js';
 import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
+import CommentsModel from '../models/comments.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
@@ -16,6 +17,7 @@ export default class MovieController {
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._closePopup = this._closePopup.bind(this);
     this._film = null;
+    this._commentsModel = null;
   }
 
   getId() {
@@ -23,7 +25,7 @@ export default class MovieController {
   }
 
   _renderComments(popup) {
-    const comments = popup.getComments();
+    const comments = this._commentsModel.getComments();
     const commentsList = popup.getCommentsList();
     comments.forEach((comment) => {
       const commentElement = new CommentComponent(comment);
@@ -44,6 +46,8 @@ export default class MovieController {
 
   render(film) {
     this._film = film;
+    this._commentsModel = new CommentsModel();
+    this._commentsModel.setComments(this._film.comments);
     const oldFilmCardComponent = this._filmCardComponent;
     const oldPopupComponent = this._popupComponent;
 
