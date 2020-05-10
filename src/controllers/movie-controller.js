@@ -18,6 +18,10 @@ export default class MovieController {
     this._film = null;
   }
 
+  getId() {
+    return this._film.id;
+  }
+
   _renderComments(popup) {
     const comments = popup.getComments();
     const commentsList = popup.getCommentsList();
@@ -57,19 +61,19 @@ export default class MovieController {
     };
 
     const watchlistButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+      this._onDataChange(this._film, Object.assign({}, this._film, {
         isAtWatchlist: !this._film.isAtWatchlist
       }));
     };
 
     const watchedButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+      this._onDataChange(this._film, Object.assign({}, this._film, {
         isWatched: !this._film.isWatched
       }));
     };
 
     const favoriteButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
+      this._onDataChange(this._film, Object.assign({}, this._film, {
         isFavorite: !this._film.isFavorite
       }));
     };
