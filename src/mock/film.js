@@ -88,6 +88,12 @@ const generateGenres = () => {
   return genres;
 };
 
+let idCounter = 0;
+
+const generateId = () => {
+  return idCounter++;
+};
+
 const generateFilm = () => {
   const name = getRandomArrayItem(filmNames);
   const poster = getRandomArrayItem(posters);
@@ -97,8 +103,10 @@ const generateFilm = () => {
   const genres = generateGenres();
   const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
   const comments = generateComments();
+  const id = generateId();
 
   return {
+    id,
     name,
     poster,
     description,
