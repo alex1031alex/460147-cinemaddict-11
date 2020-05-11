@@ -1,4 +1,4 @@
-export default class Movies {
+export default class MoviesModel {
   constructor() {
     this._movies = [];
     this._dataChangeHandlers = [];
