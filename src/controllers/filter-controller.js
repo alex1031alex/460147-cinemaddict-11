@@ -1,25 +1,8 @@
+import {FilterType} from '../const.js';
 import FilterComponent from '../components/filter.js';
 import {PlaceForRender, render, replaceComponent} from '../utils/render.js';
+import {getMoviesByFilter} from '../utils/filter.js';
 
-const FilterType = {
-  ALL_MOVIES: `All movies`,
-  WATCHLIST: `Watchlist`,
-  HISTORY: `History`,
-  FAVORITES: `Favorites`,
-};
-
-const getMoviesByFilter = (movies, filterType) => {
-  switch (filterType) {
-    case FilterType.ALL_MOVIES:
-      return movies;
-    case FilterType.WATCHLIST:
-      return movies.filter((movie) => movie.isAtWatchlist);
-    case FilterType.HISTORY:
-      return movies.filter((movie) => movie.isWatched);
-    case FilterType.FAVORITES:
-      return movies.filter((movie) => movie.isFavorite);
-  }
-};
 
 export default class FilterController {
   constructor(container, moviesModel) {
