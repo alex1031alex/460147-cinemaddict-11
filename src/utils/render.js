@@ -51,4 +51,12 @@ const replaceComponent = (newComponent, oldComponent) => {
   }
 };
 
-export {createElement, render, removeComponent, appendChildComponent, removeChildElement, replaceComponent};
+export {
+  PlaceForRender,
+  createElement,
+  render,
+  removeComponent,
+  appendChildComponent,
+  removeChildElement,
+  replaceComponent
+};
