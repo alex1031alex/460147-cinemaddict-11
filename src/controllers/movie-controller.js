@@ -2,7 +2,7 @@ import FilmComponent from '../components/film.js';
 import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
 import CommentsModel from '../models/comments.js';
-import {render, appendChildComponent, removeChildElement, replaceComponent} from '../utils/render.js';
+import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
 const page = document.querySelector(`body`);
@@ -112,6 +112,12 @@ export default class MovieController {
     } else {
       render(this._container, this._filmCardComponent);
     }
+  }
+
+  destroy() {
+    removeComponent(this._filmCardComponent);
+    removeComponent(this._popupComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   setDefaultView() {
