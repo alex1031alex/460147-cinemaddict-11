@@ -38,6 +38,13 @@ export default class Filter extends AbstractComponent {
   }
 
   setFilterChangeHandler(handler) {
+    const filterButtons = this.getElement().querySelectorAll(`.main-navigation__item`);
 
+    filterButtons.forEach((filterButton) => {
+      const filterType = filterButton.firstChild.textContent.trim();
+      filterButton.addEventListener(`click`, () => {
+        handler(filterType);
+      });
+    });
   }
 }

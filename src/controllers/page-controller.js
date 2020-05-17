@@ -16,6 +16,8 @@ export default class PageController {
     this._mainMovieElement = boardComponent.getMainMovieElement();
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
     this._showedMovieControllers = [];
+    this._filterChangeHandler = this._filterChangeHandler.bind(this);
+    this._moviesModel.setFilterChangeHandler(this._filterChangeHandler);
   }
 
   _onDataChange(oldData, newData) {
@@ -88,5 +90,14 @@ export default class PageController {
     this._renderMoviesBlock(this._commentMovieElement, mostCommentedShowingFilms);
     this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
     this._renderShowMoreButton();
+  }
+
+  _filterChangeHandler() {
+    const movies = this._moviesModel.getMovies();
+    const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
+
+    this._mainMovieElement.innerHTML = ``;
+
+    this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
   }
 }

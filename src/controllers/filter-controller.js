@@ -38,8 +38,8 @@ export default class FilterController {
   }
 
   _onFilterChange(filterType) {
-    this._moviesModel.setFilter(filterType);
     this._activeFilter = filterType;
+    this._moviesModel.setFilter(filterType);
   }
 
   _onDataChange() {
