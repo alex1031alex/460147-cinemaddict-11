@@ -14,7 +14,7 @@ export default class PageController {
     this._ratedMovieElement = boardComponent.getRatedMovieElement();
     this._commentMovieElement = boardComponent.getCommentMovieElement();
     this._mainMovieElement = boardComponent.getMainMovieElement();
-    this._showMoreButtonComponent = new ShowMoreButtonComponent();
+    this._showMoreButtonComponent = null;
     this._showedMovieControllers = [];
     this._filterChangeHandler = this._filterChangeHandler.bind(this);
     this._moviesModel.setFilterChangeHandler(this._filterChangeHandler);
@@ -53,23 +53,23 @@ export default class PageController {
   }
 
   _renderShowMoreButton() {
-    const movies = this._moviesModel.getMovies();
-
-    if (movieShowingCount >= movies.length) {
+    if (movieShowingCount >= this._moviesModel.getMovies().length) {
       return;
     }
 
+    this._showMoreButtonComponent = new ShowMoreButtonComponent();
     render(this._mainMovieElement, this._showMoreButtonComponent, `afterend`);
 
     this._showMoreButtonComponent.setClickHandler(() => {
       const prevMovieCount = movieShowingCount;
       movieShowingCount += MOVIE_COUNT_BY_BUTTON;
-      const showingFilms = movies.slice(prevMovieCount, movieShowingCount);
+      const showingFilms = this._moviesModel.getMovies().slice(prevMovieCount, movieShowingCount);
 
       this._renderMoviesBlock(this._mainMovieElement, showingFilms);
 
-      if (movieShowingCount >= movies.length) {
+      if (movieShowingCount >= this._moviesModel.getMovies().length) {
         removeComponent(this._showMoreButtonComponent);
+        this._showMoreButtonComponent = null;
       }
     });
   }
@@ -86,18 +86,24 @@ export default class PageController {
 
     const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
 
+
     this._renderMoviesBlock(this._ratedMovieElement, topRatedShowingFilms);
     this._renderMoviesBlock(this._commentMovieElement, mostCommentedShowingFilms);
     this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
-    this._renderShowMoreButton();
+
+    if (movieShowingCount < this._moviesModel.getMovies().length && !this._showMoreButtonComponent) {
+      this._renderShowMoreButton();
+    } else if (this._showMoreButtonComponent) {
+      removeComponent(this._showMoreButtonComponent);
+      this._showMoreButtonComponent = null;
+    }
   }
 
   _filterChangeHandler() {
-    const movies = this._moviesModel.getMovies();
-    const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
+    this._showedMovieControllers.forEach((controller) => controller.destroy());
+    this._showedMovieControllers = [];
+    movieShowingCount = INITIAL_MOVIE_COUNT;
 
-    this._mainMovieElement.innerHTML = ``;
-
-    this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
+    this.render();
   }
 }
