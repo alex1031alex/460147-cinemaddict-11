@@ -102,8 +102,8 @@ const generateFilm = () => {
   const duration = generateFilmDurationData();
   const genres = generateGenres();
   const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
-  const comments = generateComments();
   const id = generateId();
+  const comments = generateComments(id);
 
   return {
     id,
