@@ -34,7 +34,7 @@ const appendChildComponent = (container, childComponent) => {
 };
 
 const removeChildElement = (container, childComponent) => {
-  if (childComponent.getElement().parentElement === container) {
+  if (childComponent && container && childComponent.getElement().parentElement === container) {
     container.removeChild(childComponent.getElement());
   }
 };

@@ -96,7 +96,7 @@ export default class PageController {
     if (movieShowingCount < movies.length && !this._showMoreButtonComponent) {
       this._renderShowMoreButton();
     }
- 
+
     if (movieShowingCount >= movies.length && this._showMoreButtonComponent) {
       removeComponent(this._showMoreButtonComponent);
       this._showMoreButtonComponent = null;

@@ -4,7 +4,7 @@ import SortingComponent from './components/sorting.js';
 import BoardComponent from './components/board.js';
 import NoFilmsComponent from './components/no-films.js';
 import StatCounterComponent from './components/stat-counter.js';
-import MoviesModel from './models/movies.js';
+import MoviesModel from './models/movies-model.js';
 import {generateFilms} from './mock/film.js';
 import {getUserTitle} from './mock/profile.js';
 import {render} from './utils/render.js';
@@ -25,6 +25,7 @@ const watchedFilms = films.filter((film) => film.isWatched).length;
 
 /* Создание модели */
 const moviesModel = new MoviesModel();
+
 moviesModel.setMovies(films);
 
 /* Отрисовка меню и профиля пользователя */

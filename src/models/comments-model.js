@@ -9,15 +9,13 @@ export default class CommentsModel {
   }
 
   setComments(comments) {
-    this._comments = Array.from(comments);
+    comments.forEach((comment) => {
+      this._comments.push(comment);
+    });
     this._callHandlers(this._dataChangeHandlers);
   }
 
-  addComment(comment) {
-    this._comments.push(comment);
-  }
-
-  deleteComment() {
+  addComment() {
 
   }
 

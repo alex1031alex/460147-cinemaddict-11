@@ -1,7 +1,8 @@
 import FilmComponent from '../components/film.js';
 import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
-import CommentsModel from '../models/comments.js';
+import CommentsModel from '../models/comments-model.js';
+import {generateComments} from '../mock/comment.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
@@ -24,15 +25,6 @@ export default class MovieController {
     return this._film.id;
   }
 
-  _renderComments(popup) {
-    const comments = this._commentsModel.getComments();
-    const commentsList = popup.getCommentsList();
-    comments.forEach((comment) => {
-      const commentElement = new CommentComponent(comment);
-      appendChildComponent(commentsList, commentElement);
-    });
-  }
-
   _onEscKeyDown(evt) {
     if (evt.key === ESC_KEY) {
       this._closePopup();
@@ -42,20 +34,42 @@ export default class MovieController {
   _closePopup() {
     removeChildElement(page, this._popupComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    this._commentsModel = null;
   }
 
   render(film) {
     this._film = film;
-    this._commentsModel = new CommentsModel();
-    this._commentsModel.setComments(this._film.comments);
     const oldFilmCardComponent = this._filmCardComponent;
     const oldPopupComponent = this._popupComponent;
 
     this._filmCardComponent = new FilmComponent(this._film);
-    this._popupComponent = new FilmPopupComponent(this._film);
 
     const showPopup = () => {
       this._onViewChange();
+
+      this._commentsModel = new CommentsModel();
+
+      this._commentsModel.setComments(generateComments());
+
+      const comments = this._commentsModel.getComments();
+
+      this._popupComponent = new FilmPopupComponent(this._film, comments);
+
+      const commentsList = this._popupComponent.getCommentsList();
+
+      if (comments.length > 0) {
+        comments.forEach((comment) => {
+          const commentComponent = new CommentComponent(comment);
+          appendChildComponent(commentsList, commentComponent);
+        });
+      }
+
+      this._popupComponent.setCloseButtonClickHandler(this._closePopup);
+      this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
+      this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
+      this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
+      this._popupComponent.setEmojiClickHandler(emojiClickHandler);
+
       appendChildComponent(page, this._popupComponent);
       document.addEventListener(`keydown`, this._onEscKeyDown);
     };
@@ -97,14 +111,6 @@ export default class MovieController {
       evt.preventDefault();
       favoriteButtonClickHandler();
     });
-
-    this._popupComponent.setCloseButtonClickHandler(this._closePopup);
-    this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
-    this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
-    this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
-    this._popupComponent.setEmojiClickHandler(emojiClickHandler);
-
-    this._renderComments(this._popupComponent);
 
     if (oldFilmCardComponent && oldPopupComponent) {
       replaceComponent(this._filmCardComponent, oldFilmCardComponent);

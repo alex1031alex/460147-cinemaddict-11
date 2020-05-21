@@ -31,4 +31,9 @@ export default class Comment extends AbstractComponent {
   getTemplate() {
     return createCommentTemplate(this._comment);
   }
+
+  setDeleteButtonHandler(handler) {
+    const deleteButton = this.getElement().querySelector(`.film-details__comment-delete`);
+    deleteButton.addEventListener(`click`, handler);
+  }
 }

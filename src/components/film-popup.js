@@ -4,10 +4,11 @@ import AbstractSmartComponent from './abstract-smart-component.js';
 const EMOJI_WIDTH = 55;
 const EMOJI_HEIGHT = 55;
 
-const createMovieDetailsTemplate = (film) => {
-  const {name, poster, description, duration, genres, rating, comments,
+const createMovieDetailsTemplate = (film, filmComments) => {
+  const {name, poster, description, duration, genres, rating,
     isAtWatchlist, isWatched, isFavorite} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
+  const comments = filmComments;
   const formattedGenres = capitalizeWords(genres)
     .map((it) => `<span class="film-details__genre">${it}</span>`)
     .join(`\n`);
@@ -199,10 +200,11 @@ const createMovieDetailsTemplate = (film) => {
 };
 
 export default class FilmPopup extends AbstractSmartComponent {
-  constructor(film) {
+  constructor(film, comments) {
     super();
 
     this._film = film;
+    this._comments = comments;
     this._closeButtonClickHandler = null;
     this._watchlistButtonClickHandler = null;
     this._watchedButtonClickHandler = null;
@@ -211,7 +213,7 @@ export default class FilmPopup extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    return createMovieDetailsTemplate(this._film);
+    return createMovieDetailsTemplate(this._film, this._comments);
   }
 
   getComments() {

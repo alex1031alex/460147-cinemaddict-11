@@ -32,9 +32,13 @@ const generateCommentDate = () => {
   return targetDate;
 };
 
-const generateComment = (id) => {
+let idCounter = 0;
+
+const generateId = () => idCounter++;
+
+const generateComment = () => {
   return {
-    id: id,
+    id: generateId(),
     emoji: getRandomArrayItem(emojis),
     date: generateCommentDate(),
     author: getRandomArrayItem(authors),
@@ -42,11 +46,11 @@ const generateComment = (id) => {
   };
 };
 
-const generateComments = (id) => {
+const generateComments = () => {
   const count = getRandomNumber(0, 5);
   const comments = [];
   for (let i = 0; i < count; i++) {
-    comments.push(generateComment(id));
+    comments.push(generateComment());
   }
 
   return comments;
