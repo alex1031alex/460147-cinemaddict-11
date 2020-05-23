@@ -16,18 +16,21 @@ export default class CommentsModel {
   }
 
   addComment(comment) {
-    this._comments.push(comment);
+    this._comments = [].concat(this._comments, comment);
     this._callHandlers(this._dataChangeHandlers);
   }
 
   deleteComment(id) {
+    console.log(this._comments);
     const index = this._comments.findIndex((comment) => comment.id === id );
-
+    console.log(index);
     if (index === -1) {
       return false;
     }
 
     this._comments = [].concat(this._comments.slice(0, index), this._comments.slice(index + 1));
+    console.log(this._comments);
+    console.log(this._dataChangeHandlers);
     this._callHandlers(this._dataChangeHandlers);
 
     return true;

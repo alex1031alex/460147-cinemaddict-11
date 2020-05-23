@@ -36,4 +36,8 @@ export default class Comment extends AbstractComponent {
     const deleteButton = this.getElement().querySelector(`.film-details__comment-delete`);
     deleteButton.addEventListener(`click`, handler);
   }
+
+  getCommentId() {
+    return this._comment.id;
+  }
 }
