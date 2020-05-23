@@ -84,7 +84,7 @@ export default class PageController {
       .slice(0, EXTRA_MOVIE_COUNT);
 
     const mostCommentedShowingFilms = movies
-      .sort((a, b) => b.comments.length - a.comments.length)
+      .sort((a, b) => b.commentsQuantity - a.commentsQuantity)
       .slice(0, EXTRA_MOVIE_COUNT);
 
     const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
