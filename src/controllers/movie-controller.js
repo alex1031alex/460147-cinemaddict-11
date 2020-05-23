@@ -19,10 +19,10 @@ export default class MovieController {
     this._closePopup = this._closePopup.bind(this);
     this._film = null;
     this._commentsModel = null;
-    this._emojiClickHandler = this._emojiClickHandler.bind(this);
-    this._watchlistButtonClickHandler = this._watchlistButtonClickHandler.bind(this);
-    this._watchedButtonClickHandler = this._watchedButtonClickHandler.bind(this);
-    this._favoriteButtonClickHandler = this._favoriteButtonClickHandler.bind(this);
+    this._onEmojiClickHandler = this._onEmojiClickHandler.bind(this);
+    this._onWatchlistButtonClickHandler = this._onWatchlistButtonClickHandler.bind(this);
+    this._onWatchedButtonClickHandler = this._onWatchedButtonClickHandler.bind(this);
+    this._onFavoriteButtonClickHandler = this._onFavoriteButtonClickHandler.bind(this);
     this._showPopup = this._showPopup.bind(this);
   }
 
@@ -42,23 +42,23 @@ export default class MovieController {
     this._commentsModel = null;
   }
 
-  _emojiClickHandler(evt) {
+  _onEmojiClickHandler(evt) {
     this._popupComponent.setEmojiById(evt.target.id);
   }
 
-  _watchlistButtonClickHandler() {
+  _onWatchlistButtonClickHandler() {
     this._onDataChange(this._film, Object.assign({}, this._film, {
       isAtWatchlist: !this._film.isAtWatchlist
     }));
   }
 
-  _watchedButtonClickHandler() {
+  _onWatchedButtonClickHandler() {
     this._onDataChange(this._film, Object.assign({}, this._film, {
       isWatched: !this._film.isWatched
     }));
   }
 
-  _favoriteButtonClickHandler() {
+  _onFavoriteButtonClickHandler() {
     this._onDataChange(this._film, Object.assign({}, this._film, {
       isFavorite: !this._film.isFavorite
     }));
@@ -66,27 +66,27 @@ export default class MovieController {
 
   _setPopupButtonClickHandlers() {
     this._popupComponent.setCloseButtonClickHandler(this._closePopup);
-    this._popupComponent.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
-    this._popupComponent.setWatchedButtonClickHandler(this._watchedButtonClickHandler);
-    this._popupComponent.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
-    this._popupComponent.setEmojiClickHandler(this._emojiClickHandler);
+    this._popupComponent.setWatchlistButtonClickHandler(this._onWatchlistButtonClickHandler);
+    this._popupComponent.setWatchedButtonClickHandler(this._onWatchedButtonClickHandler);
+    this._popupComponent.setFavoriteButtonClickHandler(this._onFavoriteButtonClickHandler);
+    this._popupComponent.setEmojiClickHandler(this._onEmojiClickHandler);
   }
 
   _setFilmCardButtonClickHandlers() {
     this._filmCardComponent.setPopupOpenHandler(this._showPopup);
     this._filmCardComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._watchlistButtonClickHandler();
+      this._onWatchlistButtonClickHandler();
     });
 
     this._filmCardComponent.setWatchedButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._watchedButtonClickHandler();
+      this._onWatchedButtonClickHandler();
     });
 
     this._filmCardComponent.setFavoriteButtonClickHandler((evt) => {
       evt.preventDefault();
-      this._favoriteButtonClickHandler();
+      this._onFavoriteButtonClickHandler();
     });
   }
 
@@ -100,7 +100,6 @@ export default class MovieController {
     }
 
     const comments = this._commentsModel.getComments();
-    console.log(comments);
     const oldPopupComponent = this._popupComponent;
 
     this._popupComponent = new FilmPopupComponent(this._film, comments);
