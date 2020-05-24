@@ -68,14 +68,18 @@ export default class MovieController {
   _onCtrlEnterKeyDownHandler(evt) {
     if (evt.ctrlKey && evt.key === `Enter`) {
       const emojiContainer = this._popupComponent.getEmojiContainer();
-      const emojiType = emojiContainer.firstChild.dataset.type;
-      const commentText = this._popupComponent.getCommentTextInputElement().value;
-      const comment = {
-        emoji: emojiType,
-        message: commentText.trim(),
-      };
+      const commentText = this._popupComponent.getCommentTextInputElement().value.trim();
 
-      this._commentsModel.addComment(comment);
+      if (emojiContainer.innerHTML !== `` && commentText !== ``) {
+        const emojiType = emojiContainer.firstChild.dataset.type;
+
+        const comment = {
+          emoji: emojiType,
+          message: commentText,
+        };
+  
+        this._commentsModel.addComment(comment);
+      }
     }
   }
 
