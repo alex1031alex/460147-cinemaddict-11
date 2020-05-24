@@ -1,8 +1,10 @@
 import {formatDateTime} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
+import {encode} from 'he';
 
 const createCommentTemplate = (comment) => {
   const {emoji, date, author, message} = comment;
+  const encodedMessage = encode(message);
   const fullCommentDate = formatDateTime(date);
 
   return (
@@ -11,7 +13,7 @@ const createCommentTemplate = (comment) => {
       <img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">
       </span>
       <div>
-        <p class="film-details__comment-text">${message}</p>
+        <p class="film-details__comment-text">${encodedMessage}</p>
         <p class="film-details__comment-info">
           <span class="film-details__comment-author">${author}</span>
           <span class="film-details__comment-day">${fullCommentDate}</span>
