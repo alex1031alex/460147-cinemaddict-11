@@ -77,7 +77,7 @@ export default class MovieController {
           emoji: emojiType,
           message: commentText,
         };
-  
+
         this._commentsModel.addComment(comment);
       }
     }
