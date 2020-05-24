@@ -158,7 +158,7 @@ const createMovieDetailsTemplate = (film, filmComments) => {
                   value="smile"
                 >
                 <label class="film-details__emoji-label" for="emoji-smile">
-                  <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+                  <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji" data-type="smile">
                 </label>
                 <input
                   class="film-details__emoji-item visually-hidden"
@@ -168,7 +168,7 @@ const createMovieDetailsTemplate = (film, filmComments) => {
                   value="sleeping"
                 >
                 <label class="film-details__emoji-label" for="emoji-sleeping">
-                  <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+                  <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji" data-type="sleeping">
                 </label>
                 <input
                   class="film-details__emoji-item visually-hidden"
@@ -178,7 +178,7 @@ const createMovieDetailsTemplate = (film, filmComments) => {
                   value="puke"
                 >
                 <label class="film-details__emoji-label" for="emoji-puke">
-                  <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+                  <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji" data-type="puke">
                 </label>
                 <input
                   class="film-details__emoji-item visually-hidden"
@@ -188,7 +188,7 @@ const createMovieDetailsTemplate = (film, filmComments) => {
                   value="angry"
                 >
                 <label class="film-details__emoji-label" for="emoji-angry">
-                  <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+                  <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji" data-type="angry">
                 </label>
               </div>
             </div>
@@ -222,6 +222,14 @@ export default class FilmPopup extends AbstractSmartComponent {
 
   getCommentsList() {
     return this.getElement().querySelector(`.film-details__comments-list`);
+  }
+
+  getEmojiContainer() {
+    return this.getElement().querySelector(`.film-details__add-emoji-label`);
+  }
+
+  getCommentTextInputElement() {
+    return this.getElement().querySelector(`.film-details__comment-input`);
   }
 
   setCloseButtonClickHandler(handler) {
@@ -269,13 +277,5 @@ export default class FilmPopup extends AbstractSmartComponent {
     });
 
     this._emojiClickHandler = handler;
-  }
-
-  recoveryListeners() {
-    this.setCloseButtonClickHandler(this._closeButtonClickHandler);
-    this.setWatchlistButtonClickHandler(this._watchlistButtonClickHandler);
-    this.setWatchedButtonClickHandler(this._watchedButtonClickHandler);
-    this.setFavoriteButtonClickHandler(this._favoriteButtonClickHandler);
-    this.setEmojiClickHandler(this._emojiClickHandler);
   }
 }

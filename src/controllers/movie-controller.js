@@ -23,6 +23,7 @@ export default class MovieController {
     this._onWatchlistButtonClickHandler = this._onWatchlistButtonClickHandler.bind(this);
     this._onWatchedButtonClickHandler = this._onWatchedButtonClickHandler.bind(this);
     this._onFavoriteButtonClickHandler = this._onFavoriteButtonClickHandler.bind(this);
+    this._onCtrlEnterKeyDownHandler = this._onCtrlEnterKeyDownHandler.bind(this);
     this._showPopup = this._showPopup.bind(this);
   }
 
@@ -64,12 +65,27 @@ export default class MovieController {
     }));
   }
 
+  _onCtrlEnterKeyDownHandler(evt) {
+    if (evt.ctrlKey && evt.key === `Enter`) {
+      const emojiContainer = this._popupComponent.getEmojiContainer();
+      const emojiType = emojiContainer.firstChild.dataset.type;
+      const commentText = this._popupComponent.getCommentTextInputElement().value;
+      const comment = {
+        emoji: emojiType,
+        message: commentText.trim(),
+      };
+
+      this._commentsModel.addComment(comment);
+    }
+  }
+
   _setPopupButtonClickHandlers() {
     this._popupComponent.setCloseButtonClickHandler(this._closePopup);
     this._popupComponent.setWatchlistButtonClickHandler(this._onWatchlistButtonClickHandler);
     this._popupComponent.setWatchedButtonClickHandler(this._onWatchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(this._onFavoriteButtonClickHandler);
     this._popupComponent.setEmojiClickHandler(this._onEmojiClickHandler);
+    document.addEventListener(`keydown`, this._onCtrlEnterKeyDownHandler);
   }
 
   _setFilmCardButtonClickHandlers() {
@@ -153,8 +169,11 @@ export default class MovieController {
 
   destroy() {
     removeComponent(this._filmCardComponent);
-    removeComponent(this._popupComponent);
-    document.removeEventListener(`keydown`, this._onEscKeyDown);
+
+    if (this._popupComponent) {
+      removeComponent(this._popupComponent);
+      document.removeEventListener(`keydown`, this._onEscKeyDown);
+    }
   }
 
   setDefaultView() {

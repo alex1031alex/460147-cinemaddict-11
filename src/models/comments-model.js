@@ -1,3 +1,4 @@
+import {getRandomNumber} from '../utils/common.js';
 export default class CommentsModel {
   constructor() {
     this._comments = [];
@@ -16,21 +17,23 @@ export default class CommentsModel {
   }
 
   addComment(comment) {
+    comment.id = getRandomNumber(100, 25000);
+    comment.date = new Date();
+    comment.author = `John Dow`;
+
     this._comments = [].concat(this._comments, comment);
     this._callHandlers(this._dataChangeHandlers);
   }
 
   deleteComment(id) {
-    console.log(this._comments);
-    const index = this._comments.findIndex((comment) => comment.id === id );
-    console.log(index);
+    const index = this._comments.findIndex((comment) => comment.id === id);
+
     if (index === -1) {
       return false;
     }
 
     this._comments = [].concat(this._comments.slice(0, index), this._comments.slice(index + 1));
-    console.log(this._comments);
-    console.log(this._dataChangeHandlers);
+
     this._callHandlers(this._dataChangeHandlers);
 
     return true;
