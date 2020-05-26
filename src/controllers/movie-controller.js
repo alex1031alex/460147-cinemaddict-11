@@ -27,7 +27,7 @@ export default class MovieController {
     this._showPopup = this._showPopup.bind(this);
   }
 
-  getId() {
+  getFilmId() {
     return this._film.id;
   }
 

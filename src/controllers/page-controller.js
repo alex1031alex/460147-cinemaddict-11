@@ -26,7 +26,7 @@ export default class PageController {
 
     if (isSuccess) {
       this._showedMovieControllers.forEach((controller) => {
-        if (controller.getId() === oldData.id) {
+        if (controller.getFilmId() === oldData.id) {
           controller.render(newData);
         }
       });
