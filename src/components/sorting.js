@@ -6,19 +6,29 @@ export const SortType = {
   RATING: `rating`,
 };
 
-const createSortingTemplate = () => (
-  `<ul class="sort">
-    <li>
-      <a href="#" data-sort-type="${SortType.DEFAULT}" class="sort__button sort__button--active">Sort by default</a>
-    </li>
-    <li>
-      <a href="#" data-sort-type="${SortType.DATE}" class="sort__button">Sort by date</a>
-    </li>
-    <li>
-      <a href="#" data-sort-type="${SortType.RATING}" class="sort__button">Sort by rating</a>
-    </li>
-  </ul>`
-);
+const createSortingTemplate = (activeSortType) => {
+  const createSortingMarkup = (sortType) => {
+    const activeClass = sortType === activeSortType ? `sort__button--active` : ``;
+    return (
+      `<li>
+        <a href="#" data-sort-type="${sortType}" class="sort__button ${activeClass}">Sort by ${sortType}</a>
+      </li>`
+    );
+  };
+
+  const sortTypes = Object.values(SortType);
+  const sortingMarkup = sortTypes
+    .map((sortType) => {
+      return createSortingMarkup(sortType);
+    })
+    .join(`\n`);
+
+  return (
+    `<ul class="sort">
+      ${sortingMarkup}
+    </ul>`
+  );
+};
 
 export default class Sorting extends AbstractComponent {
   constructor() {
@@ -28,7 +38,7 @@ export default class Sorting extends AbstractComponent {
   }
 
   getTemplate() {
-    return createSortingTemplate();
+    return createSortingTemplate(this._currentSortType);
   }
 
   getSortType() {
