@@ -19,19 +19,11 @@ export default class Sorting extends AbstractComponent {
     return createSortingTemplate();
   }
 
-  getSortButtons() {
-    return this.getElement().querySelectorAll(`.sort__button`);
+  getSortType() {
+
   }
 
-  getSortByDateButton() {
-    return this.getElement().querySelector(`.sort__button--date`);
-  }
+  setSortTypeChangeHandler(handler) {
 
-  getSortByRatingButton() {
-    return this.getElement().querySelector(`.sort__button--rating`);
-  }
-
-  getSortByDefaultButton() {
-    return this.getElement().querySelector(`.sort__button--default`);
   }
 }
