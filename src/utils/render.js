@@ -21,7 +21,7 @@ const render = (container, component, place = `beforeend`) => {
       parentElement.append(component.getElement());
       parentElement.append(nextElement);
       break;
-    }    
+    }
     case PlaceForRender.AFTERBEGIN:
       container.prepend(component.getElement());
       break;

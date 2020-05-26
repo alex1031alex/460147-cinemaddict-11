@@ -62,7 +62,6 @@ export default class Sorting extends AbstractComponent {
       this._currentSortType = sortType;
 
       handler(this._currentSortType);
-    })
-
+    });
   }
 }
