@@ -1,23 +1,20 @@
 import {FilterType} from '../const.js';
 
 const getMoviesByFilter = (movies, filterType) => {
-  let movieList = [];
-
   switch (filterType) {
-    case FilterType.ALL_MOVIES:
-      movieList = movies;
-      break;
-    case FilterType.WATCHLIST:
-      movieList = movies.filter((movie) => movie.isAtWatchlist);
-      break;
-    case FilterType.HISTORY:
-      movieList = movies.filter((movie) => movie.isWatched);
-      break;
-    case FilterType.FAVORITES:
-      movieList = movies.filter((movie) => movie.isFavorite);
+    case FilterType.WATCHLIST: {
+      return movies.filter((movie) => movie.isAtWatchlist);
+    }
+    case FilterType.HISTORY: {
+      return movies.filter((movie) => movie.isWatched);
+    }
+    case FilterType.FAVORITES: {
+      return movies.filter((movie) => movie.isFavorite);
+    }
+    default: {
+      return movies;
+    }
   }
-
-  return movieList;
 };
 
 export {getMoviesByFilter};
