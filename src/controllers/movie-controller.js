@@ -23,7 +23,7 @@ export default class MovieController {
     this._onWatchlistButtonClickHandler = this._onWatchlistButtonClickHandler.bind(this);
     this._onWatchedButtonClickHandler = this._onWatchedButtonClickHandler.bind(this);
     this._onFavoriteButtonClickHandler = this._onFavoriteButtonClickHandler.bind(this);
-    this._onCtrlEnterKeyDownHandler = this._onCtrlEnterKeyDownHandler.bind(this);
+    this._onAddComment = this._onAddComment.bind(this);
     this._showPopup = this._showPopup.bind(this);
   }
 
@@ -65,7 +65,7 @@ export default class MovieController {
     }));
   }
 
-  _onCtrlEnterKeyDownHandler(evt) {
+  _onAddComment(evt) {
     if (evt.ctrlKey && evt.key === `Enter`) {
       const emojiContainer = this._popupComponent.getEmojiContainer();
       const commentText = this._popupComponent.getCommentTextInputElement().value.trim();
@@ -89,7 +89,7 @@ export default class MovieController {
     this._popupComponent.setWatchedButtonClickHandler(this._onWatchedButtonClickHandler);
     this._popupComponent.setFavoriteButtonClickHandler(this._onFavoriteButtonClickHandler);
     this._popupComponent.setEmojiClickHandler(this._onEmojiClickHandler);
-    document.addEventListener(`keydown`, this._onCtrlEnterKeyDownHandler);
+    document.addEventListener(`keydown`, this._onAddComment);
   }
 
   _setFilmCardButtonClickHandlers() {
