@@ -10,7 +10,7 @@ const createMovieCardTemplate = (film) => {
     duration,
     genres,
     rating,
-    comments,
+    commentsQuantity,
     isAtWatchlist,
     isWatched,
     isFavorite,
@@ -19,7 +19,7 @@ const createMovieCardTemplate = (film) => {
   const formattedGenres = capitalizeWords(genres).join(`, `);
   const formattedRating = formatRating(rating);
   const brief = cutText(description, 140);
-  const commentOrComments = comments.length === 1 ? `comment` : `comments`;
+  const commentOrComments = commentsQuantity === 1 ? `comment` : `comments`;
   const watchlistActiveClass = isAtWatchlist ? `film-card__controls-item--active` : ``;
   const historyActiveClass = isWatched ? `film-card__controls-item--active` : ``;
   const favoriteActiveClass = isFavorite ? `film-card__controls-item--active` : ``;
@@ -37,7 +37,7 @@ const createMovieCardTemplate = (film) => {
       <p class="film-card__description">
         ${brief}
       </p>
-      <a class="film-card__comments">${comments.length} ${commentOrComments} </a>
+      <a class="film-card__comments">${commentsQuantity} ${commentOrComments} </a>
       <form class="film-card__controls">
         <button
           class="film-card__controls-item

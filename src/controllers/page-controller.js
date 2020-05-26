@@ -8,26 +8,29 @@ const INITIAL_MOVIE_COUNT = 5;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 export default class PageController {
-  constructor(boardComponent) {
-    this._movies = [];
+  constructor(boardComponent, moviesModel) {
     this._board = boardComponent;
+    this._moviesModel = moviesModel;
     this._ratedMovieElement = boardComponent.getRatedMovieElement();
     this._commentMovieElement = boardComponent.getCommentMovieElement();
     this._mainMovieElement = boardComponent.getMainMovieElement();
-    this._showMoreButtonComponent = new ShowMoreButtonComponent();
+    this._showMoreButtonComponent = null;
     this._showedMovieControllers = [];
+    this._filterChangeHandler = this._filterChangeHandler.bind(this);
+    this._onShowMoreButtonClickHandler = this._onShowMoreButtonClickHandler.bind(this);
+    this._moviesModel.setFilterChangeHandler(this._filterChangeHandler);
   }
 
-  _onDataChange(movieController, oldData, newData) {
-    const index = this._movies.findIndex((it) => it === oldData);
+  _onDataChange(oldData, newData) {
+    const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
 
-    if (index === -1) {
-      return;
+    if (isSuccess) {
+      this._showedMovieControllers.forEach((controller) => {
+        if (controller.getFilmId() === oldData.id) {
+          controller.render(newData);
+        }
+      });
     }
-
-    this._movies = [].concat(this._movies.slice(0, index), newData, this._movies.slice(index + 1));
-
-    movieController.render(this._movies[index]);
   }
 
   _onViewChange() {
@@ -50,42 +53,61 @@ export default class PageController {
     this._showedMovieControllers = this._showedMovieControllers.concat(movieControllers);
   }
 
+  _onShowMoreButtonClickHandler() {
+    const prevMovieCount = movieShowingCount;
+    movieShowingCount += MOVIE_COUNT_BY_BUTTON;
+    const showingFilms = this._moviesModel.getMovies().slice(prevMovieCount, movieShowingCount);
+
+    this._renderMoviesBlock(this._mainMovieElement, showingFilms);
+
+    if (movieShowingCount >= this._moviesModel.getMovies().length) {
+      removeComponent(this._showMoreButtonComponent);
+      this._showMoreButtonComponent = null;
+    }
+  }
+
   _renderShowMoreButton() {
-    if (movieShowingCount >= this._movies.length) {
+    if (movieShowingCount >= this._moviesModel.getMovies().length) {
       return;
     }
 
+    this._showMoreButtonComponent = new ShowMoreButtonComponent();
     render(this._mainMovieElement, this._showMoreButtonComponent, `afterend`);
 
-    this._showMoreButtonComponent.setClickHandler(() => {
-      const prevMovieCount = movieShowingCount;
-      movieShowingCount += MOVIE_COUNT_BY_BUTTON;
-      const showingFilms = this._movies.slice(prevMovieCount, movieShowingCount);
-
-      this._renderMoviesBlock(this._mainMovieElement, showingFilms);
-
-      if (movieShowingCount >= this._movies.length) {
-        removeComponent(this._showMoreButtonComponent);
-      }
-    });
+    this._showMoreButtonComponent.setClickHandler(this._onShowMoreButtonClickHandler);
   }
 
-  render(movies) {
-    this._movies = movies;
-
-    const topRatedShowingFilms = this._movies
+  render() {
+    const movies = this._moviesModel.getMovies();
+    const topRatedShowingFilms = movies
       .sort((a, b) => b.rating - a.rating)
       .slice(0, EXTRA_MOVIE_COUNT);
 
-    const mostCommentedShowingFilms = this._movies
-      .sort((a, b) => b.comments.length - a.comments.length)
+    const mostCommentedShowingFilms = movies
+      .sort((a, b) => b.commentsQuantity - a.commentsQuantity)
       .slice(0, EXTRA_MOVIE_COUNT);
 
-    const mainShowingFilms = this._movies.slice(0, INITIAL_MOVIE_COUNT);
+    const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
 
     this._renderMoviesBlock(this._ratedMovieElement, topRatedShowingFilms);
     this._renderMoviesBlock(this._commentMovieElement, mostCommentedShowingFilms);
     this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
-    this._renderShowMoreButton();
+
+    if (movieShowingCount < movies.length && !this._showMoreButtonComponent) {
+      this._renderShowMoreButton();
+    }
+
+    if (movieShowingCount >= movies.length && this._showMoreButtonComponent) {
+      removeComponent(this._showMoreButtonComponent);
+      this._showMoreButtonComponent = null;
+    }
+  }
+
+  _filterChangeHandler() {
+    this._showedMovieControllers.forEach((controller) => controller.destroy());
+    this._showedMovieControllers = [];
+    movieShowingCount = INITIAL_MOVIE_COUNT;
+
+    this.render();
   }
 }

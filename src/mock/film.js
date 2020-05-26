@@ -1,5 +1,4 @@
 import {getRandomNumber, getRandomArrayItem} from '../utils/common.js';
-import {generateComments} from './comment.js';
 
 const filmNames = [
   `Made for Each Other`,
@@ -88,6 +87,16 @@ const generateGenres = () => {
   return genres;
 };
 
+let idCounter = 0;
+
+const generateId = () => {
+  return idCounter++;
+};
+
+const generateCommentsQuantity = () => {
+  return getRandomNumber(0, 5);
+};
+
 const generateFilm = () => {
   const name = getRandomArrayItem(filmNames);
   const poster = getRandomArrayItem(posters);
@@ -96,9 +105,11 @@ const generateFilm = () => {
   const duration = generateFilmDurationData();
   const genres = generateGenres();
   const rating = +(getRandomNumber(10, 99) / 10).toFixed(1);
-  const comments = generateComments();
+  const id = generateId();
+  const commentsQuantity = generateCommentsQuantity();
 
   return {
+    id,
     name,
     poster,
     description,
@@ -106,7 +117,7 @@ const generateFilm = () => {
     duration,
     genres,
     rating,
-    comments,
+    commentsQuantity,
     isAtWatchlist: getRandomNumber(0, 3) < 1,
     isWatched: getRandomNumber(0, 3) < 1,
     isFavorite: getRandomNumber(0, 3) < 1,

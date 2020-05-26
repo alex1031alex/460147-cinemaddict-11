@@ -1,7 +1,9 @@
 import FilmComponent from '../components/film.js';
 import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
-import {render, appendChildComponent, removeChildElement, replaceComponent} from '../utils/render.js';
+import CommentsModel from '../models/comments-model.js';
+import {generateComments} from '../mock/comment.js';
+import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
 const page = document.querySelector(`body`);
@@ -16,15 +18,17 @@ export default class MovieController {
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._closePopup = this._closePopup.bind(this);
     this._film = null;
+    this._commentsModel = null;
+    this._onEmojiClickHandler = this._onEmojiClickHandler.bind(this);
+    this._onWatchlistButtonClickHandler = this._onWatchlistButtonClickHandler.bind(this);
+    this._onWatchedButtonClickHandler = this._onWatchedButtonClickHandler.bind(this);
+    this._onFavoriteButtonClickHandler = this._onFavoriteButtonClickHandler.bind(this);
+    this._onAddComment = this._onAddComment.bind(this);
+    this._showPopup = this._showPopup.bind(this);
   }
 
-  _renderComments(popup) {
-    const comments = popup.getComments();
-    const commentsList = popup.getCommentsList();
-    comments.forEach((comment) => {
-      const commentElement = new CommentComponent(comment);
-      appendChildComponent(commentsList, commentElement);
-    });
+  getFilmId() {
+    return this._film.id;
   }
 
   _onEscKeyDown(evt) {
@@ -36,77 +40,148 @@ export default class MovieController {
   _closePopup() {
     removeChildElement(page, this._popupComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+    this._commentsModel = null;
   }
 
-  render(film) {
-    this._film = film;
-    const oldFilmCardComponent = this._filmCardComponent;
-    const oldPopupComponent = this._popupComponent;
+  _onEmojiClickHandler(evt) {
+    this._popupComponent.setEmojiById(evt.target.id);
+  }
 
-    this._filmCardComponent = new FilmComponent(this._film);
-    this._popupComponent = new FilmPopupComponent(this._film);
+  _onWatchlistButtonClickHandler() {
+    this._onDataChange(this._film, Object.assign({}, this._film, {
+      isAtWatchlist: !this._film.isAtWatchlist
+    }));
+  }
 
-    const showPopup = () => {
-      this._onViewChange();
-      appendChildComponent(page, this._popupComponent);
-      document.addEventListener(`keydown`, this._onEscKeyDown);
-    };
+  _onWatchedButtonClickHandler() {
+    this._onDataChange(this._film, Object.assign({}, this._film, {
+      isWatched: !this._film.isWatched
+    }));
+  }
 
-    const emojiClickHandler = (evt) => {
-      this._popupComponent.setEmojiById(evt.target.id);
-    };
+  _onFavoriteButtonClickHandler() {
+    this._onDataChange(this._film, Object.assign({}, this._film, {
+      isFavorite: !this._film.isFavorite
+    }));
+  }
 
-    const watchlistButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
-        isAtWatchlist: !this._film.isAtWatchlist
-      }));
-    };
+  _onAddComment(evt) {
+    if (evt.ctrlKey && evt.key === `Enter`) {
+      const emojiContainer = this._popupComponent.getEmojiContainer();
+      const commentText = this._popupComponent.getCommentTextInputElement().value.trim();
 
-    const watchedButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
-        isWatched: !this._film.isWatched
-      }));
-    };
+      if (emojiContainer.innerHTML !== `` && commentText !== ``) {
+        const emojiType = emojiContainer.firstChild.dataset.type;
 
-    const favoriteButtonClickHandler = () => {
-      this._onDataChange(this, this._film, Object.assign({}, this._film, {
-        isFavorite: !this._film.isFavorite
-      }));
-    };
+        const comment = {
+          emoji: emojiType,
+          message: commentText,
+        };
 
-    this._filmCardComponent.setPopupOpenHandler(showPopup);
+        this._commentsModel.addComment(comment);
+      }
+    }
+  }
+
+  _setPopupButtonClickHandlers() {
+    this._popupComponent.setCloseButtonClickHandler(this._closePopup);
+    this._popupComponent.setWatchlistButtonClickHandler(this._onWatchlistButtonClickHandler);
+    this._popupComponent.setWatchedButtonClickHandler(this._onWatchedButtonClickHandler);
+    this._popupComponent.setFavoriteButtonClickHandler(this._onFavoriteButtonClickHandler);
+    this._popupComponent.setEmojiClickHandler(this._onEmojiClickHandler);
+    document.addEventListener(`keydown`, this._onAddComment);
+  }
+
+  _setFilmCardButtonClickHandlers() {
+    this._filmCardComponent.setPopupOpenHandler(this._showPopup);
     this._filmCardComponent.setWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
-      watchlistButtonClickHandler();
+      this._onWatchlistButtonClickHandler();
     });
 
     this._filmCardComponent.setWatchedButtonClickHandler((evt) => {
       evt.preventDefault();
-      watchedButtonClickHandler();
+      this._onWatchedButtonClickHandler();
     });
 
     this._filmCardComponent.setFavoriteButtonClickHandler((evt) => {
       evt.preventDefault();
-      favoriteButtonClickHandler();
+      this._onFavoriteButtonClickHandler();
     });
+  }
 
-    this._popupComponent.setCloseButtonClickHandler(this._closePopup);
-    this._popupComponent.setWatchlistButtonClickHandler(watchlistButtonClickHandler);
-    this._popupComponent.setWatchedButtonClickHandler(watchedButtonClickHandler);
-    this._popupComponent.setFavoriteButtonClickHandler(favoriteButtonClickHandler);
-    this._popupComponent.setEmojiClickHandler(emojiClickHandler);
+  _showPopup() {
+    this._onViewChange();
 
-    this._renderComments(this._popupComponent);
+    if (!this._commentsModel) {
+      this._commentsModel = new CommentsModel();
+      this._commentsModel.setComments(generateComments());
+      this._commentsModel.setDataChangeHandler(this._onCommentChange.bind(this));
+    }
 
-    if (oldFilmCardComponent && oldPopupComponent) {
-      replaceComponent(this._filmCardComponent, oldFilmCardComponent);
+    const comments = this._commentsModel.getComments();
+    const oldPopupComponent = this._popupComponent;
+
+    this._popupComponent = new FilmPopupComponent(this._film, comments);
+
+    if (comments.length > 0) {
+      const commentsList = this._popupComponent.getCommentsList();
+
+      comments.forEach((comment) => {
+        const commentComponent = new CommentComponent(comment);
+        appendChildComponent(commentsList, commentComponent);
+        commentComponent.setDeleteButtonHandler((evt) => {
+          evt.preventDefault();
+          const id = commentComponent.getCommentId();
+          this._commentsModel.deleteComment(id);
+        });
+      });
+    }
+
+    this._setPopupButtonClickHandlers();
+
+    if (oldPopupComponent) {
       replaceComponent(this._popupComponent, oldPopupComponent);
+    }
+
+    appendChildComponent(page, this._popupComponent);
+    document.addEventListener(`keydown`, this._onEscKeyDown);
+  }
+
+  _onCommentChange() {
+    this._onDataChange(this._film, Object.assign({}, this._film, {
+      commentsQuantity: this._commentsModel.getComments().length
+    }));
+    this._showPopup();
+  }
+
+  render(film) {
+    this._film = film;
+
+    const oldFilmCardComponent = this._filmCardComponent;
+
+    this._filmCardComponent = new FilmComponent(this._film);
+
+    this._setFilmCardButtonClickHandlers();
+
+    if (oldFilmCardComponent) {
+      replaceComponent(this._filmCardComponent, oldFilmCardComponent);
     } else {
       render(this._container, this._filmCardComponent);
     }
   }
 
+  destroy() {
+    removeComponent(this._filmCardComponent);
+
+    if (this._popupComponent) {
+      removeComponent(this._popupComponent);
+      document.removeEventListener(`keydown`, this._onEscKeyDown);
+    }
+  }
+
   setDefaultView() {
-    this._closePopup();
+    removeChildElement(page, this._popupComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 }

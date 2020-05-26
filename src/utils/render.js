@@ -34,7 +34,7 @@ const appendChildComponent = (container, childComponent) => {
 };
 
 const removeChildElement = (container, childComponent) => {
-  if (childComponent.getElement().parentElement === container) {
+  if (childComponent && container && childComponent.getElement().parentElement === container) {
     container.removeChild(childComponent.getElement());
   }
 };
@@ -51,4 +51,12 @@ const replaceComponent = (newComponent, oldComponent) => {
   }
 };
 
-export {createElement, render, removeComponent, appendChildComponent, removeChildElement, replaceComponent};
+export {
+  PlaceForRender,
+  createElement,
+  render,
+  removeComponent,
+  appendChildComponent,
+  removeChildElement,
+  replaceComponent
+};
