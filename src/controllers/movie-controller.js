@@ -124,9 +124,9 @@ export default class MovieController {
 
     this._popupComponent = new FilmPopupComponent(this._film, comments);
 
-    const commentsList = this._popupComponent.getCommentsList();
-
     if (comments.length > 0) {
+      const commentsList = this._popupComponent.getCommentsList();
+
       comments.forEach((comment) => {
         const commentComponent = new CommentComponent(comment);
         appendChildComponent(commentsList, commentComponent);
