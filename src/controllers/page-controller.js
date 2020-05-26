@@ -1,12 +1,31 @@
-import SortingComponent from '../components/sorting.js';
+import SortingComponent, {SortType} from '../components/sorting.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
-import {render, removeComponent} from '../utils/render.js';
+import {render, removeComponent, replaceComponent} from '../utils/render.js';
 import MovieController from './movie-controller.js';
 
 const MOVIE_COUNT_BY_BUTTON = 5;
 const EXTRA_MOVIE_COUNT = 2;
 const INITIAL_MOVIE_COUNT = 5;
 let movieShowingCount = INITIAL_MOVIE_COUNT;
+
+const getSortedMovies = (movies, sortType) => {
+  const showingMovies = movies.slice();
+  let sortedMovies = [];
+
+  switch (sortType) {
+    case SortType.DEFAULT: 
+      sortedMovies = showingMovies;
+      break;
+    case SortType.DATE:
+      sortedMovies = showingMovies.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
+      break;
+    case SortType.RATING:
+      sortedMovies = showingMovies.sort((a, b) => b.rating - a.rating);
+      break;
+  }
+
+  return sortedMovies;
+};
 
 export default class PageController {
   constructor(boardComponent, moviesModel) {
@@ -80,8 +99,14 @@ export default class PageController {
   }
 
   render() {
+    const oldSortingComponent = this._sortingComponent;
     this._sortingComponent = new SortingComponent();
-    render(this._boardComponent.getElement(), this._sortingComponent, `beforebegin`);
+
+    if (oldSortingComponent) {
+      replaceComponent(this._sortingComponent, oldSortingComponent);
+    } else {
+      render(this._boardComponent.getElement(), this._sortingComponent, `beforebegin`);
+    }
 
     const movies = this._moviesModel.getMovies();
     const topRatedShowingFilms = movies
@@ -92,11 +117,18 @@ export default class PageController {
       .sort((a, b) => b.commentsQuantity - a.commentsQuantity)
       .slice(0, EXTRA_MOVIE_COUNT);
 
-    const mainShowingFilms = movies.slice(0, INITIAL_MOVIE_COUNT);
+    const mainShowingFilms = movies.slice(0, movieShowingCount);
 
     this._renderMoviesBlock(this._ratedMovieElement, topRatedShowingFilms);
     this._renderMoviesBlock(this._commentMovieElement, mostCommentedShowingFilms);
     this._renderMoviesBlock(this._mainMovieElement, mainShowingFilms);
+
+    this._sortingComponent.setSortTypeChangeHandler((sortType) => {
+      this._mainMovieElement.innerHTML = ``;
+
+      const sortedMovies = getSortedMovies(movies, sortType);
+      this._renderMoviesBlock(this._mainMovieElement, sortedMovies.slice(0, movieShowingCount));
+    });
 
     if (movieShowingCount < movies.length && !this._showMoreButtonComponent) {
       this._renderShowMoreButton();
