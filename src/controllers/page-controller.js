@@ -1,3 +1,4 @@
+import SortingComponent from '../components/sorting.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {render, removeComponent} from '../utils/render.js';
 import MovieController from './movie-controller.js';
@@ -9,11 +10,12 @@ let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 export default class PageController {
   constructor(boardComponent, moviesModel) {
-    this._board = boardComponent;
+    this._boardComponent = boardComponent;
     this._moviesModel = moviesModel;
     this._ratedMovieElement = boardComponent.getRatedMovieElement();
     this._commentMovieElement = boardComponent.getCommentMovieElement();
     this._mainMovieElement = boardComponent.getMainMovieElement();
+    this._sortingComponent = null;
     this._showMoreButtonComponent = null;
     this._showedMovieControllers = [];
     this._filterChangeHandler = this._filterChangeHandler.bind(this);
@@ -78,6 +80,9 @@ export default class PageController {
   }
 
   render() {
+    this._sortingComponent = new SortingComponent();
+    render(this._boardComponent.getElement(), this._sortingComponent, `beforebegin`);
+
     const movies = this._moviesModel.getMovies();
     const topRatedShowingFilms = movies
       .sort((a, b) => b.rating - a.rating)
