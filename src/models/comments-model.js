@@ -17,11 +17,13 @@ export default class CommentsModel {
   }
 
   addComment(comment) {
-    comment.id = getRandomNumber(100, 25000);
-    comment.date = new Date();
-    comment.author = `John Dow`;
+    const newComment = Object.assign({}, comment, {
+      id: getRandomNumber(100, 25000),
+      date: new Date(),
+      author: `John Dow`,
+    });
 
-    this._comments = [].concat(this._comments, comment);
+    this._comments = [].concat(this._comments, newComment);
     this._callHandlers(this._dataChangeHandlers);
   }
 
