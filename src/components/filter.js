@@ -3,7 +3,7 @@ import AbstractComponent from './abstract-component.js';
 const createFilterMarkup = (filter) => {
   const {name, count, checked} = filter;
   const activeClass = checked ? `main-navigation__item--active` : ``;
-  const countToShow = count > 5 || count === 0 ? `` : `<span class="main-navigation__item-count">${count}</span>`;
+  const countToShow = name === `All movies` ? `` : `<span class="main-navigation__item-count">${count}</span>`;
 
   return (
     `<a href="#${name}" class="main-navigation__item ${activeClass}">
