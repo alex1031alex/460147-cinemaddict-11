@@ -31,6 +31,7 @@ const render = (container, component, place = `beforeend`) => {
     }
     case PlaceForRender.AFTEREND: {
       container.parentElement.append(component.getElement());
+      break;
     }
   }
 };
