@@ -110,9 +110,7 @@ export default class PageController {
     const movies = this._moviesModel.getMovies();
     const sortedMovies = getSortedMovies(movies, this._sortType);
 
-    const topRatedShowingFilms = movies
-      .sort((a, b) => b.rating - a.rating)
-      .slice(0, EXTRA_MOVIE_COUNT);
+    const topRatedShowingFilms = getSortedMovies(movies, SortType.RATING).slice(0, EXTRA_MOVIE_COUNT);
 
     const mostCommentedShowingFilms = movies
       .sort((a, b) => b.commentsQuantity - a.commentsQuantity)
