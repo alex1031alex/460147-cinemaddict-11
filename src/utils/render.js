@@ -1,4 +1,5 @@
 const PlaceForRender = {
+  BEFOREBEGIN: `beforebegin`,
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`,
   AFTEREND: `afterend`,
@@ -13,14 +14,25 @@ const createElement = (template) => {
 
 const render = (container, component, place = `beforeend`) => {
   switch (place) {
-    case PlaceForRender.AFTERBEGIN:
+    case PlaceForRender.BEFOREBEGIN: {
+      const parentElement = container.parentElement;
+      container.remove();
+      parentElement.append(component.getElement());
+      parentElement.append(container);
+      break;
+    }
+    case PlaceForRender.AFTERBEGIN: {
       container.prepend(component.getElement());
       break;
-    case PlaceForRender.BEFOREEND:
+    }
+    case PlaceForRender.BEFOREEND: {
       container.append(component.getElement());
       break;
-    case PlaceForRender.AFTEREND:
+    }
+    case PlaceForRender.AFTEREND: {
       container.parentElement.append(component.getElement());
+      break;
+    }
   }
 };
 

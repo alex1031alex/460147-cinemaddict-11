@@ -1,6 +1,5 @@
 import ProfileComponent from './components/profile.js';
 import MenuComponent from './components/menu.js';
-import SortingComponent from './components/sorting.js';
 import BoardComponent from './components/board.js';
 import NoFilmsComponent from './components/no-films.js';
 import StatCounterComponent from './components/stat-counter.js';
@@ -33,10 +32,6 @@ render(main, menuComponent);
 const filterContainer = menuComponent.getElement();
 const filterController = new FilterController(filterContainer, moviesModel);
 filterController.render();
-
-const sortingComponent = new SortingComponent();
-
-render(main, sortingComponent);
 
 if (films.length > 0) {
   const boardComponent = new BoardComponent();
