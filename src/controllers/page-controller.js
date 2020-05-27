@@ -10,21 +10,18 @@ let movieShowingCount = INITIAL_MOVIE_COUNT;
 
 const getSortedMovies = (movies, sortType) => {
   const showingMovies = movies.slice();
-  let sortedMovies = [];
 
   switch (sortType) {
-    case SortType.DEFAULT:
-      sortedMovies = movies;
-      break;
-    case SortType.DATE:
-      sortedMovies = showingMovies.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
-      break;
-    case SortType.RATING:
-      sortedMovies = showingMovies.sort((a, b) => b.rating - a.rating);
-      break;
+    case SortType.DATE: {
+      return showingMovies.sort((a, b) => b.details.releaseDate - a.details.releaseDate);
+    }
+    case SortType.RATING: {
+      return showingMovies.sort((a, b) => b.rating - a.rating);
+    }
+    default: {
+      return movies;
+    }
   }
-
-  return sortedMovies;
 };
 
 export default class PageController {
