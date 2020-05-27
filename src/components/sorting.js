@@ -6,20 +6,21 @@ export const SortType = {
   RATING: `rating`,
 };
 
-const createSortingTemplate = (activeSortType) => {
-  const createSortingMarkup = (sortType) => {
-    const activeClass = sortType === activeSortType ? `sort__button--active` : ``;
-    return (
-      `<li>
-        <a href="#" data-sort-type="${sortType}" class="sort__button ${activeClass}">Sort by ${sortType}</a>
-      </li>`
-    );
-  };
+const createSortingMarkup = (sortType, isActive) => {
+  const activeClass = isActive ? `sort__button--active` : ``;
 
+  return (
+    `<li>
+      <a href="#" data-sort-type="${sortType}" class="sort__button ${activeClass}">Sort by ${sortType}</a>
+    </li>`
+  );
+};
+
+const createSortingTemplate = (activeSortType) => {
   const sortTypes = Object.values(SortType);
   const sortingMarkup = sortTypes
     .map((sortType) => {
-      return createSortingMarkup(sortType);
+      return createSortingMarkup(sortType, sortType === activeSortType);
     })
     .join(`\n`);
 
