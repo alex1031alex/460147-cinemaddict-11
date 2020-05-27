@@ -16,20 +16,22 @@ const render = (container, component, place = `beforeend`) => {
   switch (place) {
     case PlaceForRender.BEFOREBEGIN: {
       const parentElement = container.parentElement;
-      const nextElement = container;
       container.remove();
       parentElement.append(component.getElement());
-      parentElement.append(nextElement);
+      parentElement.append(container);
       break;
     }
-    case PlaceForRender.AFTERBEGIN:
+    case PlaceForRender.AFTERBEGIN: {
       container.prepend(component.getElement());
       break;
-    case PlaceForRender.BEFOREEND:
+    }
+    case PlaceForRender.BEFOREEND: {
       container.append(component.getElement());
       break;
-    case PlaceForRender.AFTEREND:
+    }
+    case PlaceForRender.AFTEREND: {
       container.parentElement.append(component.getElement());
+    }
   }
 };
 
