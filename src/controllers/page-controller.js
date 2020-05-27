@@ -142,6 +142,7 @@ export default class PageController {
     const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), sortType);
 
     this._mainMovieElement.innerHTML = ``;
+    movieShowingCount = INITIAL_MOVIE_COUNT;
     this._renderMoviesBlock(this._mainMovieElement, sortedMovies.slice(0, movieShowingCount));
   }
 
