@@ -1,3 +1,4 @@
+import API from './api.js';
 import ProfileComponent from './components/profile.js';
 import MenuComponent from './components/menu.js';
 import BoardComponent from './components/board.js';
