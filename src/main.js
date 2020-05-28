@@ -16,9 +16,10 @@ const TOTAL_MOVIE_COUNT = 20;
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
+const AUTHORIZATION = `Basic eo0w590ik29889a`;
 
 // const films = generateFilms(TOTAL_MOVIE_COUNT);
-const api = new API();
+const api = new API(AUTHORIZATION);
 
 // const watchedFilms = films.filter((film) => film.isWatched).length;
 
