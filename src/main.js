@@ -17,33 +17,39 @@ const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
 
-const films = generateFilms(TOTAL_MOVIE_COUNT);
+// const films = generateFilms(TOTAL_MOVIE_COUNT);
+const api = new API();
 
-const watchedFilms = films.filter((film) => film.isWatched).length;
+// const watchedFilms = films.filter((film) => film.isWatched).length;
 
 const moviesModel = new MoviesModel();
 
-moviesModel.setMovies(films);
+// moviesModel.setMovies(films);
 
 const menuComponent = new MenuComponent();
 
-render(header, new ProfileComponent(getUserTitle(watchedFilms)));
+// render(header, new ProfileComponent(getUserTitle(watchedFilms)));
 render(main, menuComponent);
 
 const filterContainer = menuComponent.getElement();
 const filterController = new FilterController(filterContainer, moviesModel);
 filterController.render();
 
-if (films.length > 0) {
-  const boardComponent = new BoardComponent();
-  const pageController = new PageController(boardComponent, moviesModel);
+api.getMovies()
+  .then((movies) => {
+    moviesModel.setMovies(movies);
 
-  render(main, boardComponent);
-  pageController.render(films);
-} else {
-  const noFilmsComponent = new NoFilmsComponent();
-
-  render(main, noFilmsComponent);
-}
+    if (movies.length > 0) {
+      const boardComponent = new BoardComponent();
+      const pageController = new PageController(boardComponent, moviesModel);
+    
+      render(main, boardComponent);
+      pageController.render(movies);
+    } else {
+      const noFilmsComponent = new NoFilmsComponent();
+    
+      render(main, noFilmsComponent);
+    }
+  });
 
 render(footer, new StatCounterComponent(moviesModel.getMovies().length));
