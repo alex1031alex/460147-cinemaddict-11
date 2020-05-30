@@ -4,11 +4,10 @@ import AbstractSmartComponent from './abstract-smart-component.js';
 const EMOJI_WIDTH = 55;
 const EMOJI_HEIGHT = 55;
 
-const createMovieDetailsTemplate = (film, filmComments) => {
+const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, runtime, genres, rating,
-    isAtWatchlist, isWatched, isFavorite} = film;
+    isAtWatchlist, isWatched, isFavorite, commentsQuantity} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
-  const comments = filmComments;
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
   const writersList = writers.join(`, `);
@@ -18,7 +17,6 @@ const createMovieDetailsTemplate = (film, filmComments) => {
   const isWatchlistChecked = isAtWatchlist ? `checked` : ``;
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
-  const commentsQuantity = comments.length;
   const formattedDescription  = capitalizeFirstSymbol(description);
   const formattedRuntime = formatRuntime(runtime);
 

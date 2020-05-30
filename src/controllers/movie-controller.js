@@ -1,3 +1,5 @@
+import API from '../api.js';
+import {AUTHORIZATION} from '../const.js'; 
 import FilmComponent from '../components/film.js';
 import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
@@ -115,44 +117,50 @@ export default class MovieController {
 
     if (!this._commentsModel) {
       this._commentsModel = new CommentsModel();
-      this._commentsModel.setComments(generateComments());
       this._commentsModel.setDataChangeHandler(this._onCommentChange.bind(this));
     }
 
-    const comments = this._commentsModel.getComments();
-    const oldPopupComponent = this._popupComponent;
+    const api = new API(AUTHORIZATION);
 
-    this._popupComponent = new FilmPopupComponent(this._film, comments);
+    api.getComments(this._film.id)
+      .then((data) => {
+        this._commentsModel.setComments(data);
+        const comments = this._commentsModel.getComments();
 
-    if (comments.length > 0) {
-      const commentsList = this._popupComponent.getCommentsList();
-
-      comments.forEach((comment) => {
-        const commentComponent = new CommentComponent(comment);
-        appendChildComponent(commentsList, commentComponent);
-        commentComponent.setDeleteButtonHandler((evt) => {
-          evt.preventDefault();
-          const id = commentComponent.getCommentId();
-          this._commentsModel.deleteComment(id);
-        });
+        const oldPopupComponent = this._popupComponent;
+    
+        this._popupComponent = new FilmPopupComponent(this._film, comments);
+    
+        if (comments.length > 0) {
+          const commentsList = this._popupComponent.getCommentsList();
+    
+          comments.forEach((comment) => {
+            const commentComponent = new CommentComponent(comment);
+            appendChildComponent(commentsList, commentComponent);
+            commentComponent.setDeleteButtonHandler((evt) => {
+              evt.preventDefault();
+              const id = commentComponent.getCommentId();
+              this._commentsModel.deleteComment(id);
+            });
+          });
+        }
+    
+        this._setPopupButtonClickHandlers();
+    
+        if (oldPopupComponent) {
+          replaceComponent(this._popupComponent, oldPopupComponent);
+        }
+    
+        appendChildComponent(page, this._popupComponent);
+        document.addEventListener(`keydown`, this._onEscKeyDown);
       });
-    }
-
-    this._setPopupButtonClickHandlers();
-
-    if (oldPopupComponent) {
-      replaceComponent(this._popupComponent, oldPopupComponent);
-    }
-
-    appendChildComponent(page, this._popupComponent);
-    document.addEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _onCommentChange() {
-    this._onDataChange(this._film, Object.assign({}, this._film, {
-      commentsQuantity: this._commentsModel.getComments().length
-    }));
-    this._showPopup();
+    // this._onDataChange(this._film, Object.assign({}, this._film, {
+    //   commentsQuantity: this._commentsModel.getComments().length
+    // }));
+    // this._showPopup();
   }
 
   render(film) {
