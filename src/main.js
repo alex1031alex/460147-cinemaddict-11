@@ -38,7 +38,7 @@ api.getMovies()
     
     if (movies.length > 0) {
       const boardComponent = new BoardComponent();
-      const pageController = new PageController(boardComponent, moviesModel);
+      const pageController = new PageController(boardComponent, moviesModel, api);
     
       render(main, boardComponent);
       pageController.render(movies);

@@ -25,7 +25,8 @@ const getSortedMovies = (movies, sortType) => {
 };
 
 export default class PageController {
-  constructor(boardComponent, moviesModel) {
+  constructor(boardComponent, moviesModel, api) {
+    this._api = api;
     this._boardComponent = boardComponent;
     this._moviesModel = moviesModel;
     this._ratedMovieElement = boardComponent.getRatedMovieElement();
@@ -64,7 +65,8 @@ export default class PageController {
         const movieController = new MovieController(
             container,
             this._onDataChange.bind(this),
-            this._onViewChange.bind(this)
+            this._onViewChange.bind(this),
+            this._api
         );
         movieController.render(movie);
 
