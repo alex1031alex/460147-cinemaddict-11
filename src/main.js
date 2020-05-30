@@ -1,4 +1,5 @@
 import API from './api.js';
+import {AUTHORIZATION} from './const.js';
 import ProfileComponent from './components/profile.js';
 import MenuComponent from './components/menu.js';
 import BoardComponent from './components/board.js';
@@ -16,8 +17,6 @@ const TOTAL_MOVIE_COUNT = 20;
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
-const AUTHORIZATION = `Basic eo0w590ik29889a`;
-
 
 const api = new API(AUTHORIZATION);
 
@@ -51,7 +50,3 @@ api.getMovies()
 
     render(footer, new StatCounterComponent(moviesModel.getMovies().length));
   });
-
-
-
-
