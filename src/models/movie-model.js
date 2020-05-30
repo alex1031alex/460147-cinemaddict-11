@@ -27,7 +27,6 @@ export default class MovieModel {
   }
 
   static parseMovies(data) {
-    console.log(data);
     return data.map(MovieModel.parseMovie);
   }
 }
