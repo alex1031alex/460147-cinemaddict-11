@@ -17,7 +17,7 @@ const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max - mi
 
 const getRandomArrayItem = (array) => array[getRandomNumber(0, array.length - 1)];
 
-const capitalizeWords = (words) => words.map((it) => it.replace(/^\w/, it[0].toUpperCase()));
+const capitalizeFirstSymbol = (string) => string.replace(/^\w/, string[0].toUpperCase());
 
 const formatDate = (date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 
@@ -32,6 +32,13 @@ const formatDateTime = (date) => {
   return fullCommentDate;
 };
 
+const formatDuration = (duration) => {
+  const hours = Math.trunc(duration / 60);
+  const minutes = duration % 60;
+  
+  return minutes < 10 ? `${hours}h 0${minutes}m` : `${hours}h ${minutes}m`;
+}
+
 const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
 
 const cutText = (text, length) => text.length > length ? `${text.substring(0, length)}...` : text;
@@ -39,9 +46,10 @@ const cutText = (text, length) => text.length > length ? `${text.substring(0, le
 export {
   getRandomNumber,
   getRandomArrayItem,
-  capitalizeWords,
+  capitalizeFirstSymbol,
   formatDate,
   formatDateTime,
+  formatDuration,
   formatRating,
   cutText
 };

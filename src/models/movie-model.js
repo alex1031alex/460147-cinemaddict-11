@@ -5,8 +5,7 @@ export default class MovieModel {
     this.name = data[`film_info`][`title`];
     this.poster = data[`film_info`][`poster`];
     this.description = data[`film_info`][`description`];
-    this.year = data[`film_info`][`release`];
-    this.duration = `${data.film_info.runtime / 60}h ${data.film_info.runtime % 60}min`;
+    this.duration = data.film_info.runtime;
     this.genres = data[`film_info`][`genre`];
     this.rating = data[`film_info`][`total_rating`];
     this.commentsQuantity = data.comments.length;
@@ -16,6 +15,7 @@ export default class MovieModel {
     this.details.ageRating = data[`film_info`][`age_rating`];
     this.details.originalTitle = data.film_info.alternative_title;
     this.details.releaseDate = new Date(data.film_info.release.date);
+    this.year = this.details.releaseDate.getFullYear();
     this.details.country = data.film_info.release.release_country;
     this.details.director = data.film_info.director;
     this.details.writers = data.film_info.writers;
@@ -27,6 +27,7 @@ export default class MovieModel {
   }
 
   static parseMovies(data) {
+    console.log(data);
     return data.map(MovieModel.parseMovie);
   }
 }
