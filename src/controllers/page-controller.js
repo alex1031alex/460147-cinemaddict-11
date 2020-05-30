@@ -104,8 +104,6 @@ export default class PageController {
   }
 
   render() {
-    render(this._boardComponent.getElement(), this._sortingComponent, `beforebegin`);
-
     const movies = this._moviesModel.getMovies();
     const sortedMovies = getSortedMovies(movies, this._sortType);
 
