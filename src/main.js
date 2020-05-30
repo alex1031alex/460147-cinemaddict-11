@@ -18,28 +18,25 @@ const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
 const AUTHORIZATION = `Basic eo0w590ik29889a`;
 
-// const films = generateFilms(TOTAL_MOVIE_COUNT);
-const api = new API(AUTHORIZATION);
 
-// const watchedFilms = films.filter((film) => film.isWatched).length;
+const api = new API(AUTHORIZATION);
 
 const moviesModel = new MoviesModel();
 
-// moviesModel.setMovies(films);
-
-const menuComponent = new MenuComponent();
-
-// render(header, new ProfileComponent(getUserTitle(watchedFilms)));
-render(main, menuComponent);
-
-const filterContainer = menuComponent.getElement();
-const filterController = new FilterController(filterContainer, moviesModel);
-filterController.render();
-
 api.getMovies()
-  .then((movies) => {
-    moviesModel.setMovies(movies);
-
+  .then((data) => {
+    moviesModel.setMovies(data);
+    const movies = moviesModel.getMovies();
+    const watchedMovies = movies.filter((movie) => movie.isWatched).length;
+    const menuComponent = new MenuComponent();
+    
+    render(header, new ProfileComponent(getUserTitle(watchedMovies)));
+    render(main, menuComponent);
+    
+    const filterContainer = menuComponent.getElement();
+    const filterController = new FilterController(filterContainer, moviesModel);
+    filterController.render();
+    
     if (movies.length > 0) {
       const boardComponent = new BoardComponent();
       const pageController = new PageController(boardComponent, moviesModel);
@@ -51,6 +48,10 @@ api.getMovies()
     
       render(main, noFilmsComponent);
     }
+
+    render(footer, new StatCounterComponent(moviesModel.getMovies().length));
   });
 
-render(footer, new StatCounterComponent(moviesModel.getMovies().length));
+
+
+
