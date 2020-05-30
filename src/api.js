@@ -12,7 +12,6 @@ export default class API {
     return fetch(`https://11.ecmascript.pages.academy/cinemaddict/movies`, {headers})
       .then((response) => {
         const resp = response.json();
-        // console.log(resp);
         return resp;
       })
       .then(MovieModel.parseMovies);
