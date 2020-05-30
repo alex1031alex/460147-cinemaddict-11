@@ -1,4 +1,4 @@
-import {capitalizeFirstSymbol, formatRating, formatDuration, cutText} from '../utils/common.js';
+import {capitalizeFirstSymbol, formatRating, formatRuntime, cutText} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
 
 const createMovieCardTemplate = (film) => {
@@ -7,7 +7,7 @@ const createMovieCardTemplate = (film) => {
     poster,
     description,
     year,
-    duration,
+    runtime,
     genres,
     rating,
     commentsQuantity,
@@ -23,8 +23,7 @@ const createMovieCardTemplate = (film) => {
   const watchlistActiveClass = isAtWatchlist ? `film-card__controls-item--active` : ``;
   const historyActiveClass = isWatched ? `film-card__controls-item--active` : ``;
   const favoriteActiveClass = isFavorite ? `film-card__controls-item--active` : ``;
-  const formattedDuration = formatDuration(duration);
-
+  const formattedRuntime = formatRuntime(runtime);
 
   return (
     `<article class="film-card">
@@ -32,7 +31,7 @@ const createMovieCardTemplate = (film) => {
       <p class="film-card__rating">${formattedRating}</p>
       <p class="film-card__info">
         <span class="film-card__year">${year}</span>
-        <span class="film-card__duration">${formattedDuration}</span>
+        <span class="film-card__duration">${formattedRuntime}</span>
         <span class="film-card__genre">${formattedGenres}</span>
       </p>
       <img src="./${poster}" alt="" class="film-card__poster">

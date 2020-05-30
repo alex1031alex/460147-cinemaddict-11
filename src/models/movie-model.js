@@ -5,7 +5,7 @@ export default class MovieModel {
     this.name = data[`film_info`].title;
     this.poster = data[`film_info`].poster;
     this.description = data[`film_info`].description;
-    this.duration = data[`film_info`].runtime;
+    this.runtime = data[`film_info`].runtime;
     this.genres = data[`film_info`].genre;
     this.rating = data[`film_info`][`total_rating`];
     this.commentsQuantity = data.comments.length;

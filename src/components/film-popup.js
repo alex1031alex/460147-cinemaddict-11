@@ -1,11 +1,11 @@
-import {capitalizeFirstSymbol, formatDate, formatRating} from '../utils/common.js';
+import {capitalizeFirstSymbol, formatDate, formatRuntime, formatRating} from '../utils/common.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
 const EMOJI_WIDTH = 55;
 const EMOJI_HEIGHT = 55;
 
 const createMovieDetailsTemplate = (film, filmComments) => {
-  const {name, poster, description, duration, genres, rating,
+  const {name, poster, description, runtime, genres, rating,
     isAtWatchlist, isWatched, isFavorite} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const comments = filmComments;
@@ -20,6 +20,7 @@ const createMovieDetailsTemplate = (film, filmComments) => {
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const commentsQuantity = comments.length;
   const formattedDescription  = capitalizeFirstSymbol(description);
+  const formattedRuntime = formatRuntime(runtime);
 
   return (
     `<section class="film-details">
@@ -64,7 +65,7 @@ const createMovieDetailsTemplate = (film, filmComments) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Run Time</td>
-                  <td class="film-details__cell">${duration}</td>
+                  <td class="film-details__cell">${formattedRuntime}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>

@@ -32,7 +32,7 @@ const formatDateTime = (date) => {
   return fullCommentDate;
 };
 
-const formatDuration = (duration) => {
+const formatRuntime = (duration) => {
   const hours = Math.trunc(duration / 60);
   const minutes = duration % 60;
   
@@ -49,7 +49,7 @@ export {
   capitalizeFirstSymbol,
   formatDate,
   formatDateTime,
-  formatDuration,
+  formatRuntime,
   formatRating,
   cutText
 };
