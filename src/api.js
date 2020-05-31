@@ -1,4 +1,5 @@
 import MovieModel from './models/movie-model.js';
+import CommentsModel from './models/comments-model.js';
 import {Method} from './const.js';
 
 const checkStatus = (response) => {
@@ -45,5 +46,17 @@ export default class API {
     })
       .then((response) => response.json())
       .then(MovieModel.parseMovie);
+  }
+
+  addComment(movieId, localComment) {
+    console.log(localComment);
+    console.log(JSON.stringify(localComment));
+    return this._load({
+      url: `comments/${movieId}`,
+      method: Method.POST,
+      body: JSON.stringify(localComment),
+      headers: new Headers({"Content-Type": `application/json`})
+    })
+      .then((response) => response.json());
   }
 }

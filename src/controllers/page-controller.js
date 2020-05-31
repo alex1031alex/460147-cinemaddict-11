@@ -44,19 +44,22 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-
     this._api.updateMovie(oldData.id, newData.toRAW())
-      .then((movieModel) => {
-        const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
+      .then((serverData) => {
+        this._updateMoviesModel(oldData.id, serverData);
+      });
+  }
 
-        if (isSuccess) {
-          this._showedMovieControllers.forEach((controller) => {
-            if (controller.getFilmId() === oldData.id) {
-              controller.render(movieModel);
-            }
-          });
+  _updateMoviesModel(movieId, movieModel) {
+    const isSuccess = this._moviesModel.updateMovie(movieId, movieModel);
+
+    if (isSuccess) {
+      this._showedMovieControllers.forEach((controller) => {
+        if (controller.getFilmId() === movieId) {
+          controller.render(movieModel);
         }
       });
+    }
   }
 
   _onViewChange() {
@@ -70,6 +73,7 @@ export default class PageController {
             container,
             this._onDataChange.bind(this),
             this._onViewChange.bind(this),
+            this._updateMoviesModel.bind(this),
             this._api
         );
         movieController.render(movie);

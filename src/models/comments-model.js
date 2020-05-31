@@ -17,17 +17,6 @@ export default class CommentsModel {
     this._callHandlers(this._dataChangeHandlers);
   }
 
-  addComment(comment) {
-    const newComment = Object.assign({}, comment, {
-      id: getRandomNumber(100, 25000),
-      date: new Date(),
-      author: `John Dow`,
-    });
-
-    this._comments = [].concat(this._comments, newComment);
-    this._callHandlers(this._dataChangeHandlers);
-  }
-
   deleteComment(id) {
     const index = this._comments.findIndex((comment) => comment.id === id);
 

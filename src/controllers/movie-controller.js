@@ -9,10 +9,11 @@ const ESC_KEY = `Escape`;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
-  constructor(container, onDataChange, onViewChange, api) {
+  constructor(container, onDataChange, onViewChange, updateMoviesModel, api) {
     this._container = container;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
+    this._updateMoviesModel = updateMoviesModel;
     this._filmCardComponent = null;
     this._popupComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -29,7 +30,9 @@ export default class MovieController {
   }
 
   getFilmId() {
-    return this._film.id;
+    if (this._film) {
+      return this._film.id;
+    }
   }
 
   _onEscKeyDown(evt) {
@@ -74,12 +77,17 @@ export default class MovieController {
       if (emojiContainer.innerHTML !== `` && commentText !== ``) {
         const emojiType = emojiContainer.firstChild.dataset.type;
 
-        const comment = {
-          emoji: emojiType,
-          message: commentText,
+        const localComment = {
+          comment: commentText,
+          date: new Date().toISOString(),
+          emotion: emojiType,
         };
 
-        this._commentsModel.addComment(comment);
+        this._api.addComment(this._film.id, localComment)
+          .then((response) => {
+            this._film = new MovieModel(response.movie);
+            this._commentsModel.setComments(response.comments);
+          });
       }
     }
   }
@@ -134,6 +142,11 @@ export default class MovieController {
     if (!this._commentsModel) {
       this._commentsModel = new CommentsModel();
       this._commentsModel.setDataChangeHandler(this._onCommentChange.bind(this));
+
+      this._api.getComments(this._film.id)
+      .then((data) => {
+        this._commentsModel.setComments(data);
+      });
     }
 
     const oldPopupComponent = this._popupComponent;
@@ -149,23 +162,17 @@ export default class MovieController {
     appendChildComponent(page, this._popupComponent);
     document.addEventListener(`keydown`, this._onEscKeyDown);
 
-    this._api.getComments(this._film.id)
-      .then((data) => {
-        this._commentsModel.setComments(data);
-        const comments = this._commentsModel.getComments();
-        this._renderComments(comments);
-      });
+    const comments = this._commentsModel.getComments();
+    this._renderComments(comments);
   }
 
   _onCommentChange() {
-    // this._onDataChange(this._film, Object.assign({}, this._film, {
-    //   commentsQuantity: this._commentsModel.getComments().length
-    // }));
-    // this._showPopup();
+    this._updateMoviesModel(this._film.id, this._film);
+    this._showPopup();
   }
 
-  render(film) {
-    this._film = film;
+  render(movieModel) {
+    this._film = movieModel;
 
     const oldFilmCardComponent = this._filmCardComponent;
 
