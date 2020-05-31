@@ -32,7 +32,7 @@ export default class MovieModel {
         actors: this.details.actors,
         writers: this.details.writers,
         [`age_rating`]: this.details.ageRating,
-        [`alternative_title`]: this.details.originalTitle,
+        [`alternative_title`]: this.details.originTitle,
         description: this.description,
         director: this.details.director,
         genre: this.genres,
