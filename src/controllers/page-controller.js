@@ -25,7 +25,8 @@ const getSortedMovies = (movies, sortType) => {
 };
 
 export default class PageController {
-  constructor(boardComponent, moviesModel) {
+  constructor(boardComponent, moviesModel, api) {
+    this._api = api;
     this._boardComponent = boardComponent;
     this._moviesModel = moviesModel;
     this._ratedMovieElement = boardComponent.getRatedMovieElement();
@@ -43,15 +44,18 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-    const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
+    this._api.updateMovie(oldData.id, newData)
+      .then((movieModel) => {
+        const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
 
-    if (isSuccess) {
-      this._showedMovieControllers.forEach((controller) => {
-        if (controller.getFilmId() === oldData.id) {
-          controller.render(newData);
+        if (isSuccess) {
+          this._showedMovieControllers.forEach((controller) => {
+            if (controller.getFilmId() === oldData.id) {
+              controller.render(movieModel);
+            }
+          });
         }
       });
-    }
   }
 
   _onViewChange() {
@@ -64,7 +68,8 @@ export default class PageController {
         const movieController = new MovieController(
             container,
             this._onDataChange.bind(this),
-            this._onViewChange.bind(this)
+            this._onViewChange.bind(this),
+            this._api
         );
         movieController.render(movie);
 

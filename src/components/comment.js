@@ -1,16 +1,17 @@
 import {formatDateTime} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
 import {encode} from 'he';
+import {capitalizeFirstSymbol} from '../utils/common.js';
 
-const createCommentTemplate = (comment) => {
-  const {emoji, date, author, message} = comment;
-  const encodedMessage = encode(message);
-  const fullCommentDate = formatDateTime(date);
+const createCommentTemplate = (data) => {
+  const {emotion, date, author, comment} = data;
+  const encodedMessage = encode(capitalizeFirstSymbol(comment));
+  const fullCommentDate = formatDateTime(new Date(date));
 
   return (
     `<li class="film-details__comment">
       <span class="film-details__comment-emoji">
-      <img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">
+      <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
       </span>
       <div>
         <p class="film-details__comment-text">${encodedMessage}</p>

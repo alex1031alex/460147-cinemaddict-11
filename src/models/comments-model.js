@@ -10,6 +10,7 @@ export default class CommentsModel {
   }
 
   setComments(comments) {
+    this._comments = [];
     comments.forEach((comment) => {
       this._comments.push(comment);
     });

@@ -1,3 +1,4 @@
+const AUTHORIZATION = `Basic eo0w590ik29889a`;
 const FilterType = {
   ALL_MOVIES: `All movies`,
   WATCHLIST: `Watchlist`,
@@ -5,4 +6,4 @@ const FilterType = {
   FAVORITES: `Favorites`,
 };
 
-export {FilterType};
+export {FilterType, AUTHORIZATION};
