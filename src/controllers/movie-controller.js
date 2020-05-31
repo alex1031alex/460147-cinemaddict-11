@@ -3,7 +3,6 @@ import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
 import CommentsModel from '../models/comments-model.js';
 import MovieModel from '../models/movie-model.js';
-import {generateComments} from '../mock/comment.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
@@ -159,10 +158,10 @@ export default class MovieController {
   }
 
   _onCommentChange() {
-    // this._onDataChange(this._film, Object.assign({}, this._film, {
-    //   commentsQuantity: this._commentsModel.getComments().length
-    // }));
-    // this._showPopup();
+    this._onDataChange(this._film, Object.assign({}, this._film, {
+      commentsQuantity: this._commentsModel.getComments().length
+    }));
+    this._showPopup();
   }
 
   render(film) {

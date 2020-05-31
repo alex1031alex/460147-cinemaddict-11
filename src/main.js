@@ -8,13 +8,10 @@ import NoFilmsComponent from './components/no-films.js';
 import SortingComponent from './components/sorting.js';
 import StatCounterComponent from './components/stat-counter.js';
 import MoviesModel from './models/movies-model.js';
-import {generateFilms} from './mock/film.js';
 import {getUserTitle} from './mock/profile.js';
 import {render, removeComponent} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
 import FilterController from './controllers/filter-controller.js';
-
-const TOTAL_MOVIE_COUNT = 20;
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
