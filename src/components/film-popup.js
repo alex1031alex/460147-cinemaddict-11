@@ -50,8 +50,8 @@ const createMovieDetailsTemplate = (film) => {
                   <td class="film-details__cell">${director}</td>
                 </tr>
                 <tr class="film-details__row">
-                  <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${writersList}</td>
+                  <td class="film-details__term">${writers.length > 0 ? `Writers` : ``}</td>
+                  <td class="film-details__cell">${writers.length > 0 ? writersList : ``}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
@@ -71,10 +71,10 @@ const createMovieDetailsTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">
-                    ${genreOrGenres}
+                    ${genres.length > 0 ? genreOrGenres : ``}
                   </td>
                   <td class="film-details__cell">
-                    ${formattedGenres}
+                    ${genres.length > 0 ? formattedGenres : ``}
                   </td>
                 </tr>
               </table>

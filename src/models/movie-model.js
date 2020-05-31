@@ -14,7 +14,7 @@ export default class MovieModel {
     this.isWatched = data[`user_details`][`already_watched`];
     this.isFavorite = data[`user_details`].favorite;
     this.details.ageRating = data[`film_info`][`age_rating`];
-    this.details.originalTitle = data[`film_info`][`alternative_title`];
+    this.details.originTitle = data[`film_info`][`alternative_title`];
     this.details.releaseDate = new Date(data[`film_info`].release.date);
     this.year = this.details.releaseDate.getFullYear();
     this.details.country = data[`film_info`][`release`][`release_country`];
