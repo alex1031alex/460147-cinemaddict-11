@@ -44,15 +44,18 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-    const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
+    this._api.updateMovie(oldData.id, newData)
+      .then((movieModel) => {
+        const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
 
-    if (isSuccess) {
-      this._showedMovieControllers.forEach((controller) => {
-        if (controller.getFilmId() === oldData.id) {
-          controller.render(newData);
+        if (isSuccess) {
+          this._showedMovieControllers.forEach((controller) => {
+            if (controller.getFilmId() === oldData.id) {
+              controller.render(movieModel);
+            }
+          });
         }
       });
-    }
   }
 
   _onViewChange() {

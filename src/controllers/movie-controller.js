@@ -2,6 +2,7 @@ import FilmComponent from '../components/film.js';
 import CommentComponent from '../components/comment.js';
 import FilmPopupComponent from '../components/film-popup.js';
 import CommentsModel from '../models/comments-model.js';
+import MovieModel from '../models/movie-model.js';
 import {generateComments} from '../mock/comment.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
@@ -49,19 +50,19 @@ export default class MovieController {
   }
 
   _onWatchlistButtonClickHandler() {
-    this._onDataChange(this._film, Object.assign({}, this._film, {
+    this._onDataChange(this._film, Object.assign(MovieModel.clone(this._film), this._film, {
       isAtWatchlist: !this._film.isAtWatchlist
     }));
   }
 
   _onWatchedButtonClickHandler() {
-    this._onDataChange(this._film, Object.assign({}, this._film, {
+    this._onDataChange(this._film, Object.assign(MovieModel.clone(this._film), this._film, {
       isWatched: !this._film.isWatched
     }));
   }
 
   _onFavoriteButtonClickHandler() {
-    this._onDataChange(this._film, Object.assign({}, this._film, {
+    this._onDataChange(this._film, Object.assign(MovieModel.clone(this._film), this._film, {
       isFavorite: !this._film.isFavorite
     }));
   }
@@ -137,11 +138,11 @@ export default class MovieController {
     }
 
     const oldPopupComponent = this._popupComponent;
-    
+
     this._popupComponent = new FilmPopupComponent(this._film);
 
     this._setPopupButtonClickHandlers();
-    
+
     if (oldPopupComponent) {
       replaceComponent(this._popupComponent, oldPopupComponent);
     }
