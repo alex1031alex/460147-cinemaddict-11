@@ -1,5 +1,5 @@
 import API from './api.js';
-import {AUTHORIZATION} from './const.js';
+import {AUTHORIZATION, END_POINT} from './const.js';
 import ProfileComponent from './components/profile.js';
 import MenuComponent from './components/menu.js';
 import BoardComponent from './components/board.js';
@@ -16,7 +16,7 @@ import FilterController from './controllers/filter-controller.js';
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer__statistics`);
-const api = new API(AUTHORIZATION);
+const api = new API(AUTHORIZATION, END_POINT);
 const moviesModel = new MoviesModel();
 const menuComponent = new MenuComponent();
 const filterContainer = menuComponent.getElement();

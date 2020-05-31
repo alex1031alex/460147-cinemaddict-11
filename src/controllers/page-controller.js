@@ -44,7 +44,8 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-    this._api.updateMovie(oldData.id, newData)
+
+    this._api.updateMovie(oldData.id, newData.toRAW())
       .then((movieModel) => {
         const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
 

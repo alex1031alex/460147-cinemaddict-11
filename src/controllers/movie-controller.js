@@ -158,10 +158,10 @@ export default class MovieController {
   }
 
   _onCommentChange() {
-    this._onDataChange(this._film, Object.assign({}, this._film, {
-      commentsQuantity: this._commentsModel.getComments().length
-    }));
-    this._showPopup();
+    // this._onDataChange(this._film, Object.assign({}, this._film, {
+    //   commentsQuantity: this._commentsModel.getComments().length
+    // }));
+    // this._showPopup();
   }
 
   render(film) {
