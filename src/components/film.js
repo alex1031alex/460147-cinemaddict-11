@@ -1,7 +1,7 @@
 import {capitalizeFirstSymbol, formatRating, formatRuntime, cutText} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
 
-const createMovieCardTemplate = (film) => {
+const createMovieCardTemplate = (movieModel) => {
   const {
     name,
     poster,
@@ -14,7 +14,7 @@ const createMovieCardTemplate = (film) => {
     isAtWatchlist,
     isWatched,
     isFavorite,
-  } = film;
+  } = movieModel;
 
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
