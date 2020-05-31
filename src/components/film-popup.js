@@ -17,7 +17,7 @@ const createMovieDetailsTemplate = (film) => {
   const isWatchlistChecked = isAtWatchlist ? `checked` : ``;
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
-  const formattedDescription  = capitalizeFirstSymbol(description);
+  const formattedDescription = capitalizeFirstSymbol(description);
   const formattedRuntime = formatRuntime(runtime);
 
   return (

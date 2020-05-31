@@ -35,9 +35,9 @@ const formatDateTime = (date) => {
 const formatRuntime = (duration) => {
   const hours = Math.trunc(duration / 60);
   const minutes = duration % 60;
-  
+
   return minutes < 10 ? `${hours}h 0${minutes}m` : `${hours}h ${minutes}m`;
-}
+};
 
 const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
 
