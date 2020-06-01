@@ -6,7 +6,6 @@ import MovieModel from '../models/movie-model.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
-const SHAKE_ANIMATION_TIMEOUT = 600;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
@@ -107,7 +106,7 @@ export default class MovieController {
           .then((response) => {
             this._commentsModel.setComments(response.comments);
             this._onCommentsChange(this._film.id, new MovieModel(response.movie));
-            this._showPopup();           
+            this._showPopup();
           })
           .catch(() => {
             this._popupComponent.enableTextField();
