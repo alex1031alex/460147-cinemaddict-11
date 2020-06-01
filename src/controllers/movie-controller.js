@@ -30,9 +30,7 @@ export default class MovieController {
   }
 
   getFilmId() {
-    if (this._film) {
-      return this._film.id;
-    }
+    return this._film.id;
   }
 
   _onEscKeyDown(evt) {
@@ -85,11 +83,31 @@ export default class MovieController {
 
         this._api.addComment(this._film.id, localComment)
           .then((response) => {
-            this._film = new MovieModel(response.movie);
-            this._commentsModel.setComments(response.comments);
+            const isSuccess = this._commentsModel.setComments(response.comments);
+
+            if (isSuccess) {
+              this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
+              this._showPopup();
+            }
           });
       }
     }
+  }
+
+  _onDeleteComment(commentId) {
+    this._api.deleteComment(commentId)
+      .then(() => {
+        const isSuccess = this._commentsModel.deleteComment(commentId);
+        const updatedComments = this._commentsModel.getCommentsIds();
+        const updatedMovie = Object.assign(MovieModel.clone(this._film), this._film, {
+          comments: updatedComments
+        });
+
+        if (isSuccess) {
+          this._updateMoviesModel(this._film.id, updatedMovie);
+          this._showPopup();
+        }
+      });
   }
 
   _setPopupButtonClickHandlers() {
@@ -129,8 +147,8 @@ export default class MovieController {
 
         commentComponent.setDeleteButtonHandler((evt) => {
           evt.preventDefault();
-          const id = commentComponent.getCommentId();
-          this._commentsModel.deleteComment(id);
+          const commentId = commentComponent.getCommentId();
+          this._onDeleteComment(commentId);
         });
       });
     }
@@ -138,16 +156,6 @@ export default class MovieController {
 
   _showPopup() {
     this._onViewChange();
-
-    if (!this._commentsModel) {
-      this._commentsModel = new CommentsModel();
-      this._commentsModel.setDataChangeHandler(this._onCommentChange.bind(this));
-
-      this._api.getComments(this._film.id)
-      .then((data) => {
-        this._commentsModel.setComments(data);
-      });
-    }
 
     const oldPopupComponent = this._popupComponent;
 
@@ -162,13 +170,19 @@ export default class MovieController {
     appendChildComponent(page, this._popupComponent);
     document.addEventListener(`keydown`, this._onEscKeyDown);
 
-    const comments = this._commentsModel.getComments();
-    this._renderComments(comments);
-  }
+    if (!this._commentsModel) {
+      this._commentsModel = new CommentsModel();
 
-  _onCommentChange() {
-    this._updateMoviesModel(this._film.id, this._film);
-    this._showPopup();
+      this._api.getComments(this._film.id)
+      .then((data) => {
+        this._commentsModel.setComments(data);
+        const comments = this._commentsModel.getComments();
+        this._renderComments(comments);
+      });
+    } else {
+      const comments = this._commentsModel.getComments();
+      this._renderComments(comments);
+    }
   }
 
   render(movieModel) {

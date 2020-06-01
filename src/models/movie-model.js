@@ -9,7 +9,6 @@ export default class MovieModel {
     this.genres = data[`film_info`].genre;
     this.rating = data[`film_info`][`total_rating`];
     this.comments = data.comments;
-    this.commentsQuantity = data.comments.length;
     this.isAtWatchlist = data[`user_details`].watchlist;
     this.isWatched = data[`user_details`][`already_watched`];
     this.isFavorite = data[`user_details`].favorite;

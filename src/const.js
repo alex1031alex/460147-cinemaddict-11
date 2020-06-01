@@ -15,4 +15,4 @@ const Method = {
   DELETE: `DELETE`,
 };
 
-export { AUTHORIZATION, END_POINT, FilterType, Method};
+export {AUTHORIZATION, END_POINT, FilterType, Method};

@@ -6,7 +6,7 @@ const EMOJI_HEIGHT = 55;
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, runtime, genres, rating,
-    isAtWatchlist, isWatched, isFavorite, commentsQuantity} = film;
+    isAtWatchlist, isWatched, isFavorite, comments} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
@@ -19,6 +19,7 @@ const createMovieDetailsTemplate = (film) => {
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const formattedDescription = capitalizeFirstSymbol(description);
   const formattedRuntime = formatRuntime(runtime);
+  const commentsQuantity = comments.length;
 
   return (
     `<section class="film-details">

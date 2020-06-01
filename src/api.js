@@ -1,5 +1,4 @@
 import MovieModel from './models/movie-model.js';
-import CommentsModel from './models/comments-model.js';
 import {Method} from './const.js';
 
 const checkStatus = (response) => {
@@ -11,7 +10,7 @@ const checkStatus = (response) => {
 };
 
 export default class API {
-  constructor(authorization, endPoint,) {
+  constructor(authorization, endPoint) {
     this._endPoint = endPoint;
     this._authorization = authorization;
   }
@@ -27,13 +26,13 @@ export default class API {
   }
 
   getMovies() {
-    return this._load({url:`movies`})
+    return this._load({url: `movies`})
       .then((response) => response.json())
       .then(MovieModel.parseMovies);
   }
 
   getComments(movieId) {
-    return this._load({url:`comments/${movieId}`})
+    return this._load({url: `comments/${movieId}`})
       .then((response) => response.json());
   }
 
@@ -49,8 +48,6 @@ export default class API {
   }
 
   addComment(movieId, localComment) {
-    console.log(localComment);
-    console.log(JSON.stringify(localComment));
     return this._load({
       url: `comments/${movieId}`,
       method: Method.POST,
