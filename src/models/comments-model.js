@@ -13,7 +13,6 @@ export default class CommentsModel {
 
   setComments(comments) {
     this._comments = comments.slice();
-    return true;
   }
 
   deleteComment(id) {

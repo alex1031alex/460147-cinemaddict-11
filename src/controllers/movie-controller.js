@@ -105,12 +105,9 @@ export default class MovieController {
 
         this._api.addComment(this._film.id, localComment)
           .then((response) => {
-            const isSuccess = this._commentsModel.setComments(response.comments);
-
-            if (isSuccess) {
-              this._onCommentsChange(this._film.id, new MovieModel(response.movie));
-              this._showPopup();
-            }
+            this._commentsModel.setComments(response.comments);
+            this._onCommentsChange(this._film.id, new MovieModel(response.movie));
+            this._showPopup();           
           })
           .catch(() => {
             this._popupComponent.enableTextField();
