@@ -90,7 +90,7 @@ export default class MovieController {
         date: new Date().toISOString(),
         emotion: emojiType,
       };
-    }
+    } 
   }
 
   _onAddComment(evt) {
@@ -118,6 +118,9 @@ export default class MovieController {
   }
 
   _onDeleteComment(commentId) {
+    const comments = this._commentsModel.getComments();
+    this._renderComments(comments, commentId);
+
     this._api.deleteComment(commentId)
       .then(() => {
         const isSuccess = this._commentsModel.deleteComment(commentId);
@@ -160,12 +163,18 @@ export default class MovieController {
     });
   }
 
-  _renderComments(comments) {
+  _renderComments(comments, deletingCommentId) {
     if (comments.length > 0) {
       const commentsList = this._popupComponent.getCommentsList();
+      commentsList.innerHTML = ``;
 
       comments.forEach((comment) => {
-        const commentComponent = new CommentComponent(comment);
+        let commentComponent = new CommentComponent(comment);
+
+        if (deletingCommentId && deletingCommentId === comment.id) {
+          commentComponent = new CommentComponent(comment, true);
+        }
+
         appendChildComponent(commentsList, commentComponent);
 
         commentComponent.setDeleteButtonHandler((evt) => {
