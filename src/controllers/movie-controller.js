@@ -102,11 +102,11 @@ export default class MovieController {
       if (localComment) {
         this._popupComponent.disableTextField();
         this._popupComponent.removeTextFieldBorder();
-  
+
         this._api.addComment(this._film.id, localComment)
           .then((response) => {
             const isSuccess = this._commentsModel.setComments(response.comments);
-  
+
             if (isSuccess) {
               this._onCommentsChange(this._film.id, new MovieModel(response.movie));
               this._showPopup();
