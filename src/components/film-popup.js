@@ -231,23 +231,27 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__inner`);
   }
 
+  getTextField() {
+    return this.getElement().querySelector(`.film-details__comment-input`);
+  }
+
   disableTextField() {
-    const textField = this.getElement().querySelector(`.film-details__inner`);
+    const textField = this.getTextField();
     textField.disabled = true;
   }
 
   enableTextField() {
-    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    const textField = this.getTextField();
     textField.disabled = false;
   }
 
   setTextFieldBorder() {
-    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    const textField = this.getTextField();
     textField.style.border = `3px solid red`;
   }
 
   removeTextFieldBorder() {
-    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    const textField = this.getTextField();
     if (textField.style.border !== ``) {
       textField.style.border = ``;
     }
@@ -256,6 +260,13 @@ export default class FilmPopup extends AbstractSmartComponent {
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
     this._closeButtonClickHandler = handler;
+  }
+
+  setTextFieldFocusHandler(handler) {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    textField.addEventListener(`focus`, (evt) => {
+      handler(evt.target);
+    });
   }
 
   setWatchlistButtonClickHandler(handler) {

@@ -204,7 +204,7 @@ export default class MovieController {
     const oldPopupComponent = this._popupComponent;
 
     this._popupComponent = new FilmPopupComponent(this._film);
-
+    this._popupComponent.getTextField().value = ``;
     this._setPopupButtonClickHandlers();
 
     if (oldPopupComponent) {
