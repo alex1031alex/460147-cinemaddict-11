@@ -34,11 +34,11 @@ export default class MovieController {
     return this._film.id;
   }
 
-  _shake() {
-    this._popupComponent.getFormElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+  _shake(shakingElement) {
+    shakingElement.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
 
     setTimeout(() => {
-      this._popupComponent.getFormElement().style.animation = ``;
+      shakingElement.style.animation = ``;
     }, 2000);
   }
 
@@ -90,30 +90,36 @@ export default class MovieController {
         date: new Date().toISOString(),
         emotion: emojiType,
       };
-    } 
+    }
+
+    return null;
   }
 
   _onAddComment(evt) {
     if (evt.ctrlKey && evt.key === `Enter`) {
       const localComment = this._getFormData();
 
-      this._popupComponent.disableTextField();
-      this._popupComponent.removeTextFieldBorder();
-
-      this._api.addComment(this._film.id, localComment)
-        .then((response) => {
-          const isSuccess = this._commentsModel.setComments(response.comments);
-
-          if (isSuccess) {
-            this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
-            this._showPopup();
-          }
-        })
-        .catch(() => {
-          this._popupComponent.enableTextField();
-          this._popupComponent.setTextFieldBorder();
-          this._shake();
-        });
+      if (localComment) {
+        this._popupComponent.disableTextField();
+        this._popupComponent.removeTextFieldBorder();
+  
+        this._api.addComment(this._film.id, localComment)
+          .then((response) => {
+            const isSuccess = this._commentsModel.setComments(response.comments);
+  
+            if (isSuccess) {
+              this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
+              this._showPopup();
+            }
+          })
+          .catch(() => {
+            this._popupComponent.enableTextField();
+            this._popupComponent.setTextFieldBorder();
+            this._shake(this._popupComponent.getFormElement());
+          });
+      } else {
+        this._shake(this._popupComponent.getFormElement());
+      }
     }
   }
 
@@ -133,7 +139,12 @@ export default class MovieController {
           this._updateMoviesModel(this._film.id, updatedMovie);
           this._showPopup();
         }
+      })
+      .catch(() => {
+        this._renderComments(comments);
+        this._shake(this._popupComponent.getCommentsList());
       });
+
   }
 
   _setPopupButtonClickHandlers() {

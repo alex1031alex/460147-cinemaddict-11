@@ -6,7 +6,7 @@ import {capitalizeFirstSymbol} from '../utils/common.js';
 const DeleteButtonText = {
   DELETE: `Delete`,
   DELETING: `Deleting...`
-}
+};
 
 const createCommentTemplate = (data, isDeletingMode) => {
   const {emotion, date, author, comment} = data;
