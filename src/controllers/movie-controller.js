@@ -10,11 +10,11 @@ const SHAKE_ANIMATION_TIMEOUT = 600;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
-  constructor(container, onDataChange, onViewChange, updateMoviesModel, api) {
+  constructor(container, onMovieChange, onViewChange, onCommentsChange, api) {
     this._container = container;
-    this._onDataChange = onDataChange;
+    this._onMovieChange = onMovieChange;
     this._onViewChange = onViewChange;
-    this._updateMoviesModel = updateMoviesModel;
+    this._onCommentsChange = onCommentsChange;
     this._filmCardComponent = null;
     this._popupComponent = null;
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
@@ -59,19 +59,19 @@ export default class MovieController {
   }
 
   _onWatchlistButtonClickHandler() {
-    this._onDataChange(this._film, Object.assign(MovieModel.clone(this._film), this._film, {
+    this._onMovieChange(this._film.id, Object.assign(MovieModel.clone(this._film), this._film, {
       isAtWatchlist: !this._film.isAtWatchlist
     }));
   }
 
   _onWatchedButtonClickHandler() {
-    this._onDataChange(this._film, Object.assign(MovieModel.clone(this._film), this._film, {
+    this._onMovieChange(this._film.id, Object.assign(MovieModel.clone(this._film), this._film, {
       isWatched: !this._film.isWatched
     }));
   }
 
   _onFavoriteButtonClickHandler() {
-    this._onDataChange(this._film, Object.assign(MovieModel.clone(this._film), this._film, {
+    this._onMovieChange(this._film.id, Object.assign(MovieModel.clone(this._film), this._film, {
       isFavorite: !this._film.isFavorite
     }));
   }
@@ -108,7 +108,7 @@ export default class MovieController {
             const isSuccess = this._commentsModel.setComments(response.comments);
   
             if (isSuccess) {
-              this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
+              this._onCommentsChange(this._film.id, new MovieModel(response.movie));
               this._showPopup();
             }
           })
@@ -125,6 +125,7 @@ export default class MovieController {
 
   _onDeleteComment(commentId) {
     const comments = this._commentsModel.getComments();
+
     this._renderComments(comments, commentId);
 
     this._api.deleteComment(commentId)
@@ -136,7 +137,7 @@ export default class MovieController {
         });
 
         if (isSuccess) {
-          this._updateMoviesModel(this._film.id, updatedMovie);
+          this._onCommentsChange(this._film.id, updatedMovie);
           this._showPopup();
         }
       })
