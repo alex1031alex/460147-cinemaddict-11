@@ -59,4 +59,8 @@ export default class API {
     })
       .then((response) => response.json());
   }
+
+  deleteComment(commentId) {
+    return this._load({url: `comments/${commentId}`, method: Method.DELETE});
+  }
 }
