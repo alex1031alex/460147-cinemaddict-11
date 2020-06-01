@@ -231,6 +231,21 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__inner`);
   }
 
+  disableTextField() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    textField.disabled = true;
+  }
+
+  enableTextField() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    textField.disabled = false;
+  }
+
+  setTextFieldBorder() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    textField.style.border = `3px solid red`;
+  }
+
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
     this._closeButtonClickHandler = handler;

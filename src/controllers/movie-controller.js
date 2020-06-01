@@ -88,6 +88,8 @@ export default class MovieController {
     if (evt.ctrlKey && evt.key === `Enter`) {
       const localComment = this._getFormData();
 
+      this._popupComponent.disableTextField();
+
       this._api.addComment(this._film.id, localComment)
         .then((response) => {
           const isSuccess = this._commentsModel.setComments(response.comments);
@@ -96,6 +98,10 @@ export default class MovieController {
             this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
             this._showPopup();
           }
+        })
+        .catch(() => {
+          this._popupComponent.enableTextField();
+          this._popupComponent.setTextFieldBorder();
         });
     }
   }
