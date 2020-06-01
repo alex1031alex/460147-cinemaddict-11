@@ -232,7 +232,7 @@ export default class FilmPopup extends AbstractSmartComponent {
   }
 
   disableTextField() {
-    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    const textField = this.getElement().querySelector(`.film-details__inner`);
     textField.disabled = true;
   }
 

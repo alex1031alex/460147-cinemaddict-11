@@ -6,6 +6,7 @@ import MovieModel from '../models/movie-model.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
+const SHAKE_ANIMATION_TIMEOUT = 600;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
@@ -31,6 +32,14 @@ export default class MovieController {
 
   getFilmId() {
     return this._film.id;
+  }
+
+  _shake() {
+    this._popupComponent.getFormElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      this._popupComponent.getFormElement().style.animation = ``;
+    }, 2000);
   }
 
   _onEscKeyDown(evt) {
