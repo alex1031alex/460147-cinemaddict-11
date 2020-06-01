@@ -21,7 +21,7 @@ const getRandomArrayItem = (array) => array[getRandomNumber(0, array.length - 1)
 
 const capitalizeFirstSymbol = (string) => string.replace(/^\w/, string[0].toUpperCase());
 
-const formatDate = (date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+const formatDate = (date) => moment(date).format(`DD MMM YYYY`);
 
 const formatDateTime = (date) => {
   const year = date.getFullYear();
