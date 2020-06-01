@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const MONTHS = [
   `Jan`,
   `Feb`,
@@ -32,11 +34,8 @@ const formatDateTime = (date) => {
   return fullCommentDate;
 };
 
-const formatRuntime = (duration) => {
-  const hours = Math.trunc(duration / 60);
-  const minutes = duration % 60;
-
-  return minutes < 10 ? `${hours}h 0${minutes}m` : `${hours}h ${minutes}m`;
+const formatRuntime = (runtime) => {
+  return moment.utc(moment.duration(runtime, 'minutes').asMilliseconds()).format(`hh[h] mm[m]`);
 };
 
 const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
