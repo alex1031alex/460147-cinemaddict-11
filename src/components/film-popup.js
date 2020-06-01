@@ -246,6 +246,13 @@ export default class FilmPopup extends AbstractSmartComponent {
     textField.style.border = `3px solid red`;
   }
 
+  removeTextFieldBorder() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    if (textField.style.border !== ``) {
+      textField.style.border = ``;
+    }
+  }
+
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
     this._closeButtonClickHandler = handler;

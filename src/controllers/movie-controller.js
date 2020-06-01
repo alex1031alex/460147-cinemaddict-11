@@ -98,6 +98,7 @@ export default class MovieController {
       const localComment = this._getFormData();
 
       this._popupComponent.disableTextField();
+      this._popupComponent.removeTextFieldBorder();
 
       this._api.addComment(this._film.id, localComment)
         .then((response) => {
@@ -111,6 +112,7 @@ export default class MovieController {
         .catch(() => {
           this._popupComponent.enableTextField();
           this._popupComponent.setTextFieldBorder();
+          this._shake();
         });
     }
   }
