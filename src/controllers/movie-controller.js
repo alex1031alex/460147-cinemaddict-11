@@ -67,30 +67,34 @@ export default class MovieController {
     }));
   }
 
+  _getFormData() {
+    const emojiContainer = this._popupComponent.getEmojiContainer();
+    const commentText = this._popupComponent.getCommentTextInputElement().value.trim();
+
+    if (emojiContainer.innerHTML !== `` && commentText !== ``) {
+      const emojiType = emojiContainer.firstChild.dataset.type;
+
+      return {
+        comment: commentText,
+        date: new Date().toISOString(),
+        emotion: emojiType,
+      };
+    }
+  }
+
   _onAddComment(evt) {
     if (evt.ctrlKey && evt.key === `Enter`) {
-      const emojiContainer = this._popupComponent.getEmojiContainer();
-      const commentText = this._popupComponent.getCommentTextInputElement().value.trim();
+      const localComment = this._getFormData();
 
-      if (emojiContainer.innerHTML !== `` && commentText !== ``) {
-        const emojiType = emojiContainer.firstChild.dataset.type;
+      this._api.addComment(this._film.id, localComment)
+        .then((response) => {
+          const isSuccess = this._commentsModel.setComments(response.comments);
 
-        const localComment = {
-          comment: commentText,
-          date: new Date().toISOString(),
-          emotion: emojiType,
-        };
-
-        this._api.addComment(this._film.id, localComment)
-          .then((response) => {
-            const isSuccess = this._commentsModel.setComments(response.comments);
-
-            if (isSuccess) {
-              this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
-              this._showPopup();
-            }
-          });
-      }
+          if (isSuccess) {
+            this._updateMoviesModel(this._film.id, new MovieModel(response.movie));
+            this._showPopup();
+          }
+        });
     }
   }
 
