@@ -227,8 +227,8 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__add-emoji-label`);
   }
 
-  getCommentTextInputElement() {
-    return this.getElement().querySelector(`.film-details__comment-input`);
+  getFormElement() {
+    return this.getElement().querySelector(`.film-details__inner`);
   }
 
   setCloseButtonClickHandler(handler) {

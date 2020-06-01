@@ -68,8 +68,10 @@ export default class MovieController {
   }
 
   _getFormData() {
+    const form = this._popupComponent.getFormElement();
+    const formData = new FormData(form);
     const emojiContainer = this._popupComponent.getEmojiContainer();
-    const commentText = this._popupComponent.getCommentTextInputElement().value.trim();
+    const commentText = formData.get(`comment`).trim();
 
     if (emojiContainer.innerHTML !== `` && commentText !== ``) {
       const emojiType = emojiContainer.firstChild.dataset.type;
