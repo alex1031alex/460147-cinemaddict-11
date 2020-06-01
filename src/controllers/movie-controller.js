@@ -35,10 +35,10 @@ export default class MovieController {
   }
 
   _shake(shakingElement) {
-    shakingElement.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    shakingElement.classList.add(`shake`);
 
     setTimeout(() => {
-      shakingElement.style.animation = ``;
+      shakingElement.classList.remove(`shake`);
     }, 2000);
   }
 
