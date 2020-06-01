@@ -41,6 +41,3 @@ export default class Profile extends AbstractComponent {
     return createUserProfileTemplate(this._getUserTitle(this._watchedFilmsCount));
   }
 }
-
-
-

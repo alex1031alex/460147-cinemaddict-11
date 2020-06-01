@@ -20,6 +20,6 @@ const UserTitle = {
   NOVICE: `novice`,
   FAN: `fan`,
   MOVIE_BUFF: `movie buff`
-}
+};
 
 export {AUTHORIZATION, END_POINT, FilterType, Method, UserTitle};
