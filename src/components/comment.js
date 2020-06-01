@@ -1,4 +1,4 @@
-import {formatDateTime} from '../utils/common.js';
+import {humanizeDate} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
 import {encode} from 'he';
 import {capitalizeFirstSymbol} from '../utils/common.js';
@@ -11,7 +11,7 @@ const DeleteButtonText = {
 const createCommentTemplate = (data, isDeletingMode) => {
   const {emotion, date, author, comment} = data;
   const encodedMessage = encode(capitalizeFirstSymbol(comment));
-  const fullCommentDate = formatDateTime(new Date(date));
+  const fullCommentDate = humanizeDate(new Date(date));
   const deleteButtonText = isDeletingMode ? DeleteButtonText.DELETING : DeleteButtonText.DELETE;
   const disabledAttribute = isDeletingMode ? `disabled="true"` : ``;
 

@@ -1,4 +1,4 @@
-import {capitalizeFirstSymbol, formatRating, formatRuntime, cutText} from '../utils/common.js';
+import {capitalizeFirstSymbol, formatRating, formatTime, cutText} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
 
 const createMovieCardTemplate = (movieModel) => {
@@ -24,7 +24,7 @@ const createMovieCardTemplate = (movieModel) => {
   const watchlistActiveClass = isAtWatchlist ? `film-card__controls-item--active` : ``;
   const historyActiveClass = isWatched ? `film-card__controls-item--active` : ``;
   const favoriteActiveClass = isFavorite ? `film-card__controls-item--active` : ``;
-  const formattedRuntime = formatRuntime(runtime);
+  const formattedRuntime = formatTime(runtime);
 
   return (
     `<article class="film-card">

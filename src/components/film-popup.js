@@ -1,4 +1,4 @@
-import {capitalizeFirstSymbol, formatDate, formatRuntime, formatRating} from '../utils/common.js';
+import {capitalizeFirstSymbol, formatDate, formatTime, formatRating} from '../utils/common.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
 const EMOJI_WIDTH = 55;
@@ -18,7 +18,7 @@ const createMovieDetailsTemplate = (film) => {
   const isHistoryChecked = isWatched ? `checked` : ``;
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const formattedDescription = capitalizeFirstSymbol(description);
-  const formattedRuntime = formatRuntime(runtime);
+  const formattedRuntime = formatTime(runtime);
   const commentsQuantity = comments.length;
 
   return (
