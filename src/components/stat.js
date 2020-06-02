@@ -1,5 +1,7 @@
 import AbstractComponent from './abstract-component.js';
-import {HIDDING_CLASS} from '../const.js'; 
+import {HIDDING_CLASS} from '../const.js';
+import Chart from "chart.js";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const creatStatTemplate = () => (
   `<section class="statistic">
