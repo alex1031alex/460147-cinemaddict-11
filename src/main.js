@@ -35,6 +35,9 @@ api.getMovies()
     const movies = moviesModel.getMovies();
     const watchedMovies = movies.filter((movie) => movie.isWatched).length;
     const statComponent = new StatComponent();
+    const boardComponent = new BoardComponent();
+    const pageController = new PageController(boardComponent, moviesModel, api);
+    const noFilmsComponent = new NoFilmsComponent();
 
     removeComponent(sortingComponent);
     removeComponent(loadingComponent);
@@ -42,15 +45,9 @@ api.getMovies()
     render(header, new ProfileComponent(watchedMovies));
 
     if (movies.length > 0) {
-      const boardComponent = new BoardComponent();
-      const pageController = new PageController(boardComponent, moviesModel, api);
-
       render(main, boardComponent);
-
       pageController.render(movies);
     } else {
-      const noFilmsComponent = new NoFilmsComponent();
-
       render(main, noFilmsComponent);
     }
 

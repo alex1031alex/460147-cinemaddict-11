@@ -166,10 +166,12 @@ export default class PageController {
   }
 
   hide() {
-    this._container.hide();
+    this._boardComponent.hide();
   }
 
   show() {
-    this._container.show();
+    this._boardComponent.show();
+    this._sortType = SortType.DEFAULT;
+    this._onSortTypeChangeHandler();
   }
 }
