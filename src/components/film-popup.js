@@ -6,7 +6,7 @@ const EMOJI_HEIGHT = 55;
 
 const createMovieDetailsTemplate = (film) => {
   const {name, poster, description, runtime, genres, rating,
-    isAtWatchlist, isWatched, isFavorite, commentsQuantity} = film;
+    isAtWatchlist, isWatched, isFavorite, comments} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
@@ -19,6 +19,7 @@ const createMovieDetailsTemplate = (film) => {
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const formattedDescription = capitalizeFirstSymbol(description);
   const formattedRuntime = formatRuntime(runtime);
+  const commentsQuantity = comments.length;
 
   return (
     `<section class="film-details">
@@ -226,8 +227,30 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__add-emoji-label`);
   }
 
-  getCommentTextInputElement() {
-    return this.getElement().querySelector(`.film-details__comment-input`);
+  getFormElement() {
+    return this.getElement().querySelector(`.film-details__inner`);
+  }
+
+  disableTextField() {
+    const textField = this.getElement().querySelector(`.film-details__inner`);
+    textField.disabled = true;
+  }
+
+  enableTextField() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    textField.disabled = false;
+  }
+
+  setTextFieldBorder() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    textField.style.border = `3px solid red`;
+  }
+
+  removeTextFieldBorder() {
+    const textField = this.getElement().querySelector(`.film-details__comment-input`);
+    if (textField.style.border !== ``) {
+      textField.style.border = ``;
+    }
   }
 
   setCloseButtonClickHandler(handler) {

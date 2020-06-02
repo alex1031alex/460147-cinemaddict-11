@@ -10,15 +10,16 @@ const createMovieCardTemplate = (movieModel) => {
     runtime,
     genres,
     rating,
-    commentsQuantity,
     isAtWatchlist,
     isWatched,
     isFavorite,
+    comments,
   } = movieModel;
 
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
   const brief = capitalizeFirstSymbol(cutText(description, 140));
+  const commentsQuantity = comments.length;
   const commentOrComments = commentsQuantity === 1 ? `comment` : `comments`;
   const watchlistActiveClass = isAtWatchlist ? `film-card__controls-item--active` : ``;
   const historyActiveClass = isWatched ? `film-card__controls-item--active` : ``;

@@ -43,19 +43,27 @@ export default class PageController {
     this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChangeHandler);
   }
 
-  _onDataChange(oldData, newData) {
-    this._api.updateMovie(oldData.id, newData)
-      .then((movieModel) => {
-        const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
+  _updateMoviesModel(movieId, updatedMovie) {
+    const isSuccess = this._moviesModel.updateMovie(movieId, updatedMovie);
 
-        if (isSuccess) {
-          this._showedMovieControllers.forEach((controller) => {
-            if (controller.getFilmId() === oldData.id) {
-              controller.render(movieModel);
-            }
-          });
+    if (isSuccess) {
+      this._showedMovieControllers.forEach((controller) => {
+        if (controller.getFilmId() === movieId) {
+          controller.render(updatedMovie);
         }
       });
+    }
+  }
+
+  _onMovieChange(movieId, updatedMovie) {
+    this._api.updateMovie(movieId, updatedMovie.toRAW())
+      .then((serverData) => {
+        this._updateMoviesModel(movieId, serverData);
+      });
+  }
+
+  _onCommentsChange(movieId, updatedMovie) {
+    this._updateMoviesModel(movieId, updatedMovie);
   }
 
   _onViewChange() {
@@ -67,8 +75,9 @@ export default class PageController {
       map((movie) => {
         const movieController = new MovieController(
             container,
-            this._onDataChange.bind(this),
+            this._onMovieChange.bind(this),
             this._onViewChange.bind(this),
+            this._onCommentsChange.bind(this),
             this._api
         );
         movieController.render(movie);
