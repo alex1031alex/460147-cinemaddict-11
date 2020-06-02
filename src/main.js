@@ -8,7 +8,6 @@ import NoFilmsComponent from './components/no-films.js';
 import SortingComponent from './components/sorting.js';
 import StatCounterComponent from './components/stat-counter.js';
 import MoviesModel from './models/movies-model.js';
-import {getUserTitle} from './mock/profile.js';
 import {render, removeComponent} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
 import FilterController from './controllers/filter-controller.js';
@@ -38,7 +37,7 @@ api.getMovies()
     removeComponent(sortingComponent);
     removeComponent(loadingComponent);
 
-    render(header, new ProfileComponent(getUserTitle(watchedMovies)));
+    render(header, new ProfileComponent(watchedMovies));
 
     if (movies.length > 0) {
       const boardComponent = new BoardComponent();

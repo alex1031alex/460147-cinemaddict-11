@@ -6,7 +6,6 @@ import MovieModel from '../models/movie-model.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
-const SHAKE_ANIMATION_TIMEOUT = 600;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
@@ -35,10 +34,10 @@ export default class MovieController {
   }
 
   _shake(shakingElement) {
-    shakingElement.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    shakingElement.classList.add(`shake`);
 
     setTimeout(() => {
-      shakingElement.style.animation = ``;
+      shakingElement.classList.remove(`shake`);
     }, 2000);
   }
 
@@ -105,12 +104,13 @@ export default class MovieController {
 
         this._api.addComment(this._film.id, localComment)
           .then((response) => {
-            const isSuccess = this._commentsModel.setComments(response.comments);
-
-            if (isSuccess) {
-              this._onCommentsChange(this._film.id, new MovieModel(response.movie));
-              this._showPopup();
-            }
+            this._commentsModel.setComments(response.comments);
+            this._onCommentsChange(this._film.id, new MovieModel(response.movie));
+            this._popupComponent.rerender(
+                this._setPopupButtonClickHandlers.bind(this),
+                this._commentsModel.getCommentsQuantity()
+            );
+            this._renderComments(this._commentsModel.getComments());
           })
           .catch(() => {
             this._popupComponent.enableTextField();
@@ -124,28 +124,25 @@ export default class MovieController {
   }
 
   _onDeleteComment(commentId) {
-    const comments = this._commentsModel.getComments();
-
-    this._renderComments(comments, commentId);
-
     this._api.deleteComment(commentId)
       .then(() => {
         const isSuccess = this._commentsModel.deleteComment(commentId);
-        const updatedComments = this._commentsModel.getCommentsIds();
+        const updatedCommentsIds = this._commentsModel.getCommentsIds();
         const updatedMovie = Object.assign(MovieModel.clone(this._film), this._film, {
-          comments: updatedComments
+          comments: updatedCommentsIds
         });
 
         if (isSuccess) {
           this._onCommentsChange(this._film.id, updatedMovie);
-          this._showPopup();
+          this._popupComponent.rerender(this._setPopupButtonClickHandlers.bind(this), this._commentsModel.getCommentsQuantity());
+          const updatedComments = this._commentsModel.getComments();
+          this._renderComments(updatedComments);
         }
       })
       .catch(() => {
-        this._renderComments(comments);
+        this._renderComments(this._commentsModel.getComments());
         this._shake(this._popupComponent.getCommentsList());
       });
-
   }
 
   _setPopupButtonClickHandlers() {
@@ -175,17 +172,13 @@ export default class MovieController {
     });
   }
 
-  _renderComments(comments, deletingCommentId) {
+  _renderComments(comments) {
     if (comments.length > 0) {
       const commentsList = this._popupComponent.getCommentsList();
       commentsList.innerHTML = ``;
 
       comments.forEach((comment) => {
         let commentComponent = new CommentComponent(comment);
-
-        if (deletingCommentId && deletingCommentId === comment.id) {
-          commentComponent = new CommentComponent(comment, true);
-        }
 
         appendChildComponent(commentsList, commentComponent);
 
@@ -203,8 +196,8 @@ export default class MovieController {
 
     const oldPopupComponent = this._popupComponent;
 
-    this._popupComponent = new FilmPopupComponent(this._film);
-
+    this._popupComponent = new FilmPopupComponent(this._film, this._film.comments.length);
+    this._popupComponent.cleanTextField();
     this._setPopupButtonClickHandlers();
 
     if (oldPopupComponent) {

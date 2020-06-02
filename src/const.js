@@ -15,4 +15,11 @@ const Method = {
   DELETE: `DELETE`,
 };
 
-export {AUTHORIZATION, END_POINT, FilterType, Method};
+const UserTitle = {
+  NO_TITLE: ``,
+  NOVICE: `novice`,
+  FAN: `fan`,
+  MOVIE_BUFF: `movie buff`
+};
+
+export {AUTHORIZATION, END_POINT, FilterType, Method, UserTitle};

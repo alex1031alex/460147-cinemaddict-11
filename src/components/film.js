@@ -1,7 +1,9 @@
-import {capitalizeFirstSymbol, formatRating, formatRuntime, cutText} from '../utils/common.js';
+import {capitalizeFirstSymbol, formatRating, formatTime, cutText} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
 
 const createMovieCardTemplate = (movieModel) => {
+  const MAX_DESCRIPTION_LENGTH = 140;
+
   const {
     name,
     poster,
@@ -18,13 +20,13 @@ const createMovieCardTemplate = (movieModel) => {
 
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
-  const brief = capitalizeFirstSymbol(cutText(description, 140));
+  const brief = capitalizeFirstSymbol(cutText(description, MAX_DESCRIPTION_LENGTH));
   const commentsQuantity = comments.length;
   const commentOrComments = commentsQuantity === 1 ? `comment` : `comments`;
   const watchlistActiveClass = isAtWatchlist ? `film-card__controls-item--active` : ``;
   const historyActiveClass = isWatched ? `film-card__controls-item--active` : ``;
   const favoriteActiveClass = isFavorite ? `film-card__controls-item--active` : ``;
-  const formattedRuntime = formatRuntime(runtime);
+  const formattedRuntime = formatTime(runtime);
 
   return (
     `<article class="film-card">
