@@ -12,7 +12,7 @@ const humanizeDate = (date) => moment(date).fromNow();
 
 const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
 
-const cutText = (text, maxLength) => text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+const cutText = (text, maxLength) => text.length > maxLength ? `${text.substring(0, maxLength)} &hellip;` : text;
 
 export {
   getRandomNumber,
