@@ -124,10 +124,6 @@ export default class MovieController {
   }
 
   _onDeleteComment(commentId) {
-    const comments = this._commentsModel.getComments();
-
-    this._renderComments(comments, commentId);
-
     this._api.deleteComment(commentId)
       .then(() => {
         const isSuccess = this._commentsModel.deleteComment(commentId);
@@ -144,7 +140,7 @@ export default class MovieController {
         }
       })
       .catch(() => {
-        this._renderComments(comments);
+        this._renderComments(this._commentsModel.getComments());
         this._shake(this._popupComponent.getCommentsList());
       });
   }
@@ -176,17 +172,13 @@ export default class MovieController {
     });
   }
 
-  _renderComments(comments, deletingCommentId) {
+  _renderComments(comments) {
     if (comments.length > 0) {
       const commentsList = this._popupComponent.getCommentsList();
       commentsList.innerHTML = ``;
 
       comments.forEach((comment) => {
         let commentComponent = new CommentComponent(comment);
-
-        if (deletingCommentId && deletingCommentId === comment.id) {
-          commentComponent = new CommentComponent(comment, true);
-        }
 
         appendChildComponent(commentsList, commentComponent);
 

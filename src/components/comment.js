@@ -1,5 +1,5 @@
 import {humanizeDate} from '../utils/common.js';
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component';
 import {encode} from 'he';
 import {capitalizeFirstSymbol} from '../utils/common.js';
 
@@ -32,11 +32,11 @@ const createCommentTemplate = (data, isDeletingMode) => {
   );
 };
 
-export default class Comment extends AbstractComponent {
-  constructor(comment, isDeletingMode = false) {
+export default class Comment extends AbstractSmartComponent {
+  constructor(comment) {
     super();
     this._comment = comment;
-    this._isDeletingMode = isDeletingMode;
+    this._isDeletingMode = false;
   }
 
   getTemplate() {
@@ -46,6 +46,8 @@ export default class Comment extends AbstractComponent {
   setDeleteButtonHandler(handler) {
     const deleteButton = this.getElement().querySelector(`.film-details__comment-delete`);
     deleteButton.addEventListener(`click`, (evt) => {
+      this._isDeletingMode = true;
+      this.rerender();
       handler(evt);
     });
   }
