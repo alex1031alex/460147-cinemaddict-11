@@ -7,6 +7,7 @@ import LoadingComponent from './components/loading.js';
 import NoFilmsComponent from './components/no-films.js';
 import SortingComponent from './components/sorting.js';
 import StatCounterComponent from './components/stat-counter.js';
+import StatComponent from './components/stat.js';
 import MoviesModel from './models/movies-model.js';
 import {render, removeComponent} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
@@ -33,6 +34,7 @@ api.getMovies()
     moviesModel.setMovies(data);
     const movies = moviesModel.getMovies();
     const watchedMovies = movies.filter((movie) => movie.isWatched).length;
+    const statComponent = new StatComponent();
 
     removeComponent(sortingComponent);
     removeComponent(loadingComponent);
@@ -53,4 +55,5 @@ api.getMovies()
     }
 
     render(footer, new StatCounterComponent(moviesModel.getMovies().length));
+    render(main, statComponent);
   });
