@@ -7,6 +7,10 @@ export default class CommentsModel {
     return this._comments;
   }
 
+  getCommentsQuantity() {
+    return this._comments.length;
+  }
+
   getCommentsIds() {
     return this._comments.map((comment) => comment.id);
   }

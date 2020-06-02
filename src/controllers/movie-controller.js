@@ -106,7 +106,11 @@ export default class MovieController {
           .then((response) => {
             this._commentsModel.setComments(response.comments);
             this._onCommentsChange(this._film.id, new MovieModel(response.movie));
-            this._showPopup();
+            this._popupComponent.rerender(
+                this._setPopupButtonClickHandlers.bind(this),
+                this._commentsModel.getCommentsQuantity()
+            );
+            this._renderComments(this._commentsModel.getComments());
           })
           .catch(() => {
             this._popupComponent.enableTextField();
@@ -127,21 +131,22 @@ export default class MovieController {
     this._api.deleteComment(commentId)
       .then(() => {
         const isSuccess = this._commentsModel.deleteComment(commentId);
-        const updatedComments = this._commentsModel.getCommentsIds();
+        const updatedCommentsIds = this._commentsModel.getCommentsIds();
         const updatedMovie = Object.assign(MovieModel.clone(this._film), this._film, {
-          comments: updatedComments
+          comments: updatedCommentsIds
         });
 
         if (isSuccess) {
           this._onCommentsChange(this._film.id, updatedMovie);
-          this._showPopup();
+          this._popupComponent.rerender(this._setPopupButtonClickHandlers.bind(this), this._commentsModel.getCommentsQuantity());
+          const updatedComments = this._commentsModel.getComments();
+          this._renderComments(updatedComments);
         }
       })
       .catch(() => {
         this._renderComments(comments);
         this._shake(this._popupComponent.getCommentsList());
       });
-
   }
 
   _setPopupButtonClickHandlers() {
@@ -199,8 +204,8 @@ export default class MovieController {
 
     const oldPopupComponent = this._popupComponent;
 
-    this._popupComponent = new FilmPopupComponent(this._film);
-    this._popupComponent.getTextField().value = ``;
+    this._popupComponent = new FilmPopupComponent(this._film, this._film.comments.length);
+    this._popupComponent.cleanTextField();
     this._setPopupButtonClickHandlers();
 
     if (oldPopupComponent) {

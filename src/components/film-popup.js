@@ -4,9 +4,9 @@ import AbstractSmartComponent from './abstract-smart-component.js';
 const EMOJI_WIDTH = 55;
 const EMOJI_HEIGHT = 55;
 
-const createMovieDetailsTemplate = (film) => {
+const createMovieDetailsTemplate = (film, commentsQuantity) => {
   const {name, poster, description, runtime, genres, rating,
-    isAtWatchlist, isWatched, isFavorite, comments} = film;
+    isAtWatchlist, isWatched, isFavorite} = film;
   const {ageRating, originTitle, releaseDate, country, director, writers, actors} = film.details;
   const formattedGenres = genres.join(`, `);
   const formattedRating = formatRating(rating);
@@ -19,7 +19,6 @@ const createMovieDetailsTemplate = (film) => {
   const isFavoriteChecked = isFavorite ? `checked` : ``;
   const formattedDescription = capitalizeFirstSymbol(description);
   const formattedRuntime = formatTime(runtime);
-  const commentsQuantity = comments.length;
 
   return (
     `<section class="film-details">
@@ -199,11 +198,11 @@ const createMovieDetailsTemplate = (film) => {
 };
 
 export default class FilmPopup extends AbstractSmartComponent {
-  constructor(film, comments) {
+  constructor(film, commentsQuantity) {
     super();
 
     this._film = film;
-    this._comments = comments;
+    this._commentsQuantity = commentsQuantity;
     this._closeButtonClickHandler = null;
     this._watchlistButtonClickHandler = null;
     this._watchedButtonClickHandler = null;
@@ -212,7 +211,7 @@ export default class FilmPopup extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    return createMovieDetailsTemplate(this._film, this._comments);
+    return createMovieDetailsTemplate(this._film, this._commentsQuantity);
   }
 
   getComments() {
@@ -233,6 +232,10 @@ export default class FilmPopup extends AbstractSmartComponent {
 
   getTextField() {
     return this.getElement().querySelector(`.film-details__comment-input`);
+  }
+
+  cleanTextField() {
+    this.getTextField().value = ``;
   }
 
   disableTextField() {
@@ -260,13 +263,6 @@ export default class FilmPopup extends AbstractSmartComponent {
   setCloseButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
     this._closeButtonClickHandler = handler;
-  }
-
-  setTextFieldFocusHandler(handler) {
-    const textField = this.getElement().querySelector(`.film-details__comment-input`);
-    textField.addEventListener(`focus`, (evt) => {
-      handler(evt.target);
-    });
   }
 
   setWatchlistButtonClickHandler(handler) {
@@ -309,5 +305,12 @@ export default class FilmPopup extends AbstractSmartComponent {
     });
 
     this._emojiClickHandler = handler;
+  }
+
+  rerender(setupHandlers, commentsQty = this._commentsQuantity) {
+    this._commentsQuantity = commentsQty;
+    super.rerender();
+    this.cleanTextField();
+    setupHandlers();
   }
 }
