@@ -22,4 +22,6 @@ const UserTitle = {
   MOVIE_BUFF: `movie buff`
 };
 
-export {AUTHORIZATION, END_POINT, FilterType, Method, UserTitle};
+const HIDDING_CLASS = `visually-hidden`;
+
+export {AUTHORIZATION, END_POINT, FilterType, Method, UserTitle, HIDDING_CLASS};

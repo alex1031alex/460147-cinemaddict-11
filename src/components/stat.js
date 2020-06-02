@@ -1,4 +1,5 @@
 import AbstractComponent from './abstract-component.js';
+import {HIDDING_CLASS} from '../const.js'; 
 
 const creatStatTemplate = () => (
   `<section class="statistic">
@@ -87,5 +88,13 @@ const creatStatTemplate = () => (
 export default class Stat extends AbstractComponent {
   getTemplate() {
     return creatStatTemplate();
+  }
+
+  checkVisibility() {
+    if (this.getElement().classList.contains(HIDDING_CLASS)) {
+      return false;
+    }
+
+    return true;
   }
 }
