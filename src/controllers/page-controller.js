@@ -164,4 +164,12 @@ export default class PageController {
 
     this.render();
   }
+
+  hide() {
+    this._container.hide();
+  }
+
+  show() {
+    this._container.show();
+  }
 }
