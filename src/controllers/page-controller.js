@@ -171,7 +171,7 @@ export default class PageController {
 
   show() {
     this._boardComponent.show();
-    this._sortType = SortType.DEFAULT;
-    this._onSortTypeChangeHandler();
+    this._sortingComponent.resetSortType();
+    this._onSortTypeChangeHandler(SortType.DEFAULT);
   }
 }
