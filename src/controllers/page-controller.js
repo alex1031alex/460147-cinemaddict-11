@@ -1,6 +1,8 @@
 import SortingComponent, {SortType} from '../components/sorting.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {render, removeComponent} from '../utils/render.js';
+import {getMoviesByFilter} from '../utils/filter.js';
+import {FilterType} from '../const.js';
 import MovieController from './movie-controller.js';
 
 const MOVIE_COUNT_BY_BUTTON = 5;
@@ -35,12 +37,17 @@ export default class PageController {
     this._sortingComponent = new SortingComponent();
     this._sortType = SortType.DEFAULT;
     this._showMoreButtonComponent = null;
+    this._statComponent = null;
     this._showedMovieControllers = [];
     this._filterChangeHandler = this._filterChangeHandler.bind(this);
     this._onSortTypeChangeHandler = this._onSortTypeChangeHandler.bind(this);
     this._onShowMoreButtonClickHandler = this._onShowMoreButtonClickHandler.bind(this);
     this._moviesModel.setFilterChangeHandler(this._filterChangeHandler);
     this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChangeHandler);
+  }
+
+  setStatComponent(statComponent) {
+    this._statComponent = statComponent;
   }
 
   _updateMoviesModel(movieId, updatedMovie) {
@@ -52,6 +59,12 @@ export default class PageController {
           controller.render(updatedMovie);
         }
       });
+    }
+
+    const watchedMovies = getMoviesByFilter(this._moviesModel.getMovies(), FilterType.HISTORY);
+
+    if (this._statComponent) {
+      this._statComponent.onMovieChange(watchedMovies);
     }
   }
 

@@ -39,6 +39,7 @@ api.getMovies()
     const movies = moviesModel.getMovies();
     const watchedMovies = movies.filter((movie) => movie.isWatched);
     const statComponent = new StatComponent(watchedMovies);
+    pageController.setStatComponent(statComponent);
 
     menuComponent.setStatsButtonClickHandler(() => {
       if (statComponent.checkVisibility()) {

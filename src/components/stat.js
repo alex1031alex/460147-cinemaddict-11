@@ -296,8 +296,6 @@ export default class Stat extends AbstractSmartComponent {
     this._totalMovies = movies;
     this._movies = movies;
     this._interval = interval;
-    this._dateTo = new Date();
-    this._dateFrom = null;
   }
 
   getTemplate() {
@@ -312,18 +310,31 @@ export default class Stat extends AbstractSmartComponent {
     return true;
   }
 
+  onMovieChange(movies) {
+    this._totalMovies = movies;
+    this._movies = movies;
+    this._interval = Interval.ALL_TIME;
+  }
+
+  _onStatFilterChange(evt) {
+    if (evt.target.checked) {
+      const interval = idToInterval[evt.target.id];
+      const dateFrom = getDateFrom(interval);
+      const filteredMovies = getMoviesFromDate(this._totalMovies, dateFrom);
+
+      this._movies = filteredMovies;
+      this._interval = interval;
+
+      this.rerender();
+    }
+  }
+
   _setOnChangeIntervalHandler() {
     const menuItems = this.getElement().querySelectorAll(`.statistic__filters-input`);
 
     menuItems.forEach((menuItem) => {
       menuItem.addEventListener(`change`, (evt) => {
-        if (evt.target.checked) {
-          const interval = idToInterval[evt.target.id];
-          const dateFrom = getDateFrom(interval);
-          const filteredMovies = getMoviesFromDate(this._totalMovies, dateFrom);
-
-          this._rerender(filteredMovies, interval);
-        }
+        this._onStatFilterChange(evt);
       });
     });
   }
@@ -335,10 +346,7 @@ export default class Stat extends AbstractSmartComponent {
     }
   }
 
-  _rerender(movies, interval) {
-    this._movies = movies;
-    this._interval = interval;
-
+  rerender() {
     super.rerender();
     this._renderChart();
     this._setOnChangeIntervalHandler();
@@ -354,7 +362,6 @@ export default class Stat extends AbstractSmartComponent {
   show() {
     super.show();
 
-    this._renderChart(this._movies);
-    this._setOnChangeIntervalHandler();
+    this.rerender();
   }
 }
