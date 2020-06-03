@@ -114,10 +114,6 @@ const getMoviesFromDate = (movies, dateFrom) => {
 };
 
 const renderChart = (genresStatistic) => {
-  if (!genresStatistic) {
-    return;
-  }
-
   const BAR_HEIGHT = 50;
   const statisticCtx = document.querySelector(`.statistic__chart`);
   const labels = [];
@@ -356,7 +352,10 @@ export default class Stat extends AbstractSmartComponent {
     const genresStatistic = getGenresStatistic(this._movies);
 
     this._resetChart();
-    this._chart = renderChart(genresStatistic);
+
+    if (genresStatistic) {
+      this._chart = renderChart(genresStatistic);
+    }
   }
 
   show() {
