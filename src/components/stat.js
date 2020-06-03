@@ -121,13 +121,13 @@ const renderChart = (genresStatistic) => {
   const BAR_HEIGHT = 50;
   const statisticCtx = document.querySelector(`.statistic__chart`);
   const labels = [];
-  const data = [];
+  const count = [];
 
   Object.entries(genresStatistic)
     .sort((a, b) => b[1] - a[1])
     .forEach((it) => {
       labels.push(it[0]);
-      data.push(it[1]);
+      count.push(it[1]);
     });
 
   const barCount = labels.length;
@@ -141,7 +141,7 @@ const renderChart = (genresStatistic) => {
     data: {
       labels,
       datasets: [{
-        data,
+        data: count,
         backgroundColor: `#ffe800`,
         hoverBackgroundColor: `#ffe800`,
         anchor: `start`

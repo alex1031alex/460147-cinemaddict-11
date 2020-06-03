@@ -6,6 +6,7 @@ import MovieModel from '../models/movie-model.js';
 import {render, appendChildComponent, removeChildElement, replaceComponent, removeComponent} from '../utils/render.js';
 
 const ESC_KEY = `Escape`;
+const ENTER_KEY = `Enter`;
 const page = document.querySelector(`body`);
 
 export default class MovieController {
@@ -95,7 +96,7 @@ export default class MovieController {
   }
 
   _onAddComment(evt) {
-    if (evt.ctrlKey && evt.key === `Enter`) {
+    if (evt.ctrlKey && evt.key === ENTER_KEY) {
       const localComment = this._getFormData();
 
       if (localComment) {
@@ -210,8 +211,8 @@ export default class MovieController {
       this._commentsModel = new CommentsModel();
 
       this._api.getComments(this._film.id)
-      .then((data) => {
-        this._commentsModel.setComments(data);
+      .then((receivedComments) => {
+        this._commentsModel.setComments(receivedComments);
         const comments = this._commentsModel.getComments();
         this._renderComments(comments);
       });

@@ -34,8 +34,8 @@ render(main, sortingComponent);
 render(main, loadingComponent);
 
 api.getMovies()
-  .then((data) => {
-    moviesModel.setMovies(data);
+  .then((receivedMovies) => {
+    moviesModel.setMovies(receivedMovies);
     const movies = moviesModel.getMovies();
     const watchedMovies = movies.filter((movie) => movie.isWatched);
     const statComponent = new StatComponent(watchedMovies);

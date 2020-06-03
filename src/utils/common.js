@@ -10,8 +10,6 @@ const formatRating = (rating) => rating % 1 === 0 ? `${rating}.0` : rating;
 const cutText = (text, maxLength) => text.length > maxLength ? `${text.substring(0, maxLength)} &hellip;` : text;
 
 export {
-  getRandomNumber,
-  getRandomArrayItem,
   capitalizeFirstSymbol,
   formatDate,
   humanizeDate,

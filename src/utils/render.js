@@ -12,7 +12,7 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-const render = (container, component, place = `beforeend`) => {
+const render = (container, component, place = PlaceForRender.BEFOREEND) => {
   switch (place) {
     case PlaceForRender.BEFOREBEGIN: {
       const parentElement = container.parentElement;
