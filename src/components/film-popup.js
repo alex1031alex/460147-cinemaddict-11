@@ -202,11 +202,6 @@ export default class FilmPopup extends AbstractSmartComponent {
 
     this._film = film;
     this._commentsQuantity = commentsQuantity;
-    this._closeButtonClickHandler = null;
-    this._watchlistButtonClickHandler = null;
-    this._watchedButtonClickHandler = null;
-    this._favoriteButtonClickHandler = null;
-    this._emojiClickHandler = null;
   }
 
   getTemplate() {
@@ -263,19 +258,16 @@ export default class FilmPopup extends AbstractSmartComponent {
   setWatchlistButtonClickHandler(handler) {
     const button = this.getElement().querySelector(`#watchlist`);
     button.addEventListener(`click`, handler);
-    this._watchlistButtonClickHandler = handler;
   }
 
   setWatchedButtonClickHandler(handler) {
     const button = this.getElement().querySelector(`#watched`);
     button.addEventListener(`click`, handler);
-    this._watchedButtonClickHandler = handler;
   }
 
   setFavoriteButtonClickHandler(handler) {
     const button = this.getElement().querySelector(`#favorite`);
     button.addEventListener(`click`, handler);
-    this._favoriteButtonClickHandler = handler;
   }
 
   setEmojiById(id) {
@@ -298,8 +290,6 @@ export default class FilmPopup extends AbstractSmartComponent {
     emojis.forEach((it) => {
       it.addEventListener(`change`, handler);
     });
-
-    this._emojiClickHandler = handler;
   }
 
   rerender(setupHandlers, commentsQty = this._commentsQuantity) {

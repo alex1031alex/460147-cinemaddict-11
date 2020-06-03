@@ -42,10 +42,6 @@ export default class Sorting extends AbstractComponent {
     return createSortingTemplate(this._currentSortType);
   }
 
-  getSortType() {
-    return this._currentSortType;
-  }
-
   resetSortType() {
     this._currentSortType = SortType.DEFAULT;
   }
