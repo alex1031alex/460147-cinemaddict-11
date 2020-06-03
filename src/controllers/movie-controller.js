@@ -179,7 +179,7 @@ export default class MovieController {
       commentsList.innerHTML = ``;
 
       comments.forEach((comment) => {
-        let commentComponent = new CommentComponent(comment);
+        const commentComponent = new CommentComponent(comment);
 
         appendChildComponent(commentsList, commentComponent);
 

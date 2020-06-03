@@ -89,7 +89,7 @@ const getTopGenre = (genresStatistic) => {
 
   const moviesInTopGenre = Math.max(...Object.values(genresStatistic));
   let topGenre = ``;
-  for (let genre in genresStatistic) {
+  for (const genre in genresStatistic) {
     if (genresStatistic[genre] === moviesInTopGenre) {
       topGenre = genre;
       break;
