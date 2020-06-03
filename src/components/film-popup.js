@@ -144,8 +144,7 @@ const createMovieDetailsTemplate = (film, commentsQuantity) => {
                   class="film-details__comment-input"
                   placeholder="Select reaction below and write comment here"
                   name="comment"
-                >
-                </textarea>
+                ></textarea>
               </label>
               <div class="film-details__emoji-list">
                 <input
@@ -234,10 +233,6 @@ export default class FilmPopup extends AbstractSmartComponent {
     return this.getElement().querySelector(`.film-details__comment-input`);
   }
 
-  cleanTextField() {
-    this.getTextField().value = ``;
-  }
-
   disableTextField() {
     const textField = this.getTextField();
     textField.disabled = true;
@@ -310,7 +305,6 @@ export default class FilmPopup extends AbstractSmartComponent {
   rerender(setupHandlers, commentsQty = this._commentsQuantity) {
     this._commentsQuantity = commentsQty;
     super.rerender();
-    this.cleanTextField();
     setupHandlers();
   }
 }
