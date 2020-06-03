@@ -23,20 +23,10 @@ const filterContainer = menuComponent.getElement();
 const filterController = new FilterController(filterContainer, moviesModel);
 const sortingComponent = new SortingComponent();
 const loadingComponent = new LoadingComponent();
-const statComponent = new StatComponent();
+
 const boardComponent = new BoardComponent();
 const noFilmsComponent = new NoFilmsComponent();
 const pageController = new PageController(boardComponent, moviesModel, api);
-
-menuComponent.setStatsButtonClickHandler(() => {
-  if (statComponent.checkVisibility()) {
-    statComponent.hide();
-    pageController.show();
-  } else {
-    pageController.hide();
-    statComponent.show();
-  }
-});
 
 render(main, menuComponent);
 filterController.render();
@@ -47,11 +37,22 @@ api.getMovies()
   .then((data) => {
     moviesModel.setMovies(data);
     const movies = moviesModel.getMovies();
-    const watchedMovies = movies.filter((movie) => movie.isWatched).length;
+    const watchedMovies = movies.filter((movie) => movie.isWatched);
+    const statComponent = new StatComponent(watchedMovies);
+
+    menuComponent.setStatsButtonClickHandler(() => {
+      if (statComponent.checkVisibility()) {
+        statComponent.hide();
+        pageController.show();
+      } else {
+        pageController.hide();
+        statComponent.show();
+      }
+    });
 
     removeComponent(sortingComponent);
     removeComponent(loadingComponent);
-    render(header, new ProfileComponent(watchedMovies));
+    render(header, new ProfileComponent(watchedMovies.length));
 
     if (movies.length > 0) {
       render(main, boardComponent);
