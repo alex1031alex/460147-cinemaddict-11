@@ -8,8 +8,8 @@ const DeleteButtonText = {
   DELETING: `Deleting...`
 };
 
-const createCommentTemplate = (data, isDeletingMode) => {
-  const {emotion, date, author, comment} = data;
+const createCommentTemplate = (commentContent, isDeletingMode) => {
+  const {emotion, date, author, comment} = commentContent;
   const encodedMessage = encode(capitalizeFirstSymbol(comment));
   const fullCommentDate = humanizeDate(new Date(date));
   const deleteButtonText = isDeletingMode ? DeleteButtonText.DELETING : DeleteButtonText.DELETE;

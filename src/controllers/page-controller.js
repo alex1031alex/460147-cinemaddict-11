@@ -1,6 +1,8 @@
 import SortingComponent, {SortType} from '../components/sorting.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
-import {render, removeComponent} from '../utils/render.js';
+import {PlaceForRender, render, removeComponent} from '../utils/render.js';
+import {getMoviesByFilter} from '../utils/filter.js';
+import {FilterType} from '../const.js';
 import MovieController from './movie-controller.js';
 
 const MOVIE_COUNT_BY_BUTTON = 5;
@@ -35,12 +37,17 @@ export default class PageController {
     this._sortingComponent = new SortingComponent();
     this._sortType = SortType.DEFAULT;
     this._showMoreButtonComponent = null;
+    this._statComponent = null;
     this._showedMovieControllers = [];
     this._filterChangeHandler = this._filterChangeHandler.bind(this);
     this._onSortTypeChangeHandler = this._onSortTypeChangeHandler.bind(this);
     this._onShowMoreButtonClickHandler = this._onShowMoreButtonClickHandler.bind(this);
     this._moviesModel.setFilterChangeHandler(this._filterChangeHandler);
     this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChangeHandler);
+  }
+
+  setStatComponent(statComponent) {
+    this._statComponent = statComponent;
   }
 
   _updateMoviesModel(movieId, updatedMovie) {
@@ -53,12 +60,18 @@ export default class PageController {
         }
       });
     }
+
+    const watchedMovies = getMoviesByFilter(this._moviesModel.getMovies(), FilterType.HISTORY);
+
+    if (this._statComponent) {
+      this._statComponent.onMovieChange(watchedMovies);
+    }
   }
 
   _onMovieChange(movieId, updatedMovie) {
     this._api.updateMovie(movieId, updatedMovie.toRAW())
-      .then((serverData) => {
-        this._updateMoviesModel(movieId, serverData);
+      .then((receivedMovies) => {
+        this._updateMoviesModel(movieId, receivedMovies);
       });
   }
 
@@ -110,13 +123,13 @@ export default class PageController {
     }
 
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
-    render(this._mainMovieElement, this._showMoreButtonComponent, `afterend`);
+    render(this._mainMovieElement, this._showMoreButtonComponent, PlaceForRender.AFTEREND);
 
     this._showMoreButtonComponent.setClickHandler(this._onShowMoreButtonClickHandler);
   }
 
   render() {
-    render(this._boardComponent.getElement(), this._sortingComponent, `beforebegin`);
+    render(this._boardComponent.getElement(), this._sortingComponent, PlaceForRender.BEFOREBEGIN);
 
     const movies = this._moviesModel.getMovies();
     const sortedMovies = getSortedMovies(movies, this._sortType);
@@ -147,7 +160,7 @@ export default class PageController {
     this._sortType = sortType;
 
     removeComponent(this._sortingComponent);
-    render(this._boardComponent.getElement(), this._sortingComponent, `beforebegin`);
+    render(this._boardComponent.getElement(), this._sortingComponent, PlaceForRender.BEFOREBEGIN);
     this._sortingComponent.setSortTypeChangeHandler(this._onSortTypeChangeHandler);
 
     const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), sortType);
@@ -163,5 +176,15 @@ export default class PageController {
     movieShowingCount = INITIAL_MOVIE_COUNT;
 
     this.render();
+  }
+
+  hide() {
+    this._boardComponent.hide();
+  }
+
+  show() {
+    this._boardComponent.show();
+    this._sortingComponent.resetSortType();
+    this._onSortTypeChangeHandler(SortType.DEFAULT);
   }
 }

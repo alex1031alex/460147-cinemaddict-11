@@ -7,6 +7,7 @@ import LoadingComponent from './components/loading.js';
 import NoFilmsComponent from './components/no-films.js';
 import SortingComponent from './components/sorting.js';
 import StatCounterComponent from './components/stat-counter.js';
+import StatComponent from './components/stat.js';
 import MoviesModel from './models/movies-model.js';
 import {render, removeComponent} from './utils/render.js';
 import PageController from './controllers/page-controller.js';
@@ -23,34 +24,45 @@ const filterController = new FilterController(filterContainer, moviesModel);
 const sortingComponent = new SortingComponent();
 const loadingComponent = new LoadingComponent();
 
+const boardComponent = new BoardComponent();
+const noFilmsComponent = new NoFilmsComponent();
+const pageController = new PageController(boardComponent, moviesModel, api);
+
 render(main, menuComponent);
 filterController.render();
 render(main, sortingComponent);
 render(main, loadingComponent);
 
 api.getMovies()
-  .then((data) => {
-    moviesModel.setMovies(data);
+  .then((receivedMovies) => {
+    moviesModel.setMovies(receivedMovies);
     const movies = moviesModel.getMovies();
-    const watchedMovies = movies.filter((movie) => movie.isWatched).length;
+    const watchedMovies = movies.filter((movie) => movie.isWatched);
+    const statComponent = new StatComponent(watchedMovies);
+    pageController.setStatComponent(statComponent);
+
+    menuComponent.setStatsButtonClickHandler(() => {
+      if (statComponent.checkVisibility()) {
+        statComponent.hide();
+        pageController.show();
+      } else {
+        pageController.hide();
+        statComponent.show();
+      }
+    });
 
     removeComponent(sortingComponent);
     removeComponent(loadingComponent);
-
-    render(header, new ProfileComponent(watchedMovies));
+    render(header, new ProfileComponent(watchedMovies.length));
 
     if (movies.length > 0) {
-      const boardComponent = new BoardComponent();
-      const pageController = new PageController(boardComponent, moviesModel, api);
-
       render(main, boardComponent);
-
       pageController.render(movies);
     } else {
-      const noFilmsComponent = new NoFilmsComponent();
-
       render(main, noFilmsComponent);
     }
 
     render(footer, new StatCounterComponent(moviesModel.getMovies().length));
+    render(main, statComponent);
+    statComponent.hide();
   });

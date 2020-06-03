@@ -33,11 +33,11 @@ export default class API {
       .then((response) => response.json());
   }
 
-  updateMovie(id, data) {
+  updateMovie(id, movie) {
     return this._load({
       url: `movies/${id}`,
       method: Method.PUT,
-      body: JSON.stringify(data),
+      body: JSON.stringify(movie),
       headers: new Headers({"Content-Type": `application/json`})
     })
       .then((response) => response.json())
