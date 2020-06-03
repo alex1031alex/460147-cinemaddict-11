@@ -205,6 +205,7 @@ export default class MovieController {
     }
 
     appendChildComponent(page, this._popupComponent);
+
     document.addEventListener(`keydown`, this._onEscKeyDown);
 
     if (!this._commentsModel) {
