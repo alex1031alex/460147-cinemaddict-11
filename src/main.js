@@ -37,7 +37,7 @@ api.getMovies()
   .then((receivedMovies) => {
     moviesModel.setMovies(receivedMovies);
     const movies = moviesModel.getMovies();
-    const watchedMovies = movies.filter((movie) => movie.isWatched);
+    const watchedMovies = movies.filter((movie) => movie.watchingDate);
     const statComponent = new StatComponent(watchedMovies);
     pageController.setStatComponent(statComponent);
 

@@ -61,7 +61,7 @@ export default class PageController {
       });
     }
 
-    const watchedMovies = getMoviesByFilter(this._moviesModel.getMovies(), FilterType.HISTORY);
+    const watchedMovies = getMoviesByFilter(this._moviesModel.getMovies(), FilterType.WATCHED);
 
     if (this._statComponent) {
       this._statComponent.onMovieChange(watchedMovies);
@@ -176,6 +176,13 @@ export default class PageController {
     movieShowingCount = INITIAL_MOVIE_COUNT;
 
     this.render();
+
+    const watchedMovies = getMoviesByFilter(this._moviesModel.getMovies(), FilterType.WATCHED);
+
+    if (this._statComponent) {
+      this._statComponent.onMovieChange(watchedMovies);
+      this._statComponent.rerender();
+    }
   }
 
   hide() {
