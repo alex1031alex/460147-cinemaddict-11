@@ -12,7 +12,7 @@ const getMoviesByFilter = (movies, filterType) => {
       return movies.filter((movie) => movie.isFavorite);
     }
     case FilterType.WATCHED: {
-      return movies.filter((movies) => movies.watchingDate);
+      return movies.filter((movie) => movie.watchingDate);
     }
     default: {
       return movies;
